@@ -1,0 +1,287 @@
+*
+{
+  margin: 0px;
+  padding: 0px;
+  font-size: 100%;
+  color: white;
+  font-family: 'Libre Baskerville', serif;
+}
+
+body, html
+{
+  width: 100%;
+  font-size: 100%;
+  height: 100%;
+  background-color: white;
+}
+
+#book
+{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  float: left;
+  background-color: transparent;
+  padding: 0%;
+}
+
+p
+{
+  font-size: 1em;
+  line-height: 2em;
+  padding-bottom: 1em;
+}
+
+ul
+{
+  padding-bottom: 1em;
+}
+
+ul li
+{
+  line-height: 2em;
+}
+
+a
+{
+  color: #c2ba95;
+  text-decoration: none;
+}
+
+a:hover
+{
+  color: #c2ba95;
+  text-decoration: underline;
+}
+
+#bookTitle
+{
+  position: absolute;
+  left: 0%;
+  height: 100%;
+  width: 4%;
+  background-color: #2E2E2E;
+}
+
+/*
+In this example the Poetry Book title is in an 
+h1 tag that's been rotated 90% around it's top left corner.
+Play around with the h1 element's left, bottom and width properties to fit it exactly.
+Confusingly, the width property represent's the h1 element's width *before* it was rotated.
+That means that, after rotation, it's width will apprear to be its height. Yes, it's confusing! 
+Because of this, you need to set a maximum width in pixels to give the text inside 
+the h1 tag enough room to flow up the page.
+Set the h1 element's background-color to red help you debug positioning problems
+*/
+
+#bookTitle h1
+{
+  font-size: 1.8em;
+  color: white;
+  position: absolute;
+  bottom: -1em;
+  left: 0.16em;
+  width: 800px;
+  /* background-color: red; */
+}
+.rotate 
+{ 
+  -webkit-transform: rotate(-90deg); /* Safari */
+  -moz-transform: rotate(-90deg); /* Firefox */
+  -ms-transform: rotate(-90deg); /* IE */
+  -o-transform: rotate(-90deg); /* Opera */
+  transform: rotate(-90deg); /* Generic */
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3); /* Internet Explorer */
+    
+  /* Make the rotation happen around the top left corner */
+  -webkit-transform-origin: top left;
+  -moz-transform-origin: top left;
+  -ms-transform-origin: top left;
+  -o-transform-origin: top left;
+  transform-origin: top left;
+}
+
+nav
+{
+  position: absolute;
+  left: 4%;
+  height: 100%;
+  width: 16%;
+  background-color: black;
+  padding-left: 2%;
+  padding-right: 2%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+nav a, nav a.unselected
+{
+  display: block;
+  padding-bottom: 0.7em;
+  padding-left: 1em;
+  color: white;
+  font-size: 1em;
+  outline: none;
+}
+
+nav a:hover, nav a.selected
+{
+  color: #eee8aa;
+  text-decoration: none;
+}
+
+nav h1
+{
+  font-size: 1.2em;
+  color: white; 
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+
+/* This next style is just used to add 3em of padding to the top
+of the first article that doesn't have a category. This is
+so that it's neatly padded from the top of the page */
+nav a:first-child
+{
+  padding-top: 3em;
+}
+
+article
+{
+  position: absolute;
+  left: 24%;
+  width: 56%;
+  height: 100%;
+  color: black;
+  opacity: 0;
+  display: block;
+	
+  padding-left: 10%;
+  padding-right: 10%;
+	
+  overflow-y: scroll;
+  overflow-x: hidden;
+	
+  background-color: white;
+	
+  transition: opacity 0.5s;
+  -moz-transition: opacity 0.5s; /* Firefox 4 */
+  -webkit-transition: opacity 0.5s; /* Safari and Chrome */
+  -o-transition: opacity 0.5s; /* Opera */
+  -ms-transition: opacity 0.5s; /* IE */  
+}
+
+article p, ul li
+{
+  font-size: 1.1em;
+  color: black;
+}
+
+article h1, article h2
+{
+  font-size: 1.8em;
+  color: black;
+  font-weight: normal;
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+
+article h2
+{
+  font-size: 1.6em;
+}
+
+article h3
+{
+  font-size: 1.2em;
+}
+
+article a
+{
+  color: black;
+  text-decoration: underline;
+  outline: none;
+}
+article a:hover
+{
+  color: grey;
+}
+
+article p:last-child
+{
+  padding-bottom: 3em;
+}
+
+em
+{
+  color: black;
+}
+
+/* Responsive design styles */
+
+/* Styles for screens under 1150px */
+@media all and (max-width: 1150px) 
+{
+  #bookTitle h1
+  {
+    font-size: 1.4em;
+  }
+}
+
+/* Styles for screens under 650px */
+@media all and (max-width: 950px) 
+{
+  /*Make fonts smaller*/
+  nav h1, article h1
+  {
+    font-size: 1em;
+  }
+  
+  article h2, nav a, nav a.unselected
+  {
+    font-size: 0.9em;
+  }
+  
+  article h3
+  {
+    font-size: 0.875em;
+  }
+  
+  article p, article li
+  {
+    font-size: 0.875em;
+  }
+  
+  /* Move the title heading from the side to the top*/
+  nav
+  {
+    width: 20%;
+    height: 80%;
+    top: 20%;
+    left: 0%;
+  }
+  #bookTitle
+  {
+    height: 20%;
+    width: 24%;
+  }
+  #bookTitle h1
+  {
+    font-size: 1em;
+    top: 0;
+    left: 0;
+    width: 24%;
+    padding-left: 1em;
+    padding-top: 1em;
+  }
+  .rotate 
+  { 
+    -webkit-transform: rotate(0deg); /* Safari */
+    -moz-transform: rotate(0deg); /* Firefox */
+    -ms-transform: rotate(0deg); /* IE */
+    -o-transform: rotate(0deg); /* Opera */
+    transform: rotate(0deg); /* Generic */
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3); /* Internet Explorer */
+  }
+}
+
