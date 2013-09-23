@@ -107,14 +107,14 @@
   //Optionally, sort them manually to fine tune their order
   categories.sort();
   
-  //Make H1 tags using the category names and attach them to the nav element 
+  //Make h2 tags using the category names and attach them to the nav element 
   categories.forEach(function (category) {
-    var h1 = document.createElement("h1"),
+    var h2 = document.createElement("h2"),
       headingText = category;
     headingText = capitaliseFirstLetter(headingText);
-    h1.innerHTML = headingText;
-    h1.setAttribute("category", category);
-    nav.appendChild(h1);
+    h2.innerHTML = headingText;
+    h2.setAttribute("category", category);
+    nav.appendChild(h2);
   });
 
   //Make A tags.
@@ -122,8 +122,8 @@
   //of the page appear before articles at the bottom
   function makeATags(article) {
     var currentArticle = article,
-      //All the h1 tags in the navigation bar
-      headingsInNav = document.querySelectorAll("nav h1"),
+      //All the h2 tags in the navigation bar
+      headingsInNav = document.querySelectorAll("nav h2"),
       //Create an a <a> tag, set its innerHTML property
       a = document.createElement("a");
     //Convert the headingsInNav DOM node list into a reall array

@@ -130,7 +130,7 @@ nav a:hover, nav a.selected
   text-decoration: none;
 }
 
-nav h1
+nav h2
 {
   font-size: 1.2em;
   color: white; 
@@ -177,7 +177,7 @@ article p, ul li
   color: black;
 }
 
-article h1, article h2
+article h2, article h3
 {
   font-size: 1.8em;
   color: black;
@@ -186,12 +186,12 @@ article h1, article h2
   padding-bottom: 1em;
 }
 
-article h2
+article h3
 {
   font-size: 1.6em;
 }
 
-article h3
+article h4
 {
   font-size: 1.2em;
 }
@@ -222,7 +222,7 @@ em
 /* Styles for screens under 1150px */
 @media all and (max-width: 1150px) 
 {
-  #bookTitle h1
+  #bookTitle h2
   {
     font-size: 1.4em;
   }
@@ -232,17 +232,17 @@ em
 @media all and (max-width: 950px) 
 {
   /*Make fonts smaller*/
-  nav h1, article h1
+  nav h2, article h2
   {
     font-size: 1em;
   }
   
-  article h2, nav a, nav a.unselected
+  article h3, nav a, nav a.unselected
   {
     font-size: 0.9em;
   }
   
-  article h3
+  article h4
   {
     font-size: 0.875em;
   }
@@ -265,7 +265,7 @@ em
     height: 20%;
     width: 24%;
   }
-  #bookTitle h1
+  #bookTitle h2
   {
     font-size: 1em;
     top: 0;
