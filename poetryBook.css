@@ -74,7 +74,7 @@ the h1 tag enough room to flow up the page.
 Set the h1 element's background-color to red help you debug positioning problems
 */
 
-#bookTitle h1
+h1
 {
   font-size: 1.8em;
   color: white;
@@ -83,9 +83,8 @@ Set the h1 element's background-color to red help you debug positioning problems
   left: 0.16em;
   width: 800px;
   /* background-color: red; */
-}
-.rotate 
-{ 
+  
+  /* Rotate the text */
   -webkit-transform: rotate(-90deg); /* Safari */
   -moz-transform: rotate(-90deg); /* Firefox */
   -ms-transform: rotate(-90deg); /* IE */

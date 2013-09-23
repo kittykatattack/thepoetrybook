@@ -4,9 +4,8 @@
 
   /* Variables */
   
-  //Variables needed to switch articles
-  var currentContent = null,
-    previousContent = null,
+  var currentPage = null, //The currently displayed page
+    previousPage = null, //The previous page
       
     //An obect to represent an article
     Article = {
@@ -16,20 +15,17 @@
       category: null,
       url: undefined
     },
-    //An array to store all the Article objects
-    articles = [],
-    //Find all the articles on the page
+    articles = [], //The Article objects
+    nav = document.querySelector("nav"),  //The nav tag
+    categories = [], //All the article categories
+    url = window.location.href, //The url in the browser
+    pageName = url.split('/').pop(), //Last segment of the url
+    //DOM elements we need to reference
     articlesInDOM = document.querySelectorAll("article"),
-    //Get a reference to the <nav> tag so we can start building the navigation
-    nav = document.querySelector("nav"),
-    //An array to store all the article categories
-    categories = [],
-    //Find the url
-    url = window.location.href,
-    //Get the last segment of the url
-    pageName = url.split('/').pop(),
-    //Find all the <a> tag links in the articles
-    aTagsInArticles = document.querySelectorAll("article a");
+    aTagsInArticles = document.querySelectorAll("article a"), //All the <a> tags in the articles
+    h1 = document.querySelector("h1"),
+    title = document.querySelector("title"),
+    bookTitleDiv = document.querySelector("#bookTitle");
   
   /* Functions */
   
@@ -44,16 +40,16 @@
     var currentLink = event.target;
     articles.some(function (article) {
       if (currentLink.href === article.aTag.href) {
-        if (currentContent !== null) {
-          currentContent.articleTag.style.opacity = "0";
-          currentContent.articleTag.style.zIndex = "0";
-          currentContent.aTag.setAttribute("class", "unselected");
-          previousContent = currentContent;
+        if (currentPage !== null) {
+          currentPage.articleTag.style.opacity = "0";
+          currentPage.articleTag.style.zIndex = "0";
+          currentPage.aTag.setAttribute("class", "unselected");
+          previousPage = currentPage;
         }
-        currentContent = article;
-        currentContent.articleTag.style.opacity = "1";
-        currentContent.articleTag.style.zIndex = "1000";
-        currentContent.aTag.setAttribute("class", "selected");
+        currentPage = article;
+        currentPage.articleTag.style.opacity = "1";
+        currentPage.articleTag.style.zIndex = "1000";
+        currentPage.aTag.setAttribute("class", "selected");
         //match found, stop checking
         return true;
       } else {
@@ -72,6 +68,13 @@
   //Convert the DOM node lists into an ordinary arrays
   articlesInDOM = Array.prototype.slice.call(articlesInDOM);
   aTagsInArticles = Array.prototype.slice.call(aTagsInArticles);
+  
+  //Move he h1 tag in a containing <div> with the id "bookTitle" 
+  //This will let us position the title with the css: #booktitle 
+  bookTitleDiv.appendChild(h1);
+  
+  //Set the website title to be same as the book title
+  title.innerHTML = h1.innerHTML;
   
   //Loop through all the articles in the article DOM nodes, create
   //article objects from them and return them into the articles array
@@ -173,7 +176,7 @@
     articles[0].articleTag.style.zIndex = '1000';
     //Highlight the navigation link
     articles[0].aTag.setAttribute("class", "selected");
-    currentContent = articles[0];
+    currentPage = articles[0];
   } else {
     //Get the last section of the url after the # and load the corresponding article
     pageName = url.split('#').pop();
@@ -183,7 +186,7 @@
         article.articleTag.style.zIndex = '1000';
         //Highlight the navigation link
         article.aTag.setAttribute("class", "selected");
-        currentContent = article;
+        currentPage = article;
       }
     });
   }
