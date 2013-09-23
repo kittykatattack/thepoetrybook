@@ -82,7 +82,8 @@
     var article = Object.create(Article);
     article.articleTag = articleInDOM;
     article.title = articleInDOM.firstElementChild.innerHTML;
-    article.category = articleInDOM.getAttribute("category");
+    //Get the catefory name from the h2 tag (the article's first child)
+    article.category = articleInDOM.firstElementChild.getAttribute("category");
     //Convert the category to lower case to simplify things
     if (article.category !== null) {
       article.category.toLowerCase();
