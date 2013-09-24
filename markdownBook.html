@@ -1,0 +1,29 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name=viewport content="width=device-width, initial-scale=1.0, minimum-scale=0.5 maximum-scale=1.0">
+<title></title>
+<link href='http://fonts.googleapis.com/css?family=Libre+Baskerville:400,700,400italic' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="poetryBook.css">
+
+<div id="bookTitle"></div>  
+  
+<nav>
+<!-- 
+<h2> and <a> tags are automatically added into the  
+navigation bar by the poetryBook.js. This based on the second-level heading titles
+in the markdown document
+-->
+</nav>
+
+<!-- The markdown document is converted into HTML and inserted in to the book section below -->
+<section id="book">
+<!-- 
+The poetryBook.js file treats each second-level heading (<h2> tags) in the markdown
+document as a the start of a new page. It wraps <article> tags around those sections
+so that css can use them as positioning and styling hooks.
+-->
+</section>
+
+<!-- load the JavaScript source files -->
+<script src="showdown.js"></script>
+<script src="poetryBook.js"></script>

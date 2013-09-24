@@ -6,7 +6,8 @@
   
   var currentPage = null, //The currently displayed page
     previousPage = null, //The previous page
-      
+    reader = new XMLHttpRequest(), //An XMLHttpRequest object to read the markdown file
+    converter = new Showdown.converter(), //An markdown to HTML converter
     //An obect to represent an article
     articleObject = {
       articleTag: null,
@@ -16,19 +17,19 @@
       url: undefined
     },
     articles = [], //The Article objects
-    nav = document.querySelector("nav"),  //The nav tag
+    nav,  //The nav tag
     categories = [], //All the article categories
     url = window.location.href, //The url in the browser
     pageName = url.split('/').pop(), //Last segment of the url
     //DOM elements we need to reference
     articlesInDOM = [],
     aTagsInArticles,
-    h1 = document.querySelector("h1"),
-    h2Tags = document.querySelectorAll("h2"),
-    allTagsInDocument = document.body.childNodes,
-    title = document.querySelector("title"),
-    book = document.querySelector("#book"),
-    bookTitleDiv = document.querySelector("#bookTitle");
+    h1,
+    h2Tags,
+    allTagsInDocument,
+    title,
+    book,
+    bookTitleDiv;
   
   /* Functions */
   
@@ -62,7 +63,7 @@
     });
   }
   
-  //How this works: http://stackoverflow.com/questions/18967526/
+  //How this next function works: http://stackoverflow.com/questions/18967526/
   function wrapPageContentInArticleTags(bookContentContainer) {
     var article, sibling, toDelete = [], i, h2,
       h2s = document.getElementsByTagName("H2");
@@ -174,77 +175,104 @@
     }
   }
   
-  /* The main program */
+  //Load the markdown content, convert it to HTML, and attach it to the body
   
-  //The first and main job of this code is to build the navigation
-  //structure and create the links based on the content in
-  //the article tags
-  
-  //Loop through the all the content in the book section tag and wrap
-  //each part beginning with h2 in an <article> tag. This lets us structure
-  //a page to be each section that begins with h2
-  wrapPageContentInArticleTags(book);
-  
-  //Get all <a> tags in the articles
-  aTagsInArticles = document.querySelectorAll("article a");
-  
-  //Convert the DOM node lists into an ordinary arrays
-  articlesInDOM = Array.prototype.slice.call(articlesInDOM);
-  aTagsInArticles = Array.prototype.slice.call(aTagsInArticles);
-  h2Tags = Array.prototype.slice.call(h2Tags);
-  allTagsInDocument = Array.prototype.slice.call(allTagsInDocument);
-  
-  //Move he h1 tag into a containing <div> with the id "bookTitle" 
-  //This will let us position the title with the css: #booktitle 
-  bookTitleDiv.appendChild(h1);
-  
-  //Set the website title to be same as the book title
-  title.innerHTML = h1.innerHTML;
-  
-  //Loop through all the articles in the article DOM nodes, create
-  //article objects from them and return them into the articles array
-  articles = articlesInDOM.map(makeArticleObjects);
+  //console.log(book.innerHTML);
+  function makeHTMLpage() {
+    //The first and main job of this code is to build the navigation
+    //structure and create the links based on the content in
+    //the article tags
+    h1 = document.querySelector("h1");
+    h2Tags = document.querySelectorAll("h2");
+    allTagsInDocument = document.body.childNodes;
+    title = document.querySelector("title");
+    bookTitleDiv = document.querySelector("#bookTitle");
+    nav = document.querySelector("nav");
     
-  //Find all the article categories and push them into an array 
-  //so that we can use them to make navigation headings
-  articles.forEach(function (article) {
-    if (article.category !== null) {
-      //Only add a new category to the array
-      //if it hasn't already been added in a previous iteration of the loop
-      if (categories.indexOf(article.category) === -1) {
-        categories.push(article.category);
+    //Loop through the all the content in the book section tag and wrap
+    //each part beginning with h2 in an <article> tag. This lets us structure
+    //a page to be each section that begins with h2
+    wrapPageContentInArticleTags(book);
+    
+    //Get all <a> tags in the articles
+    aTagsInArticles = document.querySelectorAll("article a");
+    
+    //Convert the DOM node lists into an ordinary arrays
+    articlesInDOM = Array.prototype.slice.call(articlesInDOM);
+    aTagsInArticles = Array.prototype.slice.call(aTagsInArticles);
+    h2Tags = Array.prototype.slice.call(h2Tags);
+    allTagsInDocument = Array.prototype.slice.call(allTagsInDocument);
+    
+    //Move he h1 tag into a containing <div> with the id "bookTitle" 
+    //This will let us position the title with the css: #booktitle 
+    bookTitleDiv.appendChild(h1);
+    
+    //Set the website title to be same as the book title
+    title.innerHTML = h1.innerHTML;
+    
+    //Loop through all the articles in the article DOM nodes, create
+    //article objects from them and return them into the articles array
+    articles = articlesInDOM.map(makeArticleObjects);
+      
+    //Find all the article categories and push them into an array 
+    //so that we can use them to make navigation headings
+    articles.forEach(function (article) {
+      if (article.category !== null) {
+        //Only add a new category to the array
+        //if it hasn't already been added in a previous iteration of the loop
+        if (categories.indexOf(article.category) === -1) {
+          categories.push(article.category);
+        }
       }
+    });
+    
+    /* SORT CATEGORIES HERE */
+    //The sort() method sorts them alphabetically.  
+    //Optionally, sort them manually to fine tune their order
+    categories.sort();
+    
+    //The next sections of code make <h2> and <a> tags inside the <nav> element
+    //This is what builds the navigation bar.
+    
+    //Make h2 tags using the category names and attach them to the nav element 
+    categories.forEach(makeH2Tags);
+  
+    //Make A tags.
+    //Loop through the articles in reverse so that articles at the top
+    //of the page appear before articles at the bottom
+    articles.reverse();
+    articles.forEach(makeATags);
+    articles.reverse();
+    
+    //Attach a mousedown handler to all the <a> tag links in the articles.
+    //This is important so that you can have internal links between pages
+    //Change the selected article when the user clicks a navigation link
+    aTagsInArticles.forEach(function (aTag) {
+      aTag.addEventListener('mousedown', mousedownHandler, false);
+    });
+    
+    //Now that the page structure has been built, we can display a page
+    //Load the first article if a sub-page hasn't been requested
+    //(Sub-pages will have a # symbol in their name)
+    displayCurrentPage();
+  }
+  function convertMarkdownToHTML() {
+    if (reader.readyState === 4) {
+      //Convert the markdown to HTML text inside the <section id="book"> tag
+      book = document.querySelector("#book");
+      book.innerHTML = (converter.makeHtml(reader.responseText));
+      //Build the entire website
+      makeHTMLpage();
     }
-  });
+  }
+  function loadFile(fileName) {
+    reader.open("get", fileName, true);
+    reader.addEventListener("readystatechange", convertMarkdownToHTML, false);
+    //reader.onreadystatechange = displayContents;
+    reader.send(null);
+  }
   
-  /* SORT CATEGORIES HERE */
-  //The sort() method sorts them alphabetically.  
-  //Optionally, sort them manually to fine tune their order
-  categories.sort();
-  
-  //The next sections of code make <h2> and <a> tags inside the <nav> element
-  //This is what builds the navigation bar.
-  
-  //Make h2 tags using the category names and attach them to the nav element 
-  categories.forEach(makeH2Tags);
-
-  //Make A tags.
-  //Loop through the articles in reverse so that articles at the top
-  //of the page appear before articles at the bottom
-  articles.reverse();
-  articles.forEach(makeATags);
-  articles.reverse();
-  
-  //Attach a mousedown handler to all the <a> tag links in the articles.
-  //This is important so that you can have internal links between pages
-  //Change the selected article when the user clicks a navigation link
-  aTagsInArticles.forEach(function (aTag) {
-    aTag.addEventListener('mousedown', mousedownHandler, false);
-  });
-  
-  //Now that the page structure has been built, we can display a page
-  //Load the first article if a sub-page hasn't been requested
-  //(Sub-pages will have a # symbol in their name)
-  displayCurrentPage();
-  
+  //Load the markdown file and convert it to HTML
+  //When it's finished, the makeHTMLpage function will run
+  loadFile("book.markdown");
 }());
