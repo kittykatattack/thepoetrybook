@@ -1,4 +1,4 @@
-/*jslint white: false, indent: 2, browser: true, maxerr: 200, maxlen: 100  */
+/*jslint white: false, indent: 2, browser: true, maxerr: 200, maxlen: 100, plusplus: true  */
 (function () {
   "use strict";
 
@@ -8,7 +8,7 @@
     previousPage = null, //The previous page
       
     //An obect to represent an article
-    Article = {
+    articleObject = {
       articleTag: null,
       aTag: null,
       title: undefined,
@@ -21,10 +21,13 @@
     url = window.location.href, //The url in the browser
     pageName = url.split('/').pop(), //Last segment of the url
     //DOM elements we need to reference
-    articlesInDOM = document.querySelectorAll("article"),
-    aTagsInArticles = document.querySelectorAll("article a"), //All the <a> tags in the articles
+    articlesInDOM = [],
+    aTagsInArticles,
     h1 = document.querySelector("h1"),
+    h2Tags = document.querySelectorAll("h2"),
+    allTagsInDocument = document.body.childNodes,
     title = document.querySelector("title"),
+    book = document.querySelector("#book"),
     bookTitleDiv = document.querySelector("#bookTitle");
   
   /* Functions */
@@ -59,27 +62,39 @@
     });
   }
   
-  /* The main program */
+  //How this works: http://stackoverflow.com/questions/18967526/
+  function wrapPageContentInArticleTags(bookContentContainer) {
+    var article, sibling, toDelete = [], i, h2,
+      h2s = document.getElementsByTagName("H2");
+
+    //for (i = 0; h2 = h2s[i]; i++) {
+    for (i = 0; i < h2s.length; i++) {
+      h2 = h2s[i];
+      article = document.createElement("article");
+      sibling = h2.nextElementSibling;
+      article.appendChild(h2.cloneNode(true));
+      while (sibling && sibling.tagName !== "H2") {
+        article.appendChild(sibling.cloneNode(true));
+        toDelete.push(sibling);
+        sibling = sibling.nextElementSibling;
+      }
+      articlesInDOM.push(article);
+    }
+    while (toDelete.length > 0) {
+      toDelete[toDelete.length - 1].parentNode.removeChild(toDelete[toDelete.length - 1]);
+      toDelete.pop();
+    }
+    while (h2s.length > 0) {
+      h2s[0].parentNode.removeChild(h2s[0]);
+    }
+    for (i = 0; i < articlesInDOM.length; i++) {
+      article = articlesInDOM[i];
+      bookContentContainer.appendChild(article);
+    }
+  }
   
-  //The first and main job of this code is to build the navigation
-  //structure and create the links based on the content in
-  //the article tags
-  
-  //Convert the DOM node lists into an ordinary arrays
-  articlesInDOM = Array.prototype.slice.call(articlesInDOM);
-  aTagsInArticles = Array.prototype.slice.call(aTagsInArticles);
-  
-  //Move he h1 tag in a containing <div> with the id "bookTitle" 
-  //This will let us position the title with the css: #booktitle 
-  bookTitleDiv.appendChild(h1);
-  
-  //Set the website title to be same as the book title
-  title.innerHTML = h1.innerHTML;
-  
-  //Loop through all the articles in the article DOM nodes, create
-  //article objects from them and return them into the articles array
-  articles = articlesInDOM.map(function (articleInDOM) {
-    var article = Object.create(Article);
+  function makeArticleObjects(articleInDOM) {
+    var article = Object.create(articleObject);
     article.articleTag = articleInDOM;
     article.title = articleInDOM.firstElementChild.innerHTML;
     //Get the catefory name from the h2 tag (the article's first child)
@@ -92,45 +107,24 @@
     article.url = article.title.replace(/\s+/g, '');
     //Return the article so that it can be store in the articles array
     return article;
-  });
-    
-  //Find all the article categories and push them into an array 
-  //so that we can use them to make navigation headings
-  articles.forEach(function (article) {
-    if (article.category !== null) {
-      //Only add a new category to the array
-      //if it hasn't already been added in a previous iteration of the loop
-      if (categories.indexOf(article.category) === -1) {
-        categories.push(article.category);
-      }
-    }
-  });
-  
-  /* SORT CATEGORIES HERE */
-  //The sort() method sorts them alphabetically.  
-  //Optionally, sort them manually to fine tune their order
-  categories.sort();
-  
-  //Make h2 tags using the category names and attach them to the nav element 
-  categories.forEach(function (category) {
+  }
+ 
+  function makeH2Tags(category) {
     var h2 = document.createElement("h2"),
       headingText = category;
     headingText = capitaliseFirstLetter(headingText);
     h2.innerHTML = headingText;
     h2.setAttribute("category", category);
     nav.appendChild(h2);
-  });
-
-  //Make A tags.
-  //Loop through the articles in reverse so that articles at the top
-  //of the page appear before articles at the bottom
+  }
+  
   function makeATags(article) {
     var currentArticle = article,
       //All the h2 tags in the navigation bar
       headingsInNav = document.querySelectorAll("nav h2"),
       //Create an a <a> tag, set its innerHTML property
       a = document.createElement("a");
-    //Convert the headingsInNav DOM node list into a reall array
+    //Convert the headingsInNav DOM node list into a real array
     headingsInNav = Array.prototype.slice.call(headingsInNav);
     //Build the <a> tags that will become the navigation links
     //Set their attributes and add a mousedown handler
@@ -156,6 +150,87 @@
       nav.insertBefore(a, nav.firstChild);
     }
   }
+  
+  function displayCurrentPage() {
+    if (pageName.indexOf("#") === -1) {
+      //Make the first article visible and set it as the current content
+      articles[0].articleTag.style.opacity = '1';
+      articles[0].articleTag.style.zIndex = '1000';
+      //Highlight the navigation link
+      articles[0].aTag.setAttribute("class", "selected");
+      currentPage = articles[0];
+    } else {
+      //Get the last section of the url after the # and load the corresponding article
+      pageName = url.split('#').pop();
+      articles.forEach(function (article) {
+        if (article.url === pageName) {
+          article.articleTag.style.opacity = '1';
+          article.articleTag.style.zIndex = '1000';
+          //Highlight the navigation link
+          article.aTag.setAttribute("class", "selected");
+          currentPage = article;
+        }
+      });
+    }
+  }
+  
+  /* The main program */
+  
+  //The first and main job of this code is to build the navigation
+  //structure and create the links based on the content in
+  //the article tags
+  
+  //Loop through the all the content in the book section tag and wrap
+  //each part beginning with h2 in an <article> tag. This lets us structure
+  //a page to be each section that begins with h2
+  wrapPageContentInArticleTags(book);
+  
+  //Get all <a> tags in the articles
+  aTagsInArticles = document.querySelectorAll("article a");
+  
+  //Convert the DOM node lists into an ordinary arrays
+  articlesInDOM = Array.prototype.slice.call(articlesInDOM);
+  aTagsInArticles = Array.prototype.slice.call(aTagsInArticles);
+  h2Tags = Array.prototype.slice.call(h2Tags);
+  allTagsInDocument = Array.prototype.slice.call(allTagsInDocument);
+  
+  //Move he h1 tag into a containing <div> with the id "bookTitle" 
+  //This will let us position the title with the css: #booktitle 
+  bookTitleDiv.appendChild(h1);
+  
+  //Set the website title to be same as the book title
+  title.innerHTML = h1.innerHTML;
+  
+  //Loop through all the articles in the article DOM nodes, create
+  //article objects from them and return them into the articles array
+  articles = articlesInDOM.map(makeArticleObjects);
+    
+  //Find all the article categories and push them into an array 
+  //so that we can use them to make navigation headings
+  articles.forEach(function (article) {
+    if (article.category !== null) {
+      //Only add a new category to the array
+      //if it hasn't already been added in a previous iteration of the loop
+      if (categories.indexOf(article.category) === -1) {
+        categories.push(article.category);
+      }
+    }
+  });
+  
+  /* SORT CATEGORIES HERE */
+  //The sort() method sorts them alphabetically.  
+  //Optionally, sort them manually to fine tune their order
+  categories.sort();
+  
+  //The next sections of code make <h2> and <a> tags inside the <nav> element
+  //This is what builds the navigation bar.
+  
+  //Make h2 tags using the category names and attach them to the nav element 
+  categories.forEach(makeH2Tags);
+
+  //Make A tags.
+  //Loop through the articles in reverse so that articles at the top
+  //of the page appear before articles at the bottom
   articles.reverse();
   articles.forEach(makeATags);
   articles.reverse();
@@ -168,28 +243,8 @@
   });
   
   //Now that the page structure has been built, we can display a page
-  
   //Load the first article if a sub-page hasn't been requested
   //(Sub-pages will have a # symbol in their name)
-  if (pageName.indexOf("#") === -1) {
-    //Make the first article visible and set it as the current content
-    articles[0].articleTag.style.opacity = '1';
-    articles[0].articleTag.style.zIndex = '1000';
-    //Highlight the navigation link
-    articles[0].aTag.setAttribute("class", "selected");
-    currentPage = articles[0];
-  } else {
-    //Get the last section of the url after the # and load the corresponding article
-    pageName = url.split('#').pop();
-    articles.forEach(function (article) {
-      if (article.url === pageName) {
-        article.articleTag.style.opacity = '1';
-        article.articleTag.style.zIndex = '1000';
-        //Highlight the navigation link
-        article.aTag.setAttribute("class", "selected");
-        currentPage = article;
-      }
-    });
-  }
+  displayCurrentPage();
   
 }());
