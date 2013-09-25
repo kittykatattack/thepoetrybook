@@ -5,6 +5,8 @@
 <link href='http://fonts.googleapis.com/css?family=Libre+Baskerville:400,700,400italic' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="poetryBook.css">
 
+<section id="book">
+  
 <div id="bookTitle"></div>  
   
 <nav>
@@ -15,8 +17,9 @@ in the markdown document
 -->
 </nav>
 
+
 <!-- The markdown document is converted into HTML and inserted in to the book section below -->
-<section id="book">
+
 <!-- 
 The poetryBook.js file treats each second-level heading (<h2> tags) in the markdown
 document as a the start of a new page. It wraps <article> tags around those sections
@@ -25,5 +28,5 @@ so that css can use them as positioning and styling hooks.
 </section>
 
 <!-- load the JavaScript source files -->
-<script src="showdown.js"></script>
+<script src="Markdown.Converter.js"></script>
 <script src="poetryBook.js"></script>

@@ -227,6 +227,11 @@ em
   }
 }
 
+code
+{
+  color: black;
+}
+
 /* Styles for screens under 650px */
 @media all and (max-width: 950px) 
 {
