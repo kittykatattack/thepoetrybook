@@ -1,7 +1,9 @@
 The Poetry Book
 ===============
 
-<h2 class="what?">What is The Poetry Book?</h2>
+What is The Poetry Book? [what?]
+--------------------------------
+
 *The Poetry Book* is a fast and easy system for quickly making your own book of poems. You can also use it as the basis of building highly interactive websites and apps. If you want to create your own book of poems that looks like this one, [get the source code](http:#) and modify it as much as you like.
 
 ![A test image](images/williamBlake.png)
@@ -104,8 +106,9 @@ If you want to do that, here are some of the things you should know about the so
 
 [Get the source](http://#).
 
-<h2 class="x">Unlinked content</h2>
 
+Unlinked content [x]
+--------------------
 This content won't be displayed in the navigation bar. To set this up, give the `<h2>` tag the class name "x" and don't give it a category. You can access this content through the `<article>` tag that will surround it. The article's id will be the same as the `<h2>` title, but lowercase without spaces. For example, the `<article>` tag for this section will look like this:
 
 `<article id="unlinkedcontent" class="x">`
@@ -122,21 +125,23 @@ In the css file, Make sure to give the element a z-index value which is *higher 
   
 This is a very powerful feature because it lets you use The Poetry Book as the basis for a complex website or app user interface.
 
-<h2 class="blake">Infant Sorrow</h2>
+Infant Sorrow [blake]
+---------------------
 
-My mother groaned, my father wept,  
-Into the dangerous world I leapt.  
-Helpless, naked, piping loud,  
+My mother groaned, my father wept,
+Into the dangerous world I leapt.
+Helpless, naked, piping loud,
 Like a fiend hid in a cloud.
 
-Struggling in my father's hands,  
-Striving against my swaddling bands,  
-Bound and weary, I thought best  
-To sulk upon my mother's breast.  
+Struggling in my father's hands,
+Striving against my swaddling bands,
+Bound and weary, I thought best,
+To sulk upon my mother's breast.
 
 *William Blake*
   
-<h2 class="blake">Auguries of Innocence</h2>
+Auguries of Innocence [blake]
+-----------------------------
 
 To see a world in a grain of sand,  
 And a heaven in a wild flower,  
@@ -145,8 +150,8 @@ And eternity in an hour.
 
 *William Blake*
   
-<h2 class="rilke">The Panther</h2>
-
+The Panther [rilke]
+-------------------
 His vision, from the constantly passing bars,  
 has grown so weary that it cannot hold  
 anything else. It seems to him there are  
@@ -164,7 +169,8 @@ plunges into the heart and is gone.
   
 *Rainer Maria Rilke*
   
-<h2 class="rilke">Evening</h2>
+Evening [rilke]
+---------------
 
 The bleak fields are asleep,  
 My heart alone wakes.  
@@ -178,7 +184,8 @@ Blossoms within her hand.
 
 *Rainer Maria Rilke*
  
-<h2 class="coleridge">Kubla Khan</h2>
+Kubla Khan [coleridge]
+----------------------
 
 In Xanadu did Kubla Khan  
 A stately pleasure-dome decree:  
@@ -239,7 +246,8 @@ And drunk the milk of Paradise.
   
 *Samuel Taylor Coleridge*
  
-<h2 class="coleridge">Songs of the Pixies</h2>
+Songs of the Pixies [coleridge]
+-------------------------------
 
 I.  
 Whom the untaught Shepherds call  

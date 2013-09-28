@@ -7,7 +7,6 @@
   var currentPage = null, //The currently displayed page
     previousPage = null, //The previous page
     reader = new XMLHttpRequest(), //An XMLHttpRequest object to read the markdown file
-    converter = new Markdown.Converter(), //A markdown to HTML converter
     //An obect to represent an article
     articleObject = {
       articleTag: null,
@@ -228,6 +227,59 @@
     }
   }
   
+  function createClassNames(h2Tag) {
+    var h2TagText,
+      firstBracket,
+      secondBracket,
+      squareBrackets,
+      newH2TagText,
+      h2TagClassText;
+    h2TagText = h2Tag.innerHTML,
+    //Find the position of the square brackets  
+    firstBracket = h2TagText.indexOf("[", 0),
+    secondBracket = h2TagText.indexOf("]", 0),
+    //Get a string that matches the square bracket string
+    squareBrackets = h2TagText.slice(firstBracket, secondBracket + 1),
+    //slice the square bracket string from the original string
+    newH2TagText = replaceString(squareBrackets, "", h2TagText),
+    //Remove any double spaces
+    newH2TagText = newH2TagText.replace(/\s{2,}/g, ' '),
+    newH2TagText = newH2TagText.trim(),
+    //Remove the square brackets from the inner string
+    h2TagClassText = squareBrackets.replace(/[\[\]']+/g,''),
+    h2TagClassText = h2TagClassText.trim();
+      
+    //Assign the new heading text to the <h2> tag and set its class attribte
+    h2Tag.innerHTML = newH2TagText;
+    h2Tag.setAttribute("class", h2TagClassText);
+
+    function replaceString(oldS, newS, fullS){
+      return fullS.split(oldS).join(newS);
+    }
+  }
+  
+  //A function to make the browser's back button work, called by setInterval
+  //in the convertMarkdownToHTML function
+  function checkAnchorSoThatBackButtonWorks() {
+    //Only check this if a navigation link hasn't been clicked
+    if (!linkClicked) {
+      currentPageHash = window.location.hash;
+      if (currentPageHash !== null) {
+        if (currentPageHash !== "#" + currentPage.url) {
+          //console.log(true);
+          articles.some(function (article) {
+            if (currentPageHash === "#" + article.url) {
+              switchArticle(article);
+              return true;
+            } else {
+              return false;
+            }
+          });
+        }
+      } 
+    }
+  }
+  
   //Load the markdown content, convert it to HTML, and attach it to the body
   function makeHTMLpage() {
     //This function creates the HTML page structure and navigation 
@@ -262,10 +314,14 @@
     //Set the website title to be same as the book title
     title.innerHTML = h1.innerHTML;
     
+    //Loop through all the <h2> tags and extract the class names from the
+    //text inside their square brackets
+    h2Tags.forEach(createClassNames);
+    
     //Loop through all the articles in the article DOM nodes, create
     //article objects from them and return them into the articles array
     articles = articlesInDOM.map(makeArticleObjects);
-      
+    
     //Find all the h2 classAttributes and push them into an array 
     //so that we can use them to make navigation headings
     articles.forEach(function (article) {
@@ -311,38 +367,16 @@
     //(Sub-pages will have a # symbol in their name)
     displayCurrentPage();
   }
-  //A function to make the browser's back button work, called by setInterval
-  function checkAnchorSoThatBackButtonWorks() {
-    //Only check this if a navigation link hasn't been clicked
-    if (!linkClicked) {
-      currentPageHash = window.location.hash;
-      if (currentPageHash !== null) {
-        if (currentPageHash !== "#" + currentPage.url) {
-          //console.log(true);
-          articles.some(function (article) {
-            if (currentPageHash === "#" + article.url) {
-              switchArticle(article);
-              return true;
-            } else {
-              return false;
-            }
-          });
-        }
-      } 
-    }
-  }
   
   function convertMarkdownToHTML() {
     if (reader.readyState === 4) {
       //Convert the markdown to HTML text inside the <section id="book"> tag
       book = document.querySelector("#book");
-      book.innerHTML += (converter.makeHtml(reader.responseText));
-      //book.innerHTML += (marked(reader.responseText));
-      //book.innerHTML += (markdown.toHTML(reader.responseText));
-      //console.log(markdown.toHTML(reader.responseText));
+      marked.setOptions({gfm: true, breaks: true, tables: true});
+      book.innerHTML += (marked(reader.responseText));
       //Check to see if the back button was pressed so that the previous article can be displayed
       setInterval(checkAnchorSoThatBackButtonWorks, 300); 
-      //Build the entire website
+      //Build the HTML Dom tree
       makeHTMLpage();
       
     }
@@ -352,7 +386,6 @@
     reader.addEventListener("readystatechange", convertMarkdownToHTML, false);
     reader.send(null);
   }
-  
   
   //Load the markdown file and convert it to HTML
   //When it's finished, the makeHTMLpage function will run
