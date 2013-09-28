@@ -1,7 +1,7 @@
 The Poetry Book
 ===============
 
-<h2 category="what?">What is The Poetry Book?</h2>
+<h2 class="what?">What is The Poetry Book?</h2>
 *The Poetry Book* is a fast and easy system for quickly making your own book of poems. You can also use it as the basis of building highly interactive websites and apps. If you want to create your own book of poems that looks like this one, [get the source code](http:#) and modify it as much as you like.
 
 ![A test image](images/williamBlake.png)
@@ -52,7 +52,7 @@ Here's what this next example poetry book will look like:
 
 You can see that in this example the poem titles are surrounded by an HTML `<h2>` tag. Inside the `<h2>` tag is the category. Create a new category using this format: category="category name". That means that if you wanted to create a new category called *Really crazy ideas* you would do it like this:
 
-`<h2 category="Really crazy ideas">Drawing on puddles with water-proof markers</h2>`
+`<h2 class="Really crazy ideas">Drawing on puddles with water-proof markers</h2>`
 
 (Don't forget to close the final `</h2>` tag or your book won't display correctly.)
 
@@ -122,7 +122,7 @@ In the css file, Make sure to give the element a z-index value which is *higher 
   
 This is a very powerful feature because it lets you use The Poetry Book as the basis for a complex website or app user interface.
 
-<h2 category="blake">Infant Sorrow</h2>
+<h2 class="blake">Infant Sorrow</h2>
 
 My mother groaned, my father wept,  
 Into the dangerous world I leapt.  
@@ -136,7 +136,7 @@ To sulk upon my mother's breast.
 
 *William Blake*
   
-<h2 category="blake">Auguries of Innocence</h2>
+<h2 class="blake">Auguries of Innocence</h2>
 
 To see a world in a grain of sand,  
 And a heaven in a wild flower,  
@@ -145,7 +145,7 @@ And eternity in an hour.
 
 *William Blake*
   
-<h2 category="rilke">The Panther</h2>
+<h2 class="rilke">The Panther</h2>
 
 His vision, from the constantly passing bars,  
 has grown so weary that it cannot hold  
@@ -164,7 +164,7 @@ plunges into the heart and is gone.
   
 *Rainer Maria Rilke*
   
-<h2 category="rilke">Evening</h2>
+<h2 class="rilke">Evening</h2>
 
 The bleak fields are asleep,  
 My heart alone wakes.  
@@ -178,7 +178,7 @@ Blossoms within her hand.
 
 *Rainer Maria Rilke*
  
-<h2 category="coleridge">Kubla Khan</h2>
+<h2 class="coleridge">Kubla Khan</h2>
 
 In Xanadu did Kubla Khan  
 A stately pleasure-dome decree:  
@@ -239,7 +239,7 @@ And drunk the milk of Paradise.
   
 *Samuel Taylor Coleridge*
  
-<h2 category="coleridge">Songs of the Pixies</h2>
+<h2 class="coleridge">Songs of the Pixies</h2>
 
 I.  
 Whom the untaught Shepherds call  

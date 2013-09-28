@@ -13,9 +13,8 @@
       articleTag: null,
       aTag: null,
       title: undefined,
-      category: null,
       url: undefined,
-      class: null,
+      classAttribute: null,
     },
     articles = [], //The Article objects
     nav,  //The nav tag
@@ -53,15 +52,17 @@
     var currentLink = event.target;
     articles.some(function (article) {
       //Only check this for articles that are in the navigation (not with class="x")
-      if (article.aTag !== null){ 
-        if (currentLink.href === article.aTag.href) {
-          //Display the newly selected article
-          switchArticle(article);
-          //match found, stop checking
-          return true;
-        } else {
-          //match not found, continue checking
-          return false;
+      if (article.classAttribute !== "x") {
+        if (article.aTag !== null){ 
+          if (currentLink.href === article.aTag.href) {
+            //Display the newly selected article
+            switchArticle(article);
+            //match found, stop checking
+            return true;
+          } else {
+            //match not found, continue checking
+            return false;
+          }
         }
       }
     });
@@ -69,7 +70,6 @@
   //Set linkClicked back to false so checkAnchorSoThatBackButtonWorks can check the browser back button
   function resetLinkClickedToFalse() {
     linkClicked = false;
-    console.log(linkClicked);
   }
   
   function switchArticle(article) {
@@ -80,7 +80,6 @@
         currentPage.aTag.setAttribute("class", "unselected");
       }
       previousPage = currentPage;
-      //previousPageHash = window.location.hash;
     }
     currentPage = article;
     currentPage.articleTag.style.opacity = "1";
@@ -122,14 +121,14 @@
     article.articleTag = articleInDOM;
     article.title = articleInDOM.firstElementChild.innerHTML;
     //Get the catefory name from the h2 tag (the article's first child)
-    article.category = articleInDOM.firstElementChild.getAttribute("category");
-    article.class = articleInDOM.firstElementChild.getAttribute("class");
-    if (article.class !== null) {
-      article.articleTag.setAttribute("class", article.class);
+    //article.category = articleInDOM.firstElementChild.getAttribute("category");
+    article.classAttribute = articleInDOM.firstElementChild.getAttribute("class");
+    if (article.classAttribute !== null) {
+      article.articleTag.setAttribute("class", article.classAttribute);
     }
-    //Convert the category to lower case to simplify things
-    if (article.category !== null) {
-      article.category = article.category.toLowerCase();
+    //Convert the classAttribute to lower case to simplify things
+    if (article.classAttribute !== null) {
+      article.classAttribute = article.classAttribute.toLowerCase();
     }
     //Remove the white spaces from the title name and make it lower case to create a link
     article.url = article.title.replace(/\s+/g, '');
@@ -141,16 +140,17 @@
     return article;
   }
  
-  function makeH2Tags(category) {
-    var h2 = document.createElement("h2"),
-      headingText = category,
-      lowerCaseCategory = category.toLowerCase();
-    //Convert the category to lower case
-    //category.toLowerCase();
-    headingText = capitaliseFirstLetter(headingText);
-    h2.innerHTML = headingText;
-    h2.setAttribute("category", lowerCaseCategory);
-    nav.appendChild(h2);
+  function makeH2Tags(classAttribute) {
+    if(classAttribute !== "x") {
+      var h2 = document.createElement("h2"),
+        headingText = classAttribute,
+        lowerCaseClassAttribute = classAttribute.toLowerCase();
+      //Convert the classAttribute to lower case
+      headingText = capitaliseFirstLetter(headingText);
+      h2.innerHTML = headingText;
+      h2.setAttribute("class", lowerCaseClassAttribute);
+      nav.appendChild(h2);
+    }
   }
   
   function addIdAttributeToImgTags(imgTag)
@@ -167,36 +167,36 @@
     //All the h2 tags in the navigation bar
     var headingsInNav = document.querySelectorAll("nav h2"),
       //Create an a <a> tag, set its innerHTML property
-      a;
+      aTag;
     //Only create <a> tags in the navigation if the article class is not "x"
     //"x" class articles are hidden content for complex UIs that could be displayed
     //somewhere else on the page or revealed based on user intereaction.
-    if (article.class !== "x") {
-      a = document.createElement("a");
+    if (article.classAttribute !== "x") {
+      aTag = document.createElement("a");
       //Convert the headingsInNav DOM node list into a real array
       headingsInNav = Array.prototype.slice.call(headingsInNav);
       //Build the <a> tags that will become the navigation links
       //Set their attributes and add a mousedown handler
-      a.innerHTML = article.title;
-      a.setAttribute("href", "#" + article.url);
-      a.setAttribute("class", "unselected");
-      a.addEventListener("mousedown", mousedownHandler, false);
+      aTag.innerHTML = article.title;
+      aTag.setAttribute("href", "#" + article.url);
+      aTag.setAttribute("class", "unselected");
+      aTag.addEventListener("mousedown", mousedownHandler, false);
       //Assign the <a> tag to the current article object's aTag property so we can 
       //easily reference it later
-      article.aTag = a;
+      article.aTag = aTag;
     
-      //Insert the new <a> tag after a heading that matches its category
-      if (article.category !== null) {
+      //Insert the new <a> tag after a heading that matches its classAttribute
+      if (article.classAttribute !== null) {
         headingsInNav.forEach(function (heading) {
-          if (heading.getAttribute("category") === article.category) {
+          if (heading.getAttribute("class") === article.classAttribute) {
             //Insert new <a> tag after the heading (This is confusing, but don't worry about it!)
-            heading.parentNode.insertBefore(a, heading.nextSibling);
+            heading.parentNode.insertBefore(aTag, heading.nextSibling);
           }
         });
       } else {
-        //Insert links that don't have a category.
+        //Insert links that don't have a classAttribute.
         //They'll appear right at the top of the navigation, before the headings
-        nav.insertBefore(a, nav.firstChild);
+        nav.insertBefore(aTag, nav.firstChild);
       }
     }
   }
@@ -217,7 +217,7 @@
       //Get the last section of the url after the # and load the corresponding article
       pageName = url.split('#').pop();
       articles.forEach(function (article) {
-        if (article.url === pageName && article.class !== "x") {
+        if (article.url === pageName && article.classAttribute !== "x") {
           article.articleTag.style.opacity = '1';
           article.articleTag.style.zIndex = '1000';
           //Highlight the navigation link
@@ -266,14 +266,14 @@
     //article objects from them and return them into the articles array
     articles = articlesInDOM.map(makeArticleObjects);
       
-    //Find all the h2 categories and push them into an array 
+    //Find all the h2 classAttributes and push them into an array 
     //so that we can use them to make navigation headings
     articles.forEach(function (article) {
-      if (article.category !== null) {
-        //Only add a new category to the array
+      if (article.classAttribute !== null) {
+        //Only add a new classAttribute to the array
         //if it hasn't already been added in a previous iteration of the loop
-        if (categories.indexOf(article.category) === -1) {
-          categories.push(article.category);
+        if (categories.indexOf(article.classAttribute) === -1) {
+          categories.push(article.classAttribute);
         }
       }
     });
@@ -286,7 +286,7 @@
     //The next sections of code make <h2> and <a> tags inside the <nav> element
     //This is what builds the navigation bar.
     
-    //Make <h2> tags in the navigation using the category names and attach them to the nav element 
+    //Make <h2> tags in the navigation using their class names and attach them to the nav element 
     categories.forEach(makeH2Tags);
   
     //Make <a> tags for the navigation.
