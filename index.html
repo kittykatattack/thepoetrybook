@@ -7,24 +7,31 @@
 
 <section id="book">
   
-<div id="bookTitle"></div>  
+<div id="bookTitle">
+<!-- 
+The <h1> tag (the main heading) from the markdown 
+document is inserted here by poetryBook.js. The same text is 
+also copied into the <title> tag.
+-->
+</div>  
   
 <nav>
 <!-- 
-<h2> and <a> tags are automatically added into the  
-navigation bar by the poetryBook.js. This based on the second-level heading titles
+<h2> and <a> tags are automatically created and added into the  
+navigation bar by the poetryBook.js. This based on the second-level headings
 in the markdown document
 -->
 </nav>
-
-
-<!-- The markdown document is converted into HTML and inserted in to the book section below -->
-
+  
 <!-- 
+The markdown document is converted into HTML and inserted here.
 The poetryBook.js file treats each second-level heading (<h2> tags) in the markdown
 document as a the start of a new page. It wraps <article> tags around those sections
-so that css can use them as positioning and styling hooks.
+so that css can use them as positioning and styling hooks. <article> tags have
+id attributes that match their url in the address bar. <img> tags have id attributes
+that are the same as their alt text, but without spaces
 -->
+  
 </section>
 
 <!-- load the JavaScript source files -->
