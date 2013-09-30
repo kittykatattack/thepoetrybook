@@ -23,6 +23,7 @@ body, html
   float: left;
   background-color: transparent;
   padding: 0%;
+  overflow-x: hidden;
 }
 
 p
@@ -80,7 +81,7 @@ h1
   color: white;
   position: absolute;
   bottom: -1em;
-  left: 0.16em;
+  left: 0.18em;
   width: 800px;
   /* background-color: red; */
   
@@ -110,7 +111,8 @@ nav
   padding-left: 2%;
   padding-right: 2%;
   overflow-y: scroll;
-  overflow-x: hidden;
+  overflow-x: auto;
+  z-index: 3000;
 }
 
 nav a, nav a.unselected
@@ -145,6 +147,11 @@ nav a:first-child
   padding-top: 3em;
 }
 
+em, code
+{
+  color: black;
+}
+
 /* 
 <article> tags are created automatically by poetryBook.js when it loads the 
 markdown document. It wraps each content section beginning with <h2> or ## in
@@ -153,8 +160,8 @@ an <article> tag, so that the content pages can be positioned.
 article
 {
   position: absolute;
-  left: 24%;
-  width: 56%;
+  left: 23%;
+  width: 58%;
   height: 100%;
   color: black;
   opacity: 0;
@@ -217,6 +224,63 @@ article p:last-child
 }
 
 /* 
+Use these next styles for any sub-navigation you might have inside the articles 
+<h3> tags inside <article> tags used to automatically build the sub-navigation bar.
+To prevent the sub-navigation bar from displaying, use this:
+
+article nav
+{
+  display: none;
+}
+*/
+
+article nav
+{
+  background-color: #2E2E2E;
+  width: 12%;
+  height: 99%;
+  padding-left: 1%;
+  padding-right: 2%;
+  padding-bottom: 1%;
+  top: 0%;
+  left: 11%;
+  position: fixed;
+  opacity: 0.1;
+  overflow-y: scroll;
+  overflow-x: hidden; 
+  
+  transition: left 0.2s, opacity 0.2s;
+  -moz-transition: left 0.2s, opacity 0.2s; /* Firefox 4 */
+  -webkit-transition: left 0.2s, opacity 0.2s; /* Safari and Chrome */
+  -o-transition: left 0.2s, opacity 0.2s; /* Opera */
+  -ms-transition: left 0.2s, opacity 0.2s; /* IE */ 
+  
+  /* Prevent Safari flickering transition bug */
+  -webkit-backface-visibility: hidden;
+}
+
+article nav:hover
+{
+  left: 23%;
+  opacity: 1;
+}
+
+article nav a
+{
+  display: block;
+  padding-bottom: 0.8em;
+  color: white;
+  font-size: 0.875em;
+  outline: none;
+  text-decoration: none;
+}
+
+article nav a:hover
+{
+  color: #eee8aa;
+}
+
+/* 
 If you need to style an individual article that contains the 
 page content, it will have the same id name as that page's url.
 For example, here's how to style an aricle that has the url #SongsofthePixies:
@@ -228,11 +292,6 @@ For example, here's how to style an aricle that has the url #SongsofthePixies:
 
 The id attribute can't end punctuation, like this: #whatisthepoetrybook?
 */
-
-em
-{
-  color: black;
-}
 
 /*
 Hidden content
@@ -296,13 +355,8 @@ reload the index.html page.
   }
 }
 
-code
-{
-  color: black;
-}
-
 /* Styles for screens under 650px */
-@media all and (max-width: 950px) 
+@media all and (max-width: 650px) 
 {
   /*Make fonts smaller*/
   nav h2, article h2
@@ -336,18 +390,12 @@ code
   #bookTitle
   {
     height: 20%;
-    width: 24%;
+    width: 20%;
+    padding-left: 2%;
+    padding-right: 2%;
   }
-  #bookTitle h2
-  {
-    font-size: 1em;
-    top: 0;
-    left: 0;
-    width: 24%;
-    padding-left: 1em;
-    padding-top: 1em;
-  }
-  #bookTitle h1
+  
+  h1
   { 
     top: 1em;
     left: 1em;
@@ -359,6 +407,15 @@ code
     -o-transform: rotate(0deg); /* Opera */
     transform: rotate(0deg); /* Generic */
     filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0); /* Internet Explorer */
+  }
+  article nav
+  {
+    display: none;
+  }
+  
+  article img
+  {
+    width: 80%;
   }
 }
 

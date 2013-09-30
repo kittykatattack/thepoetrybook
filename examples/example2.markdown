@@ -1,15 +1,16 @@
 Yay, Poems!
 ===========
 
-<h2 category="boring">The Swan</h2>
+The Swan [boring]
+-----------------
 
 It just sits there.  
 And stares.
 
 *by Me*
 
-<h2 category="fun">Windmill</h2>
-
+Windmill [fun]
+--------------
 Dangerously close,  
 the incisive blades,  
 grist the seeds of time,  
@@ -17,7 +18,8 @@ for our decapitated fore-fathers.
 
 *Also by me*
 
-<h2 category="fun">Autumn</h2>
+Autumn [fun]
+------------
 
 Leaves fall,
 As do,

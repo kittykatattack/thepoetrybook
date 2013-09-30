@@ -6,11 +6,11 @@ What is The Poetry Book? [what?]
 
 *The Poetry Book* is a fast and easy system for quickly making your own book of poems. You can also use it as the basis of building highly interactive websites and apps. If you want to create your own book of poems that looks like this one, [get the source code](http:#) and modify it as much as you like.
 
-![A test image](images/williamBlake.png)
+![A Painting by William Blake](images/williamBlake.png)
  
 All the content for the entire book exists as a single [markdown document](http://daringfireball.net/projects/markdown/basics). Markdown documents are quick and easy to read and write, and don't require any technical skill to create. The Poetry Book uses the markdown document to figure out how the website should be organized. This is all done automatically using JavaScript - you don't have to worry about it. Just drop your markdown file into the Poetry Book's home folder, and the navigation bar and content pages will be automatically created. Fill the content pages with anything you like, as much as you like. Drop the Poetry Book project folder into any webserver, and you're done. There's nothing to configure or install, and no complex dependant technologies. It's a new way to think about websites and interactive content using the most basic technologies available.
 
-If you like, you can completely customize the css code to create completely new and original layouts and designs based on this system. It will work on any platform, anywhere. There is only one content file, so it's extremely easy to manage and displays pages instantly. If you keep things simple, this might be all you need to build a small to medium-sized personal website or focused app.
+If you like, you can completely customize the css code to create entitrely new and original layouts and designs based on this system. It will work on any platform, anywhere. There is only one content file, so it's extremely easy to manage and displays pages instantly. If you keep things simple, this might be all you need to build a small to medium-sized personal website or focused app.
   
 Or, just make a poetry book.
 
@@ -18,23 +18,21 @@ Or, just make a poetry book.
 
 You need to know [how to write a markdown document](http://www.markdowntutorial.com). That's all.
 
-If you want to post your Poetry Book on the interent, you have to use FTP software to upload the Poetry Book project folder into a webserver. Do you have an account with a website hosting company? You'll need that. An internet search will help you find a web hosting company, and you might find a good free one. This is all a bit more technical, but [This video shows you how to upload files to a webserver](http://www.youtube.com/watch?v=O3DudpEMPiY).
+If you want to post your Poetry Book on the internet, you need some kind of website hosting service. You could [use Google Drive](http://chronicle.com/blogs/profhacker/host-a-website-on-google-drive/46737). Or, you could use [Dropbox, in the normal way](http://www.dropboxwiki.com/tips-and-tricks/host-websites-with-dropbox), or [Dropbox, in the fancy way](http://www.makeuseof.com/tag/how-to-host-a-dropbox-website/). Or, you could use your own website hosting company and with your own domain name - there are lots of options.
 
-If you want to change the design and behaviour of your Poetry Book, you should know some basic HTML and CSS. If you don't know what those things are, you should learn them first. (There are many resources on the internet that will help you do this. Doing a web search for "HTML and CSS tutorial" is a good place to start. The first chapter of [this book](http://www.apress.com/programming/javascript/9781430247166) is also really good). You need to know HTML and CSS basics so that you can start customizing things like the fonts, colors and layout.
+If you want to change the graphic-design style and behaviour of your Poetry Book, you should know some basic HTML and CSS. If you don't know what those things are, you should learn them first. (There are many resources on the internet that will help you do this. Doing a web search for "HTML and CSS tutorial" is a good place to start. The first chapter of [this book](http://www.apress.com/programming/javascript/9781430247166) is also really good). You need to know HTML and CSS basics so that you can start customizing things like the fonts, colors and layout.
 
 For HTML and CSS experts, go wild! This project was intended as the simplest, bare-bones example of a new vision of what highly interactive websites and apps could be. 
 
 ### How to make your own book ###
 
-Use a plain text editor to write a markdown document. Or, you can use a free online markdown editor, [like this one](http://dillinger.io). (If you want a get fancy, download the latest version of [brackets](http://brackets.io) and install the markdown extension from the extension manager).
+Use a plain text editor to write a markdown document. Or, you can use a free online markdown editor, [like this one](http://dillinger.io). (If you want a get fancy, download the latest version of [Brackets](http://brackets.io) and install the markdown extension from the extension manager). The Poetry Book uses and enhanced style of markdown called GFM, which [adds some extra useful features](https://help.github.com/articles/github-flavored-markdown).
 
 Here's an example of a markdown document that will create a book with two pages of poems.
 
 ![](images/example1Markdown.png)
 
-(Hint: to create a line-break after the end of a line of poetry, add two blank spaces.)
-
-Save this document with the name "book.markdown" and save it in the main Poetry Book project folder. (That's the same folder that includes a file called index.html. If there's already an existing document called book.markdown in that same folder (there will be, this one!), replace it with your new one.)
+Save this document with the name "book.markdown" in the main Poetry Book project folder. (That's the same folder that includes a file called index.html. If there's already an existing document called book.markdown in that same folder (there will be, this one!), replace it with your new one.)
 
 After you've done that, open the index.html file in a web browser, and you'll see this:
 
@@ -52,17 +50,21 @@ Here's what this next example poetry book will look like:
 
 ![](images/example2.png)
 
-You can see that in this example the poem titles are surrounded by an HTML `<h2>` tag. Inside the `<h2>` tag is the category. Create a new category using this format: category="category name". That means that if you wanted to create a new category called *Really crazy ideas* you would do it like this:
+You can see that in this example the poem titles include extra words that are surrounded by square brackets. Those words are the category that you want to organize your poem into. That means that if you wanted to create a new category called *Really crazy ideas* you would do it like this:
 
-`<h2 class="Really crazy ideas">Drawing on puddles with water-proof markers</h2>`
 
-(Don't forget to close the final `</h2>` tag or your book won't display correctly.)
+`Drawing on puddles with water-proof markers [Really crazy ideas]`
+`-----------------------------------------------------------------------`
+
+
+You can use any category names you like. All poems in the same categories will be grouped together in the navigation bar.
 
 That is is all you need to do. You've got a poetry book!
 
 ### Category ordering ###
 
-The categories will be ordered alphabetically. To change that, you'll need to change the JavaScript code in the poetryBook.js file. If that's something you're confident doing, go for it! But, if you don't fight it, you'll discover that's it's really nice just to have the system organize your poems for you like this. It's just one less decision you need to make, and you can make it work for you. 
+The categories will be ordered alphabetically. To change that, you'll need to change the JavaScript code in the poetryBook.js file. If that's something you're confident doing, go for it! But, if you don't fight it, you'll discover that's it's really nice just to have the system organize your poems for you automatically like this. It's just one less decision you need to make, and you can make it work for you. 
+
 Spend the extra time you saved to write some poetry.
 
 Poems will be organized under categories based on the order in which they appear in your markdown document. That means the poems near the top will appear before the poems below them.
@@ -83,22 +85,82 @@ If you want to link a poem to another poem in the book you can [do it like this]
 
 `[do it like this](#songsofthepixies)`
 
+### Sub-page navigation for websites ###
+
+If you want to use The Poetry Book to make a website, you can think of each poem as a page of content. You might have pages with a lot of information that you want to break up with sub-headings. You can add a sub-heading in a page like this:
+
+`### This is a sub-heading inside a page ###`
+
+The Poetry Book will automatically create a sub-page navigation bar for you based on these headings. To see it, move your mouse over the light-gray vertical bar to the left of this page. A navigation bar will open showing you all the headings inside this page. You can jump to a new heading by clicking one of the links.
+
+If you don't want this sub-page navigation to be displayed, add this bit of code to the end of your CSS file:
+
+article nav
+{
+  display: none;
+}
+
 ### Advanced stuff ###
 
-You can use The Poetry Book to make a website. Just use real information, instead of poems. And, if you  know enough HTML CSS and JavaScript, you can completely customize it to look and behave however you want it to.
+You can use The Poetry Book to make a website. Just use real information, instead of poems. And, if you  know enough HTML CSS and JavaScript, you can completely customize it to look and behave however you want it to. In fact, The Poetry Book was written specifically to make it easy for you to do that. 
 
-If you want to do that, here are some of the things you should know about the source code:
+If you don't know HTML, CSS and basic JavaScript - don't read further! 
+But, if you do, here are some of the things you should know about the source code:
 
-???
+When the index.html file loads, the poetryBook.js file loads the markdown document into this tag:
 
-### Why The Poetry Book is cool ###
+`<section id="book">... the markdown document will be here... </section>`
 
-- An all the content exists as a single, easy-to-read markdown file.
+Your poetry book's main title will be loaded into the page's `<title>` tag, and also inserted into this tag:
+
+`<div id="bookTitle"><h1>... your book title will be here...</h1></div>`
+
+(The inner `<h1>` tag will be automatcally created.)
+
+poetryBook.js scans the markdown document and automatically creates the navigation bar based on the poem titles. It creates the titles as `<a>` tags, and inserts them into the `<nav>` section. The `<a>` tags will have links to their poems. (The link names are all lowercase without spaces.) If you've created categories, new `<h2>` tags will also be created to represent those categories. Here's what the HTML navigation looks like for this poetry book:
+
+![](images/navTag.png)
+
+poetryBook.js also wraps each poem in `<article>` tags. Those `<article>` tags have id's that match the poem title (also in lower case and without spaces.) They also have a class that matches their category. Here are the `<article>` tags for this book:
+
+![](images/articleTag.png)
+
+The poem's title in the markdown document is turned into an HTML `<h2>` tag, inside the enclosing `<article>` tag. Here's the what the HTML for one of the poems looks like
+
+![](images/poemExample.png)
+
+Can you see how it matches the original markdown document?
+
+You can access each image buy using an id that corresponds to its "alt" text: lower-case and without spaces. Imagine that you've got an image in your markdown document that looks like this:
+
+`![A Painting by William Blake](images/williamBlake.png)`
+
+Its matching HTML will look like this:
+
+`<img src="images/williamBlake.png" alt="A Painting by William Blake" id="apaintingbywilliamblake" >"`
+
+If you know CSS, you'll immediately understand how easy it will be to customize the design, layout and behaviour of your poetry book using all these id and class hooks.
+
+You can also add your own HTML code directly into the index.html page - it won't conflict with the HTML code generated by the markdown document. This lets you use The Poetry Book as the basis for making highly customized websites and intereactive apps.
+
+The poetryBook.js file is complex, so even if you understand JavaScript, you may want to avoid customizing it directly. Instead, if you want to add some JavaScript, just create your own new .js file and load it into the index.html file, along with the poetryBook.js file. That's the simplest, safest option.
+
+However, if you're feeling courageous, you can certainly tinker with poetryBook.js. One thing you may want to do is change the name of the markdown file that that's being loaded. To do that, scan down to the very bottom of the program, and look for a function called *loadFile*. Change the name of the file to whatever markdown file you want to use, like this:
+
+`loadFile("anyMarkdownFile.markdown");`
+
+After *loadFile* runs, it calls the *convertMarkdownToHTML* function. That's what loads the markdown and converts it to HTML (with the help of the *marked.js* file). After that, the *makeHTMLpage* function runs. That's the main part of the program that builds the HTML and interactive behaviour based on the markdown file.
+
+You will need very advanced JavaScript knowledge to understand it, but most of poetryBook.js is commented, so have fun!
+
+###  Why The Poetry Book is cool ###
+
+- All the content exists as a single, easy-to-read markdown file.
 - There are no moving parts, so nothing can break.
 - Content pages display instantly because they all exist in that single file. The browser doesn't need to make continual http requests to a server for each page.
 - You can manage the entire website offline, without needing a CMS or web server. You can do it in Notepad.
-- Minimal, uncluttered content management using markdown so that it's extremely easy to add and customize content by hand. Just use your source code editor's search capability (Ctrl-F) to find what you're looking for.
-- When you want to update your website content, just upload the single html file with FTP.
+- Minimal, uncluttered content management using markdown so that it's extremely easy to add and customize content by hand. Just use your text editor's search capability (Ctrl-F) to find what you're looking for.
+- When you want to update your website content, just upload the single markdown file with FTP.
 - Use this same code as the foundation for building a mobile app (with [CocoonJS](http://www.ludei.com/tech/cocoonjs)), or a desktop app (with [node-webkit](https://github.com/rogerwang/node-webkit/wiki/Getting-Started-with-node-webkit)).
 - Completely transportable. Just drop the same files into any webserver anywhere, and it will work exactly the same without any configuration or installation. Keep your whole website in your back pocket.
 - Low-tech, high-performance, and extremely easy to maintain.
