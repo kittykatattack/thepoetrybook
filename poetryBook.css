@@ -68,7 +68,7 @@ a:hover
 In this example the Poetry Book title is in an 
 h1 tag that's been rotated 90% around it's top left corner.
 Play around with the h1 element's left, bottom and width properties to fit it exactly.
-Confusingly, the width property represent's the h1 element's width *before* it was rotated.
+Confusingly, the width property represents the h1 element's width *before* it was rotated.
 That means that, after rotation, it's width will apprear to be its height. Yes, it's confusing! 
 Because of this, you need to set a maximum width in pixels to give the text inside 
 the h1 tag enough room to flow up the page.
@@ -393,6 +393,7 @@ reload the index.html page.
     width: 20%;
     padding-left: 2%;
     padding-right: 2%;
+    z-index: 3000;
   }
   
   h1
