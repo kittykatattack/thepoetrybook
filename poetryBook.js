@@ -19,6 +19,10 @@
     articles = [],
     //All the article categories
     categories = [],
+    //The markdown documents you want to load
+    markdownDocuments,
+    //The number of markdownDocuments loaded
+    documentsLoaded = 0,
     //The url in the browser
     url = window.location.href,
     //Last segment of the url
@@ -27,7 +31,7 @@
     currentPageHash = null,
     //Prevent page load conflict between navigation link click and back button
     linkClicked = false,
-    markdown, //A container for the HTML-ized markdown document
+    markdown = "", //A container for the HTML-ized markdown document
     //DOM elements we need to reference
     articlesInDOM = [],
     aTagsInArticles,
@@ -40,6 +44,9 @@
     title,
     book,
     bookTitleDiv;
+  
+  //Set the markdown converter options
+  marked.setOptions({gfm: true, breaks: true, tables: true});
   
   /* Functions */
 
@@ -491,11 +498,13 @@
   function loadMarkdown() {
     if (reader.readyState === 4) {
       //Convert the markdown to HTML text inside the <section id="book"> tag
-      marked.setOptions({gfm: true, breaks: true, tables: true});
-      markdown = (marked(reader.responseText));
-      //Build the HTML Dom tree
-      makeHTMLpage();
-      
+      markdown += (marked(reader.responseText));
+      documentsLoaded += 1;
+      //Build the HTML Dom tree if all the markdown documents have been loaded
+      if (documentsLoaded === markdownDocuments.length)
+      {
+        makeHTMLpage();
+      }
     }
   }
   function loadFile(fileName) {
@@ -504,7 +513,9 @@
     reader.send(null);
   }
   
-  //Load the markdown file and convert it to HTML.
-  //When it's finished, the makeHTMLpage function will run
-  loadFile("book.markdown");
+  //List the markdown documents you want to load as elements in this array
+  markdownDocuments = ["book.markdown"];
+  
+  //Load the markdown files
+  markdownDocuments.forEach(loadFile);
 }());
