@@ -6,7 +6,7 @@
   
   var currentPage = null, //The currently displayed page
     previousPage = null, //The previous page
-    reader = new XMLHttpRequest(), //An XMLHttpRequest object to read the markdown file
+    //reader = new XMLHttpRequest(), //An XMLHttpRequest object to read the markdown file
     //An obect to represent an article
     articleObject = {
       articleTag: null,
@@ -495,21 +495,20 @@
     displayCurrentPage();
   }
   
-  function loadMarkdown() {
-    if (reader.readyState === 4) {
-      //Convert the markdown to HTML text inside the <section id="book"> tag
-      markdown += (marked(reader.responseText));
-      documentsLoaded += 1;
-      //Build the HTML Dom tree if all the markdown documents have been loaded
-      if (documentsLoaded === markdownDocuments.length)
-      {
-        makeHTMLpage();
-      }
-    }
-  }
   function loadFile(fileName) {
+    var reader = new XMLHttpRequest();
     reader.open("get", fileName, true);
-    reader.addEventListener("readystatechange", loadMarkdown, false);
+    reader.addEventListener("readystatechange", function () {
+      if (reader.readyState === 4) {
+        //Convert the markdown to HTML text inside the <section id="book"> tag
+        markdown += (marked(reader.responseText));
+        documentsLoaded += 1;
+        //Build the HTML Dom tree if all the markdown documents have been loaded
+        if (documentsLoaded === markdownDocuments.length) {
+          makeHTMLpage();
+        }
+      }
+    }, false);
     reader.send(null);
   }
   

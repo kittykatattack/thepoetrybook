@@ -10,7 +10,7 @@ What is The Poetry Book? [what?]
  
 All the content for the entire book exists as a single [markdown document](http://daringfireball.net/projects/markdown/basics). Markdown documents are quick and easy to read and write, and don't require any technical skill to create. The Poetry Book uses the markdown document to figure out how the website should be organized. This is all done automatically using JavaScript - you don't have to worry about it. Just drop your markdown file into the Poetry Book's home folder, and the navigation bar and content pages will be automatically created. Fill the content pages with anything you like, as much as you like. Drop the Poetry Book project folder into any webserver, and you're done. There's nothing to configure or install, and no complex dependant technologies. It's a new way to think about websites and interactive content using the most basic technologies available.
 
-If you like, you can completely customize the css code to create entitrely new and original layouts and designs based on this system. It will work on any platform, anywhere. There is only one content file, so it's extremely easy to manage and displays pages instantly. If you keep things simple, this might be all you need to build a small to medium-sized personal website or focused app.
+If you like, you can completely customize the css code to create entirely new and original layouts and designs based on this system. It will work on any platform, anywhere. There is only one content file, so it's extremely easy to manage and displays pages instantly. If you keep things simple, this might be all you need to build a small to medium-sized personal website or focused app.
   
 Or, just make a poetry book.
 
@@ -26,9 +26,9 @@ For HTML and CSS experts, go wild! This project was intended as the simplest, ba
 
 ### How to make your own book ###
 
-Use a plain text editor to write a markdown document. Or, you can use a free online markdown editor, [like this one](http://dillinger.io). (If you want a get fancy, download the latest version of [Brackets](http://brackets.io) and install the markdown extension from the extension manager). The Poetry Book uses and enhanced style of markdown called GFM, which [adds some extra useful features](https://help.github.com/articles/github-flavored-markdown). (Here's a good [markdown cheat-sheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) you can use while you're learning it.)
+Use a plain text editor to write a markdown document. Or, you can use a free online markdown editor, [like this one](http://dillinger.io). (If you want a get fancy, download the latest version of [Brackets](http://brackets.io) and install the markdown extension from the extension manager). The Poetry Book uses and enhanced style of markdown called GFM, which [adds some extra useful features](https://help.github.com/articles/github-flavored-markdown). (Here's a good [markdown cheat-sheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) you can use while you're learning to write markdown documents.)
 
-Here's an example of a markdown document that will create a book with two pages of poems.
+What does a markdown document look like? Here's an example of a markdown document that will create a book with two pages of poems.
 
 ![](images/example1Markdown.png)
 
@@ -59,7 +59,7 @@ You can see that in this example the poem titles include extra words that are su
 
 You can use any category names you like. All poems in the same categories will be grouped together in the navigation bar.
 
-That is is all you need to do. You've got a poetry book!
+That is all you need to do. You've got a poetry book!
 
 ### Category ordering ###
 
@@ -107,6 +107,8 @@ You can use The Poetry Book to make a website. Just use real information, instea
 If you don't know HTML, CSS and basic JavaScript - don't read further! 
 But, if you do, here are some of the things you should know about the source code:
 
+All the HTML code is generated automatically by the poetryBook.js file based on the structure of your markdown document. That means you won't be able to see the HTML page structure by looking at the index.html file. Instead, you'll need to open the *developer tools* in whatever browser you're using, and use it to inspect the generated HTML elements. (If you're using the [Chrome browser](https://www.google.com/intl/en/chrome/browser/), you can [do it like this](https://developers.google.com/chrome-developer-tools/docs/elements).)
+
 When the index.html file loads, the poetryBook.js file loads the markdown document into this tag:
 
 `<section id="book">... the markdown document will be here... </section>`
@@ -115,7 +117,11 @@ Your poetry book's main title will be loaded into the page's `<title>` tag, and 
 
 `<div id="bookTitle"><h1>... your book title will be here...</h1></div>`
 
-(The inner `<h1>` tag will be automatcally created.)
+The inner `<h1>` tag will be automatically created, and the page `<title>` tag will match the `<h1>` heading.
+
+Here's what the first HTML section of this poetry book looks like:
+
+![](images/htmlHead.png)
 
 poetryBook.js scans the markdown document and automatically creates the navigation bar based on the poem titles. It creates the titles as `<a>` tags, and inserts them into the `<nav>` section. The `<a>` tags will have links to their poems. (The link names are all lowercase without spaces.) If you've created categories, new `<h2>` tags will also be created to represent those categories. Here's what the HTML navigation looks like for this poetry book:
 
@@ -125,13 +131,13 @@ poetryBook.js also wraps each poem in `<article>` tags. Those `<article>` tags h
 
 ![](images/articleTag.png)
 
-The poem's title in the markdown document is turned into an HTML `<h2>` tag, inside the enclosing `<article>` tag. Here's the what the HTML for one of the poems looks like
+The poem's title in the markdown document is turned into an HTML `<h2>` tag, inside the enclosing `<article>` tag. Here's the what the HTML for one of the poems looks like:
 
 ![](images/poemExample.png)
 
 Can you see how it matches the original markdown document?
 
-You can access each image buy using an id that corresponds to its "alt" text: lower-case and without spaces. Imagine that you've got an image in your markdown document that looks like this:
+You can access each image by using an id that corresponds to its "alt" text: lower-case and without spaces. Imagine that you've got an image in your markdown document that looks like this:
 
 `![A Painting by William Blake](images/williamBlake.png)`
 
@@ -141,15 +147,25 @@ Its matching HTML will look like this:
 
 If you know CSS, you'll immediately understand how easy it will be to customize the design, layout and behaviour of your poetry book using all these id and class hooks.
 
-You can also add your own HTML code directly into the index.html page - it won't conflict with the HTML code generated by the markdown document. This lets you use The Poetry Book as the basis for making highly customized websites and intereactive apps.
+You can also add your own HTML code directly into the index.html page - it won't conflict with the HTML code generated by the markdown document. This lets you use The Poetry Book as the basis for making highly customized websites and interactive apps.
 
 The poetryBook.js file is complex, so even if you understand JavaScript, you may want to avoid customizing it directly. Instead, if you want to add some JavaScript, just create your own new .js file and load it into the index.html file, along with the poetryBook.js file. That's the simplest, safest option.
 
-However, if you're feeling courageous, you can certainly tinker with poetryBook.js. One thing you may want to do is change the name of the markdown file that that's being loaded. To do that, scan down to the very bottom of the program, and look for a function called *loadFile*. Change the name of the file to whatever markdown file you want to use, like this:
+However, if you're feeling courageous, you can certainly tinker with poetryBook.js. One thing you may want to do is change the name of the markdown file that that's being loaded. To do that, scan down to the very bottom of the program, and look for an array called *markdownDocuments*. You should see this:
 
-`loadFile("anyMarkdownFile.markdown");`
+`markdownDocuments = ["book.markdown"];`
 
-After *loadFile* runs, it calls the *convertMarkdownToHTML* function. That's what loads the markdown and converts it to HTML (with the help of the *marked.js* file). After that, the *makeHTMLpage* function runs. That's the main part of the program that builds the HTML and interactive behaviour based on the markdown file.
+Change the name of the array element to any markdown document you want to use, like this:
+
+`markdownDocuments = ["anyMarkdownDocument.markdown"];`
+
+After the file is loaded, the *makeHTMLpage* function runs. That's the main part of the program that builds the HTML and interactive behaviour based on the markdown file.
+
+You can also use more than one markdown file to build your poetry book. In fact, you can use as many as you like - there's no limit.Just add the names of the documents you want to use as elements in the markdownDocuments array. For example, here's how to make a book using 3 separate documents:
+
+`markdownDocuments = ["firstDoc.markdown", "secondDoc.markdown", "thirdDoc.markdown"];`
+
+The Poetry Book will merge all the documents into a single book. But if you want to use multiple documents like this, you'll need to plan them a bit to make sure they organize themselves the way you expect. Also, there can only be one main title for the entire book. That title will be taken from the main heading in the first document you load. If the other documents also contain main headings, they won't be displayed.
 
 You will need very advanced JavaScript knowledge to understand it, but most of poetryBook.js is commented, so have fun!
 
