@@ -27,6 +27,7 @@
     currentPageHash = null,
     //Prevent page load conflict between navigation link click and back button
     linkClicked = false,
+    markdown, //A container for the HTML-ized markdown document
     //DOM elements we need to reference
     articlesInDOM = [],
     aTagsInArticles,
@@ -36,7 +37,6 @@
     h3Tags,
     pTags,
     imgTags,
-    allTagsInDocument,
     title,
     book,
     bookTitleDiv;
@@ -374,7 +374,29 @@
     //This function creates the HTML page structure and navigation 
     //based on the loaded markdown document
     
-    //It first loops through the all the content in the book section tag and wraps
+    //Build the main page structure
+    //First create a containing tag called <section id="book"></section> to contain
+    //all the content. It's appended to the <body>
+    book = document.createElement("section");
+    book.setAttribute("id", "book");
+    document.body.appendChild(book);
+    
+    //Create a container for the title heading called <div id="bookTitle"></div>
+    //and append it to book
+    bookTitleDiv = document.createElement("div");
+    bookTitleDiv.setAttribute("id", "bookTitle");
+    book.appendChild(bookTitleDiv);
+    
+    //Create the main navigation <nav> tag inside the book container
+    nav = document.createElement("nav");
+    book.appendChild(nav);
+    
+    //Add the loaded and converted markdown document to the book's innerHTML
+    book.innerHTML += markdown;
+    
+    //The main structure is now in place. We can now start parsing the markdown
+    
+    //Loop through the all the content in the book section tag and wrap
     //each part beginning with <h2> in an <article> tag. This lets us structure
     //each page as a section that begins 
     //with <h2> (secondary headings in the markdown document)
@@ -384,7 +406,6 @@
     h1 = document.querySelector("h1");
     h2Tags = document.querySelectorAll("h2");
     pTags = document.querySelectorAll("p");
-    allTagsInDocument = document.body.childNodes;
     title = document.querySelector("title");
     bookTitleDiv = document.querySelector("#bookTitle");
     nav = document.querySelector("nav");
@@ -395,7 +416,6 @@
     articlesInDOM = Array.prototype.slice.call(articlesInDOM);
     aTagsInArticles = Array.prototype.slice.call(aTagsInArticles);
     h2Tags = Array.prototype.slice.call(h2Tags);
-    allTagsInDocument = Array.prototype.slice.call(allTagsInDocument);
     imgTags = Array.prototype.slice.call(imgTags);
     
     //Move he h1 tag into a containing <div> with the id "bookTitle" 
@@ -458,20 +478,21 @@
     //bar for them.
     articles.forEach(makeSubNavFromH3Tags);
     
+    //A timer to check the page address url anchor link to make sure that the previous page is 
+    //loaded when the back button is clicked. This makes the browser back button work properly
+    setInterval(checkAnchorSoThatBackButtonWorks, 300);
+    
     //Now that the page structure has been built, we can display a page
     //Load the first article if a sub-page hasn't been requested
     //(Sub-pages will have a # symbol in their name)
     displayCurrentPage();
   }
   
-  function convertMarkdownToHTML() {
+  function loadMarkdown() {
     if (reader.readyState === 4) {
       //Convert the markdown to HTML text inside the <section id="book"> tag
-      book = document.querySelector("#book");
       marked.setOptions({gfm: true, breaks: true, tables: true});
-      book.innerHTML += (marked(reader.responseText));
-      //Check to see if the back button was pressed so that the previous article can be displayed
-      setInterval(checkAnchorSoThatBackButtonWorks, 300);
+      markdown = (marked(reader.responseText));
       //Build the HTML Dom tree
       makeHTMLpage();
       
@@ -479,7 +500,7 @@
   }
   function loadFile(fileName) {
     reader.open("get", fileName, true);
-    reader.addEventListener("readystatechange", convertMarkdownToHTML, false);
+    reader.addEventListener("readystatechange", loadMarkdown, false);
     reader.send(null);
   }
   

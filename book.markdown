@@ -26,7 +26,7 @@ For HTML and CSS experts, go wild! This project was intended as the simplest, ba
 
 ### How to make your own book ###
 
-Use a plain text editor to write a markdown document. Or, you can use a free online markdown editor, [like this one](http://dillinger.io). (If you want a get fancy, download the latest version of [Brackets](http://brackets.io) and install the markdown extension from the extension manager). The Poetry Book uses and enhanced style of markdown called GFM, which [adds some extra useful features](https://help.github.com/articles/github-flavored-markdown).
+Use a plain text editor to write a markdown document. Or, you can use a free online markdown editor, [like this one](http://dillinger.io). (If you want a get fancy, download the latest version of [Brackets](http://brackets.io) and install the markdown extension from the extension manager). The Poetry Book uses and enhanced style of markdown called GFM, which [adds some extra useful features](https://help.github.com/articles/github-flavored-markdown). (Here's a good [markdown cheat-sheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) you can use while you're learning it.)
 
 Here's an example of a markdown document that will create a book with two pages of poems.
 

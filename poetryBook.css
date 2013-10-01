@@ -179,7 +179,10 @@ article
   -moz-transition: opacity 0.5s; /* Firefox 4 */
   -webkit-transition: opacity 0.5s; /* Safari and Chrome */
   -o-transition: opacity 0.5s; /* Opera */
-  -ms-transition: opacity 0.5s; /* IE */  
+  -ms-transition: opacity 0.5s; /* IE */ 
+  
+  /* Prevent Safari flickering transition bug */
+  -webkit-backface-visibility: hidden;
 }
 
 article p, ul li
@@ -342,7 +345,7 @@ reload the index.html page.
   font-size: 1.4em;
   padding-top: 0;
 }
-*
+*/
 
 /* Responsive design styles */
 
