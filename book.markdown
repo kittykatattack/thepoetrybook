@@ -174,7 +174,7 @@ You will need very advanced JavaScript knowledge to understand it, but most of p
 - All the content exists as a single, easy-to-read markdown file.
 - There are no moving parts, so nothing can break.
 - Content pages display instantly because they all exist in that single file. The browser doesn't need to make continual http requests to a server for each page.
-- You can manage the entire website offline, without needing a CMS or web server. You can do it in Notepad.
+- You can manage the entire website offline, without needing a CMS, database or web server. You can do it in Notepad.
 - Minimal, uncluttered content management using markdown so that it's extremely easy to add and customize content by hand. Just use your text editor's search capability (Ctrl-F) to find what you're looking for.
 - When you want to update your website content, just upload the single markdown file with FTP.
 - Use this same code as the foundation for building a mobile app (with [CocoonJS](http://www.ludei.com/tech/cocoonjs)), or a desktop app (with [node-webkit](https://github.com/rogerwang/node-webkit/wiki/Getting-Started-with-node-webkit)).
