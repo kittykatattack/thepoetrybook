@@ -55,6 +55,17 @@
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
   
+  //Make strings lowercase, remove space and punctuation
+  function normalizeText(string) {
+    //Remove punctuation
+    string = string.replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()?]/g, "");
+    //Remove spaces
+    string = string.replace(/\s+/g, '');
+    //Make lowercase
+    string = string.toLowerCase();
+    return string;
+  }
+  
   //Set linkClicked back to false so checkAnchorSoThatBackButtonWorks can 
   //check the browser back button
   function resetLinkClickedToFalse() {
@@ -147,15 +158,11 @@
     //Get the catefory name from the h2 tag (the article's first child)
     article.classAttribute = articleInDOM.firstElementChild.getAttribute("class");
     if (article.classAttribute !== null) {
+      article.classAttribute = normalizeText(article.classAttribute);
       article.articleTag.setAttribute("class", article.classAttribute);
     }
-    //Convert the classAttribute to lower case to simplify things
-    if (article.classAttribute !== null) {
-      article.classAttribute = article.classAttribute.toLowerCase();
-    }
     //Remove the white spaces from the title name and make it lower case to create a link
-    article.url = article.title.replace(/\s+/g, '');
-    article.url = article.url.toLowerCase();
+    article.url = normalizeText(article.title);
     //Add an id attribute to the article so that it can be targetted with css.
     //The id will be the same as the url
     article.articleTag.setAttribute("id", article.url);
@@ -166,12 +173,11 @@
   function makeH2Tags(classAttribute) {
     if (classAttribute !== "x") {
       var h2 = document.createElement("h2"),
-        headingText = classAttribute,
-        lowerCaseClassAttribute = classAttribute.toLowerCase();
+        headingText = classAttribute;
       //Convert the classAttribute to lower case
       headingText = capitaliseFirstLetter(headingText);
       h2.innerHTML = headingText;
-      h2.setAttribute("class", lowerCaseClassAttribute);
+      h2.setAttribute("class", normalizeText(classAttribute));
       nav.appendChild(h2);
     }
   }
@@ -180,8 +186,7 @@
     var altText = imgTag.getAttribute("alt");
     if (altText !== null) {
       //Remove the white spaces
-      altText = altText.replace(/\s+/g, '');
-      altText = altText.toLowerCase();
+      altText = normalizeText(altText);
       imgTag.setAttribute("id", altText);
     }
   }
@@ -279,7 +284,9 @@
       
     //Assign the new heading text to the <h2> tag and set its class attribte
     h2Tag.innerHTML = newH2TagText;
-    h2Tag.setAttribute("class", h2TagClassText);
+    h2Tag.setAttribute("class", normalizeText(h2TagClassText));
+    //Create an id that matches the <h2> tag's innerHTML
+    h2Tag.setAttribute("id", normalizeText(newH2TagText));
   }
   
   //A function to make the browser's back button work, called by setInterval
@@ -325,14 +332,18 @@
       //Add it as the first child to the enclosing article tag
       article.articleTag.insertBefore(navTag, article.articleTag.firstChild);
       
+      //Add id attributes to the <article> <h3> tags that match their text
+      h3Tags.forEach(function (h3Tag) {
+        h3Tag.setAttribute("id", normalizeText(h3Tag.innerHTML));
+      });
+      
       //Create <a> tags to act as anchors and add them before each <h3> tag
       //inside the <article> tag
       h3Tags.forEach(function (h3Tag) {
         var aTag,
           aTagLink;
         aTag = document.createElement("a");
-        aTagLink = h3Tag.innerHTML.replace(/\s+/g, '');
-        aTagLink = aTagLink.toLowerCase();
+        aTagLink = normalizeText(h3Tag.innerHTML);
         aTag.setAttribute("id", article.url + "/" + aTagLink);
         h3Tag.parentNode.insertBefore(aTag, h3Tag);
       });
@@ -345,8 +356,7 @@
           aTagLink;
         aTag = document.createElement("a");
         aTag.innerHTML = h3Tag.innerHTML;
-        aTagLink = aTag.innerHTML.replace(/\s+/g, '');
-        aTagLink = aTagLink.toLowerCase();
+        aTagLink = normalizeText(aTag.innerHTML);
         aTag.setAttribute("href", "#" + article.url + "/" + aTagLink);
         //aTag.addEventListener("mousedown", mousedownHandler, false);
         //Assign the <a> tag to the current article object's aTag property so we can 
@@ -358,8 +368,7 @@
       //Make a sub-navigation link for based for the article's <h2> heading
       h2ATag = document.createElement("a");
       h2ATag.innerHTML = h2Tag.innerHTML;
-      h2ATagLink = h2ATag.innerHTML.replace(/\s+/g, '');
-      h2ATagLink = h2ATagLink.toLowerCase();
+      h2ATagLink = normalizeText(h2ATag.innerHTML);
       h2ATag.setAttribute("href", "#" + article.url + "/" + "heading:" + h2ATagLink);
       //Add it to the <nav> tag
       navTag.insertBefore(h2ATag, navTag.firstChild);
@@ -369,8 +378,7 @@
       h2ATag = null;
       h2ATagLink = null;
       h2ATag = document.createElement("a");
-      h2ATagLink = h2Tag.innerHTML.replace(/\s+/g, '');
-      h2ATagLink = h2ATagLink.toLowerCase();
+      h2ATagLink = normalizeText(h2Tag.innerHTML);
       h2ATag.setAttribute("id", article.url + "/" + "heading:" + h2ATagLink);
       h2Tag.parentNode.insertBefore(h2ATag, h2Tag);
     }

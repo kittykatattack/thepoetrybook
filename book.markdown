@@ -123,11 +123,11 @@ Here's what the first HTML section of this poetry book looks like:
 
 ![](images/htmlHead.png)
 
-poetryBook.js scans the markdown document and automatically creates the navigation bar based on the poem titles. It creates the titles as `<a>` tags, and inserts them into the `<nav>` section. The `<a>` tags will have links to their poems. (The link names are all lowercase without spaces.) If you've created categories, new `<h2>` tags will also be created to represent those categories. Here's what the HTML navigation looks like for this poetry book:
+poetryBook.js scans the markdown document and automatically creates the navigation bar based on the poem titles. It creates the titles as `<a>` tags, and inserts them into the `<nav>` section. The `<a>` tags will have links to their poems. (The link names are all lowercase without spaces or punctuation.) If you've created categories, new `<h2>` tags will also be created to represent those categories. Here's what the HTML navigation looks like for this poetry book:
 
 ![](images/navTag.png)
 
-poetryBook.js also wraps each poem in `<article>` tags. Those `<article>` tags have id's that match the poem title (also in lower case and without spaces.) They also have a class that matches their category. Here are the `<article>` tags for this book:
+poetryBook.js also wraps each poem in `<article>` tags. Those `<article>` tags have id's that match the poem title (also in lower case and without spaces or punctuation.) They also have a class that matches their category. Here are the `<article>` tags for this book:
 
 ![](images/articleTag.png)
 
@@ -137,7 +137,7 @@ The poem's title in the markdown document is turned into an HTML `<h2>` tag, ins
 
 Can you see how it matches the original markdown document?
 
-You can access each image by using an id that corresponds to its "alt" text: lower-case and without spaces. Imagine that you've got an image in your markdown document that looks like this:
+You can access each image by using an id that corresponds to its "alt" text: lower-case and without spaces or punctuation. Imagine that you've got an image in your markdown document that looks like this:
 
 `![A Painting by William Blake](images/williamBlake.png)`
 
@@ -161,7 +161,7 @@ Change the name of the array element to any markdown document you want to use, l
 
 After the file is loaded, the *makeHTMLpage* function runs. That's the main part of the program that builds the HTML and interactive behaviour based on the markdown file.
 
-You can also use more than one markdown file to build your poetry book. In fact, you can use as many as you like - there's no limit.Just add the names of the documents you want to use as elements in the markdownDocuments array. For example, here's how to make a book using 3 separate documents:
+You can also use more than one markdown file to build your poetry book. In fact, you can use as many as you like - there's no limit. Just add the names of the documents you want to use as elements in the markdownDocuments array. For example, here's how to make a book using 3 separate documents:
 
 `markdownDocuments = ["firstDoc.markdown", "secondDoc.markdown", "thirdDoc.markdown"];`
 
