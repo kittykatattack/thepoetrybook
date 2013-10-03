@@ -3,7 +3,7 @@
   "use strict";
   
   //List the markdown documents you want to load as elements in this array
-  var markdownDocuments = ["book.markdown"],
+  var markdownDocuments = ["test.markdown"],
     //A counter for the document loader
     documentsLoaded = 0,
     //The loaded markdown document
@@ -73,7 +73,9 @@
       headingTag.innerHTML = newTagText;
       headingTag.id = normalizeText(newTagText)
       if(classText !== "") {
-        headingTag.className = normalizeText(classText)
+        headingTag.className = normalizeText(classText);
+        //Add a category attribute to the heading
+        headingTag.setAttribute("category", classText);
       }
     });
   }
@@ -107,7 +109,63 @@
       });  
     });
   }
-
+  
+  function buildNavigation(headingTags) {
+    console.log("***");
+    //Loop through each heading level and find it
+    //<section> tag children. These will be the navigation index items
+    headingTags.forEach(function(headingTag) {
+      var parent = headingTag.parentNode;
+      var sections = parent.children;
+      var categories = [];
+      if (sections.length !== 0) {
+        sections = Array.prototype.slice.call(sections);
+        sections = sections.filter(function(tag) {
+          if (tag.tagName === "SECTION") {
+            //console.log(headingTag.id + ": " + tag.id);
+            return tag
+          }
+        });
+        //Add a navigation bar to the top beginning of the section, 
+        //if it contains more than one sub-heading
+        if(sections.length > 1) {
+          var nav = document.createElement("nav");
+          //console.log(parent);
+          parent.insertBefore(nav, parent.firstChild);
+        
+          //Build the navigation bar items based on the section items
+          sections.forEach(function(sectionTag) {
+            var headingTag = sectionTag.firstChild;
+            //Find out if the heading has a category and add it to 
+            //the categories array
+            if (headingTag.className !== "") {
+              //Only add a new category to the array
+              //if it hasn't already been added in a previous iteration of the loop
+              if (categories.indexOf(headingTag.className) === -1) {
+                categories.push(headingTag.className);
+              }
+            }
+            //console.log(headingTag.innerHTML);
+            console.log(categories);
+            //Create an <a> tag for each heading and append it to the <nav> tag
+            var aTag = document.createElement("a");
+            aTag.innerHTML = headingTag.innerHTML;
+            aTag.href = headingTag.id;
+            aTag.className = headingTag.className;
+            nav.appendChild(aTag);
+          });
+          
+        }
+      //console.log(parent.firstChild);
+      console.log("*");
+      }
+    });
+  
+    //Create a navgation tag
+    //
+    //Add it as the first child to the enclosing section tag
+    //parent.insertBefore(nav, parent.firstChild);
+  }
   
   function makeHTMLpage() {
     //Copy the loaded markdown into the body
@@ -116,8 +174,11 @@
     var headings = findHTagsInDocument();
     //Create the heading text, class and ids
     headings.forEach(makeHeadingTextClassAndID);
-    //Make section tags for each heading
+    //Make <section> tags that wrap each section of content defined by a heading
     headings.forEach(makeSections);
+    //Create <nav> tags for level of headings, if they contain sub-sections
+    headings.forEach(buildNavigation);
+    //console.log(document.querySelector("#thepoetrybook").children);
   }
   
   function loadFile(fileName) {
