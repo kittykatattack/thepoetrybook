@@ -116,7 +116,6 @@
     headingTags.forEach(function(headingTag) {
       var parent = headingTag.parentNode;
       var sections = parent.children;
-      var categories = [];
       if (sections.length !== 0) {
         sections = Array.prototype.slice.call(sections);
         sections = sections.filter(function(tag) {
@@ -130,9 +129,10 @@
         if(sections.length > 1) {
           var nav = document.createElement("nav");
           //console.log(parent);
+          var categories = [];
           parent.insertBefore(nav, parent.firstChild);
-        
-          //Build the navigation bar items based on the section items
+          //Find out if there are navigation categories
+          //and, if there are, build a categories array
           sections.forEach(function(sectionTag) {
             var headingTag = sectionTag.firstChild;
             //Find out if the heading has a category and add it to 
@@ -144,8 +144,21 @@
                 categories.push(headingTag.className);
               }
             }
-            //console.log(headingTag.innerHTML);
-            console.log(categories);
+          });
+          categories.sort();
+          console.log(categories);
+          //Create <span> tags for each category
+          if (categories.length !== 0) {
+            categories.sort();
+            categories.forEach(function(category) {
+              var span = document.createElement("span");
+              span.className = category;
+              nav.appendChild(span);
+            });
+          }
+          //Build the navigation bar items based on the section items
+          sections.forEach(function(sectionTag) {
+            var headingTag = sectionTag.firstChild;
             //Create an <a> tag for each heading and append it to the <nav> tag
             var aTag = document.createElement("a");
             aTag.innerHTML = headingTag.innerHTML;
