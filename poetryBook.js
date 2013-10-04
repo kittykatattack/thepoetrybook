@@ -129,7 +129,10 @@
         if(sections.length > 1) {
           var nav = document.createElement("nav");
           //console.log(parent);
-          var categories = [];
+          var categoryClasses = [];
+          var categoryStrings = [];
+          var spanTags = [];
+          var aTags = [];
           parent.insertBefore(nav, parent.firstChild);
           //Find out if there are navigation categories
           //and, if there are, build a categories array
@@ -140,21 +143,29 @@
             if (headingTag.className !== "") {
               //Only add a new category to the array
               //if it hasn't already been added in a previous iteration of the loop
-              if (categories.indexOf(headingTag.className) === -1) {
-                categories.push(headingTag.className);
+              if (categoryClasses.indexOf(headingTag.className) === -1) {
+                categoryClasses.push(headingTag.className);
+                categoryStrings.push(headingTag.getAttribute("category"));
               }
             }
           });
-          categories.sort();
-          console.log(categories);
-          //Create <span> tags for each category
-          if (categories.length !== 0) {
-            categories.sort();
-            categories.forEach(function(category) {
-              var span = document.createElement("span");
-              span.className = category;
-              nav.appendChild(span);
-            });
+          if(categoryClasses.length > 0) {
+            categoryClasses.sort();
+            console.log(categoryClasses);
+            //Create <span> tags for each category
+            if (categoryClasses.length !== 0) {
+              categoryClasses.sort();
+              categoryStrings.sort();
+              var i = 0;
+              categoryClasses.forEach(function(category) {
+                var span = document.createElement("span");
+                span.className = category;
+                span.innerHTML = categoryStrings[i];
+                spanTags.push(span);
+                nav.appendChild(span);
+                i++;
+              });
+            }
           }
           //Build the navigation bar items based on the section items
           sections.forEach(function(sectionTag) {
@@ -166,11 +177,37 @@
             if(headingTag.className !== "") {
               aTag.className = headingTag.className;
             }
-            nav.appendChild(aTag);
+            aTags.push(aTag)
           });
-          
+          aTags.forEach(function(aTag) {
+            if(aTag.className !== "") {
+              spanTags.forEach(function(spanTag){
+                if (spanTag.className === aTag.className) {
+                  //Insert new <a> tag after the catefory <span> tag 
+                  spanTag.parentNode.insertBefore(aTag, spanTag.nextSibling);
+                } 
+              });
+            } else {
+              nav.insertBefore(aTag, nav.firstChild);
+            }
+          });
+          console.log(spanTags.length);
+          /*
+            //Add the navigation <a> links to the correct category <span> tags
+            if(spanTags.length !== 0) {
+              spanTags.forEach(function (spanTag) {
+                if (spanTag.className === aTag.className) {
+                  //Insert new <a> tag after the catefory <span> tag 
+                  spanTag.parentNode.insertBefore(aTag, spanTag.nextSibling);
+                }
+              });
+            } else {
+              //Insert links that don't have a classAttribute.
+              //They'll appear right at the top of the navigation, before the headings
+              nav.insertBefore(aTag, nav.firstChild);
+            }
+          */
         }
-      //console.log(parent.firstChild);
       console.log("*");
       }
     });
