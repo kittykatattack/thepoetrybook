@@ -76,7 +76,7 @@
         //Add a category attribute to the heading
         headingTag.setAttribute("category", classText);
       }
-      headingTag.setAttribute("level", "level" + index);
+      headingTag.setAttribute("heirarchyLevel", "section" + index);
     });
   }
   
@@ -86,7 +86,7 @@
       //Give it the same id and class name as the heading
       var section = document.createElement("section");
       section.id = normalizeText(headingTag.innerHTML);
-      section.className = headingTag.getAttribute("level");
+      section.className = headingTag.getAttribute("heirarchyLevel");
       if(index !== 0) {
         //Insert the section just before the current heading tag
         headingTag.parentNode.insertBefore(section, headingTag);
@@ -114,7 +114,7 @@
   }
   
   function buildNavigation(headingTags) {
-    console.log("***");
+    //console.log("***");
     //Loop through each heading level and find it
     //<section> tag children. These will be the navigation index items
     headingTags.forEach(function(headingTag) {
@@ -155,7 +155,7 @@
           });
           if(categoryClasses.length > 0) {
             categoryClasses.sort();
-            console.log(categoryClasses);
+            //console.log(categoryClasses);
             //Create <span> tags for each category
             if (categoryClasses.length !== 0) {
               categoryClasses.sort();
@@ -170,6 +170,7 @@
             }
           }
           //Build the navigation bar items based on the section items
+          sections.reverse();
           sections.forEach(function(sectionTag) {
             var headingTag = sectionTag.firstChild;
             //Create an <a> tag for each heading and append it to the <nav> tag
@@ -193,9 +194,9 @@
               nav.insertBefore(aTag, nav.firstChild);
             }
           });
-          console.log(spanTags.length);
+          //console.log(spanTags.length);
         }
-      console.log("*");
+      //console.log("*");
       }
     });
   }
@@ -207,6 +208,7 @@
     document.body.insertBefore(toc, document.body.firstChild);
     htmlTableOfContents(document);
     
+    //Thank you!:https://github.com/matthewkastor/html-table-of-contents
     function htmlTableOfContents(documentRef) {
       var documentRef = documentRef || document;
       var toc = documentRef.getElementById('toc');
@@ -229,6 +231,12 @@
       });
     }
   }
+  function makeHeaderSection() {
+    var h1 = document.querySelector("h1");
+    var header = document.createElement("header");
+    h1.parentNode.insertBefore(header, h1);
+    header.appendChild(h1);
+  }
   
   function makeHTMLpage() {
     //Copy the loaded markdown into the body
@@ -241,8 +249,24 @@
     headings.forEach(makeSections);
     //Create <nav> tags for level of headings, if they contain sub-sections
     headings.forEach(buildNavigation);
+    //Insert the <h1> tag into a <header> tag 
+    //(Do this near the end so that we don't mess up the HTML stucture)
+    makeHeaderSection();
     //Build the table of contents
     makeTableOfContents();
+    //Add interactivity
+    
+    var aTags = document.querySelectorAll(".level2 a");
+    aTags = Array.prototype.slice.call(aTags);
+    aTags.forEach(function(aTag) {
+      aTag.addEventListener("mousedown", function(event){
+        //event.preventDefault();
+        //history.pushState('', document.title, window.location.pathname);
+        console.log("test");
+        
+      }, false);
+    });
+    
   }
   
   function loadFile(fileName) {
