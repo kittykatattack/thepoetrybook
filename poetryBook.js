@@ -80,15 +80,20 @@
     });
   }
   
-  function makeSections(headingTags) {
+  function makeSections(headingTags, index) {
     headingTags.forEach(function(headingTag) {
       //Create the <section> tag
       //Give it the same id and class name as the heading
       var section = document.createElement("section");
       section.id = normalizeText(headingTag.innerHTML);
       section.className = headingTag.getAttribute("level");
-      //Insert the section just before the current heading tag
-      headingTag.parentNode.insertBefore(section, headingTag);
+      if(index !== 0) {
+        //Insert the section just before the current heading tag
+        headingTag.parentNode.insertBefore(section, headingTag);
+      } else {
+        //If this is the first section, insert it as the first child of the body
+        document.body.insertBefore(section, document.body.firstChild);
+      }
       //Figure out what should be in that section.
       //Make an array to temporarily store the section content
       var sectionContent = [];
@@ -189,30 +194,40 @@
             }
           });
           console.log(spanTags.length);
-          /*
-            //Add the navigation <a> links to the correct category <span> tags
-            if(spanTags.length !== 0) {
-              spanTags.forEach(function (spanTag) {
-                if (spanTag.className === aTag.className) {
-                  //Insert new <a> tag after the catefory <span> tag 
-                  spanTag.parentNode.insertBefore(aTag, spanTag.nextSibling);
-                }
-              });
-            } else {
-              //Insert links that don't have a classAttribute.
-              //They'll appear right at the top of the navigation, before the headings
-              nav.insertBefore(aTag, nav.firstChild);
-            }
-          */
         }
       console.log("*");
       }
     });
-  
-    //Create a navgation tag
-    //
-    //Add it as the first child to the enclosing section tag
-    //parent.insertBefore(nav, parent.firstChild);
+  }
+  function makeTableOfContents(){
+    //Create a <div id="contents">
+    var toc = document.createElement("div");
+    toc.id = "toc";
+    //Add it as the firt child to the body
+    document.body.insertBefore(toc, document.body.firstChild);
+    htmlTableOfContents(document);
+    
+    function htmlTableOfContents(documentRef) {
+      var documentRef = documentRef || document;
+      var toc = documentRef.getElementById('toc');
+      var headings = [].slice.call(documentRef.body.querySelectorAll('h1, h2, h3, h4, h5, h6'));
+      headings.forEach(function (heading, index) {
+          var anchor = documentRef.createElement('a');
+          anchor.setAttribute('name', 'toc' + index);
+          anchor.setAttribute('id', 'toc' + index);
+          
+          var link = documentRef.createElement('a');
+          link.setAttribute('href', '#toc' + index);
+          link.textContent = heading.textContent;
+          
+          var div = documentRef.createElement('div');
+          div.setAttribute('class', heading.tagName.toLowerCase());
+          
+          div.appendChild(link);
+          toc.appendChild(div);
+          heading.parentNode.insertBefore(anchor, heading);
+      });
+    }
   }
   
   function makeHTMLpage() {
@@ -226,7 +241,8 @@
     headings.forEach(makeSections);
     //Create <nav> tags for level of headings, if they contain sub-sections
     headings.forEach(buildNavigation);
-    //console.log(document.querySelector("#thepoetrybook").children);
+    //Build the table of contents
+    makeTableOfContents();
   }
   
   function loadFile(fileName) {
