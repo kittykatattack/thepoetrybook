@@ -71,7 +71,6 @@
       classText = classText.trim();
       //Assign the new heading text to the heading tag and set its class and id attribtes
       headingTag.innerHTML = newTagText;
-      headingTag.id = normalizeText(newTagText)
       if(classText !== "") {
         headingTag.className = normalizeText(classText);
         //Add a category attribute to the heading
@@ -85,7 +84,7 @@
       //Create the <section> tag
       //Give it the same id and class name as the heading
       var section = document.createElement("section");
-      section.id = headingTag.id;
+      section.id = normalizeText(headingTag.innerHTML);
       if (headingTag.className) {
         section.className = headingTag.className;
       }
@@ -150,8 +149,10 @@
             //Create an <a> tag for each heading and append it to the <nav> tag
             var aTag = document.createElement("a");
             aTag.innerHTML = headingTag.innerHTML;
-            aTag.href = headingTag.id;
-            aTag.className = headingTag.className;
+            aTag.href = "#" + sectionTag.id;
+            if(headingTag.className !== "") {
+              aTag.className = headingTag.className;
+            }
             nav.appendChild(aTag);
           });
           
