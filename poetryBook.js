@@ -52,7 +52,7 @@
     return headings;
   } 
   
-  function makeHeadingTextClassAndID(headingTags) {
+  function makeHeadingTextClassAndID(headingTags, index) {
     headingTags.forEach(function(headingTag) {
       //1. Create the heading title, id, and class
       var tagText = headingTag.innerHTML;
@@ -76,6 +76,7 @@
         //Add a category attribute to the heading
         headingTag.setAttribute("category", classText);
       }
+      headingTag.setAttribute("level", "level" + index);
     });
   }
   
@@ -85,9 +86,7 @@
       //Give it the same id and class name as the heading
       var section = document.createElement("section");
       section.id = normalizeText(headingTag.innerHTML);
-      if (headingTag.className) {
-        section.className = headingTag.className;
-      }
+      section.className = headingTag.getAttribute("level");
       //Insert the section just before the current heading tag
       headingTag.parentNode.insertBefore(section, headingTag);
       //Figure out what should be in that section.
@@ -156,14 +155,12 @@
             if (categoryClasses.length !== 0) {
               categoryClasses.sort();
               categoryStrings.sort();
-              var i = 0;
-              categoryClasses.forEach(function(category) {
+              categoryClasses.forEach(function(category, index) {
                 var span = document.createElement("span");
                 span.className = category;
-                span.innerHTML = categoryStrings[i];
+                span.innerHTML = categoryStrings[index];
                 spanTags.push(span);
                 nav.appendChild(span);
-                i++;
               });
             }
           }
