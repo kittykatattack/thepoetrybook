@@ -4,18 +4,11 @@ var POETRYBOOK = POETRYBOOK || {};
 POETRYBOOK.tree = (function () {
   "use strict";
   
-  //List the markdown documents you want to load as elements in this array
-  var markdownDocuments = ["test.markdown"],
-    //A counter for the document loader
-    documentsLoaded = 0,
+  var documentsLoaded = 0,
     //The loaded markdown document
     markdown = "",
-    parentNode = document.body,
-    //A an object to store information about each section
-    sectionObject = {
-      headingTag: null,
-      sectionTag: null
-    };
+    markdownDocuments,
+    poetry;
   
   //Set the markdown converter options
   marked.setOptions({gfm: true, breaks: true, tables: true});
@@ -259,6 +252,12 @@ POETRYBOOK.tree = (function () {
     makeHeaderSection();
     //Build the table of contents
     makeTableOfContents();
+    
+    //Run the poetry callback function in the poet.js file to tell it that
+    //the HTML has been built
+    if (poetry !== undefined) {
+      poetry();
+    }
   }
   
   function loadFile(fileName) {
@@ -278,6 +277,17 @@ POETRYBOOK.tree = (function () {
     reader.send(null);
   }
   
-  //Load the markdown files
-  markdownDocuments.forEach(loadFile);
+  function makeHTMLFromMarkdown(documents, callBackFunction) {
+    //Load the markdown files
+    markdownDocuments = documents;
+    //A callback function to alert poet.js that the HTML has been built
+    poetry = callBackFunction;
+    markdownDocuments.forEach(loadFile);
+  }
+  
+  //Pulic API
+  return {
+    makeHTMLFromMarkdown: makeHTMLFromMarkdown
+  };
+  
 }());
