@@ -1,5 +1,7 @@
-/*jslint white: false, indent: 2, browser: true, maxerr: 200, maxlen: 100, plusplus: true  */
-(function () {
+/*jslint white: false, indent: 2, browser: true, maxerr: 200, maxlen: 100, plusplus: true, vars: true  */
+var POETRYBOOK = POETRYBOOK || {};
+
+POETRYBOOK.tree = (function () {
   "use strict";
   
   //List the markdown documents you want to load as elements in this array
@@ -12,7 +14,7 @@
     //A an object to store information about each section
     sectionObject = {
       headingTag: null,
-      sectionTag: null,
+      sectionTag: null
     };
   
   //Set the markdown converter options
@@ -35,12 +37,13 @@
   }
   
   function replaceString(oldS, newS, fullS) {
-      return fullS.split(oldS).join(newS);
+    return fullS.split(oldS).join(newS);
   }
   
   function findHTagsInDocument() {
     var headings = [];
-    for(var i = 1; i < 7; i++) {
+    var i;
+    for (i = 1; i < 7; i++) {
       var testHeading = document.querySelectorAll("h" + i);
       if (testHeading.length !== 0) {
         testHeading = Array.prototype.slice.call(testHeading);
@@ -50,10 +53,10 @@
       }
     }
     return headings;
-  } 
+  }
   
   function makeHeadingTextClassAndID(headingTags, index) {
-    headingTags.forEach(function(headingTag) {
+    headingTags.forEach(function (headingTag) {
       //1. Create the heading title, id, and class
       var tagText = headingTag.innerHTML;
       //Find the position of the square brackets  
@@ -61,7 +64,7 @@
       var secondBracket = tagText.indexOf("]", 0);
       //Get a string that matches the square bracket string
       var squareBrackets = tagText.slice(firstBracket, secondBracket + 1);
-      //slice the square bracket string from the original string
+      //Slice the square bracket string from the original string
       var newTagText = replaceString(squareBrackets, "", tagText);
       //Remove any double spaces
       newTagText = newTagText.replace(/\s{2,}/g, ' ');
@@ -71,23 +74,27 @@
       classText = classText.trim();
       //Assign the new heading text to the heading tag and set its class and id attribtes
       headingTag.innerHTML = newTagText;
-      if(classText !== "") {
+      if (classText !== "") {
         headingTag.className = normalizeText(classText);
         //Add a category attribute to the heading
         headingTag.setAttribute("category", classText);
       }
+      //Set a heirarchyLevel attribute to the heading. This will be section0 to section6
+      //Depending on the level's heirarchy. This to help us create <section> tags with
+      //the class names that match that heirarchy. This makes it easy to hide or display
+      //levels of content depending on user interaction and navigation.
       headingTag.setAttribute("heirarchyLevel", "section" + index);
     });
   }
   
   function makeSections(headingTags, index) {
-    headingTags.forEach(function(headingTag) {
+    headingTags.forEach(function (headingTag) {
       //Create the <section> tag
       //Give it the same id and class name as the heading
       var section = document.createElement("section");
       section.id = normalizeText(headingTag.innerHTML);
       section.className = headingTag.getAttribute("heirarchyLevel");
-      if(index !== 0) {
+      if (index !== 0) {
         //Insert the section just before the current heading tag
         headingTag.parentNode.insertBefore(section, headingTag);
       } else {
@@ -103,13 +110,13 @@
       sectionContent.push(headingTag);
       var sibling = headingTag.nextElementSibling;
       while (sibling && sibling.tagName !== headingTag.tagName) {
-        sectionContent.push(sibling)
+        sectionContent.push(sibling);
         sibling = sibling.nextElementSibling;
       }
       //Add the array contents to the <section> tag
-      sectionContent.forEach(function(element) {
+      sectionContent.forEach(function (element) {
         section.appendChild(element);
-      });  
+      });
     });
   }
   
@@ -117,22 +124,21 @@
     //console.log("***");
     //Loop through each heading level and find it
     //<section> tag children. These will be the navigation index items
-    headingTags.forEach(function(headingTag) {
+    headingTags.forEach(function (headingTag) {
       var parent = headingTag.parentNode;
       var sections = parent.children;
       if (sections.length !== 0) {
         sections = Array.prototype.slice.call(sections);
-        sections = sections.filter(function(tag) {
+        sections = sections.filter(function (tag) {
           if (tag.tagName === "SECTION") {
             //console.log(headingTag.id + ": " + tag.id);
-            return tag
+            return tag;
           }
         });
-        //Add a navigation bar to the top beginning of the section, 
+        //Add a navigation bar to the top of the section, 
         //if it contains more than one sub-heading
-        if(sections.length > 1) {
+        if (sections.length > 1) {
           var nav = document.createElement("nav");
-          //console.log(parent);
           var categoryClasses = [];
           var categoryStrings = [];
           var spanTags = [];
@@ -140,7 +146,7 @@
           parent.insertBefore(nav, parent.firstChild);
           //Find out if there are navigation categories
           //and, if there are, build a categories array
-          sections.forEach(function(sectionTag) {
+          sections.forEach(function (sectionTag) {
             var headingTag = sectionTag.firstChild;
             //Find out if the heading has a category and add it to 
             //the categories array
@@ -153,14 +159,14 @@
               }
             }
           });
-          if(categoryClasses.length > 0) {
+          if (categoryClasses.length > 0) {
             categoryClasses.sort();
             //console.log(categoryClasses);
             //Create <span> tags for each category
             if (categoryClasses.length !== 0) {
               categoryClasses.sort();
               categoryStrings.sort();
-              categoryClasses.forEach(function(category, index) {
+              categoryClasses.forEach(function (category, index) {
                 var span = document.createElement("span");
                 span.className = category;
                 span.innerHTML = categoryStrings[index];
@@ -171,24 +177,24 @@
           }
           //Build the navigation bar items based on the section items
           sections.reverse();
-          sections.forEach(function(sectionTag) {
+          sections.forEach(function (sectionTag) {
             var headingTag = sectionTag.firstChild;
             //Create an <a> tag for each heading and append it to the <nav> tag
             var aTag = document.createElement("a");
             aTag.innerHTML = headingTag.innerHTML;
             aTag.href = "#" + sectionTag.id;
-            if(headingTag.className !== "") {
+            if (headingTag.className !== "") {
               aTag.className = headingTag.className;
             }
-            aTags.push(aTag)
+            aTags.push(aTag);
           });
-          aTags.forEach(function(aTag) {
-            if(aTag.className !== "") {
-              spanTags.forEach(function(spanTag){
+          aTags.forEach(function (aTag) {
+            if (aTag.className !== "") {
+              spanTags.forEach(function (spanTag) {
                 if (spanTag.className === aTag.className) {
                   //Insert new <a> tag after the catefory <span> tag 
                   spanTag.parentNode.insertBefore(aTag, spanTag.nextSibling);
-                } 
+                }
               });
             } else {
               nav.insertBefore(aTag, nav.firstChild);
@@ -200,36 +206,35 @@
       }
     });
   }
-  function makeTableOfContents(){
+  function makeTableOfContents() {
     //Create a <div id="contents">
     var toc = document.createElement("div");
     toc.id = "toc";
     //Add it as the firt child to the body
     document.body.insertBefore(toc, document.body.firstChild);
-    htmlTableOfContents(document);
     
     //Thank you!:https://github.com/matthewkastor/html-table-of-contents
     function htmlTableOfContents(documentRef) {
-      var documentRef = documentRef || document;
       var toc = documentRef.getElementById('toc');
       var headings = [].slice.call(documentRef.body.querySelectorAll('h1, h2, h3, h4, h5, h6'));
       headings.forEach(function (heading, index) {
-          var anchor = documentRef.createElement('a');
-          anchor.setAttribute('name', 'toc' + index);
-          anchor.setAttribute('id', 'toc' + index);
-          
-          var link = documentRef.createElement('a');
-          link.setAttribute('href', '#toc' + index);
-          link.textContent = heading.textContent;
-          
-          var div = documentRef.createElement('div');
-          div.setAttribute('class', heading.tagName.toLowerCase());
-          
-          div.appendChild(link);
-          toc.appendChild(div);
-          heading.parentNode.insertBefore(anchor, heading);
+        var anchor = documentRef.createElement('a');
+        anchor.setAttribute('name', 'toc' + index);
+        anchor.setAttribute('id', 'toc' + index);
+        
+        var link = documentRef.createElement('a');
+        link.setAttribute('href', '#toc' + index);
+        link.textContent = heading.textContent;
+        
+        var div = documentRef.createElement('div');
+        div.setAttribute('class', heading.tagName.toLowerCase());
+        
+        div.appendChild(link);
+        toc.appendChild(div);
+        heading.parentNode.insertBefore(anchor, heading);
       });
     }
+    htmlTableOfContents(document);
   }
   function makeHeaderSection() {
     var h1 = document.querySelector("h1");
@@ -254,19 +259,6 @@
     makeHeaderSection();
     //Build the table of contents
     makeTableOfContents();
-    //Add interactivity
-    
-    var aTags = document.querySelectorAll(".level2 a");
-    aTags = Array.prototype.slice.call(aTags);
-    aTags.forEach(function(aTag) {
-      aTag.addEventListener("mousedown", function(event){
-        //event.preventDefault();
-        //history.pushState('', document.title, window.location.pathname);
-        console.log("test");
-        
-      }, false);
-    });
-    
   }
   
   function loadFile(fileName) {
