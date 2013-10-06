@@ -190,16 +190,6 @@ an <section> tag, so that the content pages can be positioned.
   -webkit-backface-visibility: hidden;
 }
 
-/*
-The :target selector makes sets section
-*/
-
-.section1:target
-{
-  opacity: 1;
-  z-index: 1;
-}
-
 .section1 p, ul li
 {
   font-size: 1.1em;
@@ -223,6 +213,11 @@ The :target selector makes sets section
 .section1 h4
 {
   font-size: 1.2em;
+}
+
+.section1 h5, .section1 h6, 
+{
+  font-size: 1em;
 }
 
 .section1 a
@@ -296,6 +291,13 @@ section nav
 .section1 nav a:hover
 {
   color: #eee8aa;
+}
+
+/* Prevent deep sub-section navigation bars from displaying, if there are any */
+.section2 nav, .section3 nav,
+.section4 nav, .section5 nav
+{
+  display: none;
 }
 
 /* 
