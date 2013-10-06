@@ -5,7 +5,7 @@ POETRYBOOK.poet = (function () {
   "use strict";
   
   //List the markdown documents you want to load into the array
-  var markdownDocuments = ["test.markdown"],
+  var markdownDocuments = ["book.markdown"],
     contentSections,  
     currentlyDisplayedSection,
     navATags,
@@ -36,8 +36,9 @@ POETRYBOOK.poet = (function () {
   //for each level of sub-navigation
   function highlightSelectedLink(event) {
     
-    //Find out from which section level the click game from 
-    var currentNavSection = event.target.parentNode.parentNode.className;
+    //Find out from which navigation bar the click came from
+    var currentNavSection = event.target.parentNode.parentNode.id;
+    console.log(currentNavSection);
     
     function makeNewNavSection(currentNavSection) {
       var newNavSection = Object.create(navSection);
