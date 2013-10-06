@@ -1,7 +1,7 @@
 The Poetry Book
 ===============
 
-What is The Poetry Book? [what?]
+What is The Poetry Book? [What?]
 --------------------------------
 
 *The Poetry Book* is a fast and easy system for quickly making your own book of poems. You can also use it as the basis of building highly interactive websites and apps. If you want to create your own book of poems that looks like this one, [get the source code](http:#) and modify it as much as you like.
@@ -203,7 +203,7 @@ In the css file, Make sure to give the element a z-index value which is *higher 
   
 This is a very powerful feature because it lets you use The Poetry Book as the basis for a complex website or app user interface.
 
-Infant Sorrow [blake]
+Infant Sorrow [Blake]
 ---------------------
 
 My mother groaned, my father wept,
@@ -218,7 +218,7 @@ To sulk upon my mother's breast.
 
 *William Blake*
   
-Auguries of Innocence [blake]
+Auguries of Innocence [Blake]
 -----------------------------
 
 To see a world in a grain of sand,  
@@ -228,7 +228,7 @@ And eternity in an hour.
 
 *William Blake*
   
-The Panther [rilke]
+The Panther [Rilke]
 -------------------
 His vision, from the constantly passing bars,  
 has grown so weary that it cannot hold  
@@ -247,7 +247,7 @@ plunges into the heart and is gone.
   
 *Rainer Maria Rilke*
   
-Evening [rilke]
+Evening [Rilke]
 ---------------
 
 The bleak fields are asleep,  
@@ -262,7 +262,7 @@ Blossoms within her hand.
 
 *Rainer Maria Rilke*
  
-Kubla Khan [coleridge]
+Kubla Khan [Coleridge]
 ----------------------
 
 In Xanadu did Kubla Khan  
@@ -324,7 +324,7 @@ And drunk the milk of Paradise.
   
 *Samuel Taylor Coleridge*
  
-Songs of the Pixies [coleridge]
+Songs of the Pixies [Coleridge]
 -------------------------------
 
 I.  

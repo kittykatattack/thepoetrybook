@@ -15,7 +15,6 @@
 body, html
 {
   width: 100%;
-  font-size: 100%;
   height: 100%;
   background-color: white;
 }
@@ -87,6 +86,8 @@ h1
   bottom: -1em;
   left: 0.18em;
   width: 800px;
+  padding-left: 0.1em;
+  padding-top: 0.16em;
   /* background-color: red; */
   
   /* Rotate the text */
@@ -124,7 +125,7 @@ h1
   padding-bottom: 0.7em;
   padding-left: 1em;
   color: white;
-  font-size: 1em;
+  font-size: 1.2em;
   outline: none;
 }
 
@@ -137,7 +138,7 @@ h1
 .section0 nav span
 {
   display: block;
-  font-size: 1.2em;
+  font-size: 1.4em;
   color: white; 
   padding-top: 1em;
   padding-bottom: 1em;
@@ -231,6 +232,7 @@ an <section> tag, so that the content pages can be positioned.
   color: black;
   text-decoration: underline;
   outline: none;
+  font-size: 1em;
 }
 .section1 a:hover
 {
@@ -267,6 +269,10 @@ section nav
   opacity: 0.1;
   overflow-y: scroll;
   overflow-x: hidden; 
+  color: white;
+  font-size: 1em;
+  outline: none;
+  text-decoration: none;
   
   transition: left 0.2s, opacity 0.2s;
   -moz-transition: left 0.2s, opacity 0.2s; /* Firefox 4 */
@@ -278,20 +284,15 @@ section nav
   -webkit-backface-visibility: hidden;
 }
 
+.section1 nav a, .section1 nav a.unselected
+{
+  text-decoration: none;
+  font-size: 1em;
+}
 .section1 nav:hover
 {
   left: 23%;
   opacity: 1;
-}
-
-.section1 nav a
-{
-  display: block;
-  padding-bottom: 0.8em;
-  color: white;
-  font-size: 0.875em;
-  outline: none;
-  text-decoration: none;
 }
 
 .section1 nav a:hover
@@ -387,8 +388,8 @@ reload the index.html page.
   }
 }
 
-/* Styles for screens under 650px */
-@media all and (max-width: 650px) 
+/* Styles for screens under 850px */
+@media all and (max-width: 850px) 
 {
   /*Make fonts smaller*/
   .section0 nav h2, .section1 h2
@@ -419,21 +420,22 @@ reload the index.html page.
     top: 20%;
     left: 0%;
   }
-  #bookTitle
+  header
   {
     height: 20%;
     width: 20%;
     padding-left: 2%;
     padding-right: 2%;
-    z-index: 3000;
+    z-index: 2;
   }
   
   h1
   { 
-    top: 1em;
+    top: 0.5em;
     left: 1em;
     font-size: 1.2em;
     width: auto;
+    height:auto;
     -webkit-transform: rotate(0deg); /* Safari */
     -moz-transform: rotate(0deg); /* Firefox */
     -ms-transform: rotate(0deg); /* IE */

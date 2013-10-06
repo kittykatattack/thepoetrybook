@@ -5,7 +5,7 @@ POETRYBOOK.poet = (function () {
   "use strict";
   
   //List the markdown documents you want to load into the array
-  var markdownDocuments = ["book.markdown"],
+  var markdownDocuments = ["test.markdown"],
     contentSections,  
     currentlyDisplayedSection,
     navATags,
@@ -70,16 +70,6 @@ POETRYBOOK.poet = (function () {
         }
       });
     }
-    /*
-    if(nav.section.oldSelection !== undefined) {
-      nav.section.oldSelection.className = "unselected";
-    }
-    nav.section.name = event.target.parentNode.parentNode.className;
-    nav.section.newSelection = event.target;
-    console.log(nav.section.newSelection);
-    nav.section.newSelection.className = "selected";
-    nav.section.oldSelection = nav.section.newSelection; 
-   */
   }
   
   function update() {
@@ -127,18 +117,18 @@ POETRYBOOK.poet = (function () {
           var allSections = document.querySelectorAll("section");
           allSections = Array.prototype.slice.call(allSections);
           allSections.some(function(section) {
-          if (window.location.hash === "#" + section.id) {
-            while (section && section.className !== "section1") {
-              section = section.parentNode;
+            if (window.location.hash === "#" + section.id) {
+              while (section && section.className !== "section1") {
+                section = section.parentNode;
+              }
+              currentlyDisplayedSection = section;
+              currentlyDisplayedSection.style.opacity = 1;
+              currentlyDisplayedSection.style.zIndex = 1;
+              return true;
+            } else {
+              return false;
             }
-            currentlyDisplayedSection = section;
-            currentlyDisplayedSection.style.opacity = 1;
-            currentlyDisplayedSection.style.zIndex = 1;
-            return true;
-          } else {
-            return false;
-          }
-        });
+          });
         }
         //if it's still not found after all that, just load the first section
         if (currentlyDisplayedSection === undefined) { 
