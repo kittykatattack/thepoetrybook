@@ -5,7 +5,7 @@ POETRYBOOK.poet = (function () {
   "use strict";
   
   //List the markdown documents you want to load into the array
-  var markdownDocuments = ["test.markdown"],
+  var markdownDocuments = ["book.markdown"],
     contentSections,
     currentlyDisplayedSection;
   
@@ -20,51 +20,77 @@ POETRYBOOK.poet = (function () {
         section.style.opacity = 1;
         section.style.zIndex = 1;
         currentlyDisplayedSection = section;
-        //window.location.hash = "#" + currentlyDisplayedSection.id;
         return true;
       } else {
         return false;
       }
     } else {
       return false;
-      //window.location.hash = "#" + currentlyDisplayedSection.id;
     }  
   }
   
   function update() {
-    webkitRequestAnimationFrame(update);
+    requestAnimationFrame(update);
     contentSections.some(display);
-    //window.location.hash = "#" + currentlyDisplayedSection.id;
-  }
-  function mouseDownHandler(event) {
-    //window.location.hash = "#" + currentlyDisplayedSection.id + this.hash + "/" ;
-    //event.preventDefault();
-    //update();
-    //console.log(window.location.hash);
   }
   //The tree.js function runs this callback when the HTML tree has been built
   function poetry() {
     //Find all the <h2> heading sections. They have all belong to the class ".section1"
     contentSections = document.querySelectorAll(".section1");
     contentSections = Array.prototype.slice.call(contentSections);
-    //Get all the <a> tags and attach a mouseEvent listener to them
-    
-    var aTags = document.querySelectorAll("a");
-    aTags = Array.prototype.slice.call(aTags);
-    aTags.forEach(function(aTag) {
-      aTag.addEventListener("mousedown", mouseDownHandler, false);
-    });
     
     //Display the first section content 
     //(this will be the first <h2> heading section in the markdown document)
     if (currentlyDisplayedSection === undefined) {
-      currentlyDisplayedSection = contentSections[0];
-      window.location.hash = "#" + currentlyDisplayedSection.id;
-      currentlyDisplayedSection.style.opacity = 1;
-      currentlyDisplayedSection.style.zIndex = 1;
+      //If the index.html page is loaded
+      if(window.location.hash === "")
+      { 
+        currentlyDisplayedSection = contentSections[0];
+        window.location.hash = "#" + currentlyDisplayedSection.id;
+        currentlyDisplayedSection.style.opacity = 1;
+        currentlyDisplayedSection.style.zIndex = 1;
+      } else {
+        //If a link to a sub-section is loaded, check whether it's an section1 (<h2>) section
+        contentSections.some(function(section) {
+          if (window.location.hash === "#" + section.id) {
+            currentlyDisplayedSection = section;
+            currentlyDisplayedSection.style.opacity = 1;
+            currentlyDisplayedSection.style.zIndex = 1;
+            return true;
+          } else {
+            return false;
+          }
+        });
+        //... if it's not an <h2> sections, look further...
+        if (currentlyDisplayedSection == undefined) {
+          var allSections = document.querySelectorAll("section");
+          allSections = Array.prototype.slice.call(allSections);
+          allSections.some(function(section) {
+          if (window.location.hash === "#" + section.id) {
+            while (section && section.className !== "section1") {
+              section = section.parentNode;
+            }
+            currentlyDisplayedSection = section;
+            currentlyDisplayedSection.style.opacity = 1;
+            currentlyDisplayedSection.style.zIndex = 1;
+            return true;
+          } else {
+            return false;
+          }
+        });
+        }
+        //if it's still not found after all that, just load the first section
+        if (currentlyDisplayedSection === undefined) { 
+          currentlyDisplayedSection = contentSections[0];
+          window.location.hash = "#" + currentlyDisplayedSection.id;
+          currentlyDisplayedSection.style.opacity = 1;
+          currentlyDisplayedSection.style.zIndex = 1;
+        }
+      }
     }
     update();
   }
+  
   //Tell the tree.js to build the HTML tree structure from the markdown documents
   POETRYBOOK.tree.makeHTMLFromMarkdown(markdownDocuments, poetry);
   

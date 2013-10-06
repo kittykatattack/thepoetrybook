@@ -86,7 +86,11 @@ POETRYBOOK.tree = (function () {
       //Give it the same id and class name as the heading
       var section = document.createElement("section");
       section.id = normalizeText(headingTag.innerHTML);
-      section.className = headingTag.getAttribute("heirarchyLevel");
+      if (headingTag.className !== "x") {
+        section.className = headingTag.getAttribute("heirarchyLevel");
+      } else {
+        section.setAttribute("class", "x " + headingTag.getAttribute("heirarchyLevel") );
+      }
       if (index !== 0) {
         //Insert the section just before the current heading tag
         headingTag.parentNode.insertBefore(section, headingTag);
@@ -147,8 +151,11 @@ POETRYBOOK.tree = (function () {
               //Only add a new category to the array
               //if it hasn't already been added in a previous iteration of the loop
               if (categoryClasses.indexOf(headingTag.className) === -1) {
-                categoryClasses.push(headingTag.className);
-                categoryStrings.push(headingTag.getAttribute("category"));
+                if(headingTag.className !== "x")
+                {
+                  categoryClasses.push(headingTag.className);
+                  categoryStrings.push(headingTag.getAttribute("category"));
+                }
               }
             }
           });
@@ -177,7 +184,11 @@ POETRYBOOK.tree = (function () {
             aTag.innerHTML = headingTag.innerHTML;
             aTag.href = "#" + sectionTag.id;
             if (headingTag.className !== "") {
-              aTag.className = headingTag.className;
+              if (headingTag.className !== "x") {
+                aTag.className = headingTag.className;
+              } else {
+                aTag.setAttribute("class", "x " + headingTag.className);
+              }
             }
             aTags.push(aTag);
           });

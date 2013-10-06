@@ -151,6 +151,12 @@ so that it's neatly padded from the top of the page */
   padding-top: 3em;
 }
 
+nav a:last-child
+{
+  padding-bottom: 2em;
+}
+
+
 em, code
 {
   color: black;
@@ -311,6 +317,13 @@ For example, here's how to style an aricle that has the url #SongsofthePixies:
 }
 */
 
+/* Hidden Content */
+
+.x
+{
+  display: none;
+}
+
 /*
 Hidden content
 
@@ -359,6 +372,7 @@ reload the index.html page.
 {
   font-size: 1.4em;
   padding-top: 0;
+  display: block;
 }
 */
 
