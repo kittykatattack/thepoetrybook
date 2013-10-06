@@ -168,7 +168,7 @@ POETRYBOOK.tree = (function () {
               categoryStrings.sort();
               categoryClasses.forEach(function (category, index) {
                 var span = document.createElement("span");
-                span.className = category;
+                span.setAttribute("category", category);
                 span.innerHTML = categoryStrings[index];
                 spanTags.push(span);
                 nav.appendChild(span);
@@ -185,17 +185,20 @@ POETRYBOOK.tree = (function () {
             aTag.href = "#" + sectionTag.id;
             if (headingTag.className !== "") {
               if (headingTag.className !== "x") {
-                aTag.className = headingTag.className;
+                //aTag.className = headingTag.className;
+                aTag.setAttribute("category", headingTag.className);
+                aTag.className = "unselected";
               } else {
-                aTag.setAttribute("class", "x " + headingTag.className);
+                aTag.setAttribute("category", headingTag.className);
+                aTag.className = "x";
               }
             }
             aTags.push(aTag);
           });
           aTags.forEach(function (aTag) {
-            if (aTag.className !== "") {
+            if (aTag.getAttribute("category") !== null) {
               spanTags.forEach(function (spanTag) {
-                if (spanTag.className === aTag.className) {
+                if (spanTag.getAttribute("category") === aTag.getAttribute("category")) {
                   //Insert new <a> tag after the catefory <span> tag 
                   spanTag.parentNode.insertBefore(aTag, spanTag.nextSibling);
                 }
@@ -207,6 +210,17 @@ POETRYBOOK.tree = (function () {
           //console.log(spanTags.length);
         }
       //console.log("*");
+      }
+    });
+  }
+  function addIdAttributeToImgTags() {
+    var imgTags = document.querySelectorAll("img");
+    imgTags = Array.prototype.slice.call(imgTags);
+    imgTags.forEach(function(imgTag) {
+      var altText = imgTag.getAttribute("alt");
+      if (altText !== null) {
+        altText = normalizeText(altText);
+        imgTag.setAttribute("id", altText);
       }
     });
   }
@@ -254,6 +268,8 @@ POETRYBOOK.tree = (function () {
     var headings = findHTagsInDocument();
     //Create the heading text, class and ids
     headings.forEach(makeHeadingTextClassAndID);
+    //Add id attributes to any image tags. The id's will match the alt text
+    addIdAttributeToImgTags();
     //Make <section> tags that wrap each section of content defined by a heading
     headings.forEach(makeSections);
     //Create <nav> tags for level of headings, if they contain sub-sections

@@ -6,8 +6,11 @@ POETRYBOOK.poet = (function () {
   
   //List the markdown documents you want to load into the array
   var markdownDocuments = ["book.markdown"],
-    contentSections,
-    currentlyDisplayedSection;
+    contentSections,  
+    currentlyDisplayedSection,
+    navATags,
+    navSection = {name: "", newSelection: "", oldSelection: ""},
+    navSections = [];
   
   //Display the correct <h2> content section if the section.id matches the url location hash
   function display(section) {
@@ -29,15 +32,73 @@ POETRYBOOK.poet = (function () {
     }  
   }
   
+  //This function maintains the correct slection state 
+  //for each level of sub-navigation
+  function highlightSelectedLink(event) {
+    
+    //Find out from which section level the click game from 
+    var currentNavSection = event.target.parentNode.parentNode.className;
+    
+    function makeNewNavSection(currentNavSection) {
+      var newNavSection = Object.create(navSection);
+      newNavSection.name = currentNavSection;
+      newNavSection.oldSelection = undefined;
+      newNavSection.newSelection = event.target;
+      newNavSection.newSelection.className = "selected";
+      navSections.push(newNavSection);
+    }
+    
+    //If there aren't any navigation sections create a new one
+    //(There won't be any the first time the page loads)
+    if (navSections.length === 0) {
+      makeNewNavSection(currentNavSection);
+    } else {
+      //If there are navigation sections, find ot whether any of their
+      //names match the currentNavSection 
+      navSections.some(function(navSection){
+        //If they do, select the current link and deselect the old one
+        if(navSection.name === currentNavSection) {
+          navSection.oldSelection = navSection.newSelection
+          navSection.oldSelection.className = "unselected";
+          navSection.newSelection = event.target;
+          navSection.newSelection.className = "selected";
+          return true;
+        } else {
+          //If they don't, we must be visiting a new navigation section, so
+          //create a new one to start tracking it
+          makeNewNavSection(currentNavSection);
+        }
+      });
+    }
+    /*
+    if(nav.section.oldSelection !== undefined) {
+      nav.section.oldSelection.className = "unselected";
+    }
+    nav.section.name = event.target.parentNode.parentNode.className;
+    nav.section.newSelection = event.target;
+    console.log(nav.section.newSelection);
+    nav.section.newSelection.className = "selected";
+    nav.section.oldSelection = nav.section.newSelection; 
+   */
+  }
+  
   function update() {
     requestAnimationFrame(update);
     contentSections.some(display);
   }
+  
   //The tree.js function runs this callback when the HTML tree has been built
   function poetry() {
     //Find all the <h2> heading sections. They have all belong to the class ".section1"
     contentSections = document.querySelectorAll(".section1");
     contentSections = Array.prototype.slice.call(contentSections);
+    //Find all the <a> tags inside the <nav> sections. Add a mousedown listenter to the them
+    //to check wether they're the currently selected link, and updated their class names to match.
+    navATags = document.querySelectorAll("nav a");
+    navATags = Array.prototype.slice.call(navATags);
+    navATags.forEach(function(navATag) {
+      navATag.addEventListener("mousedown", highlightSelectedLink, false);
+    });
     
     //Display the first section content 
     //(this will be the first <h2> heading section in the markdown document)
