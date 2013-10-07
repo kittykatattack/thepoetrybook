@@ -1,26 +1,19 @@
-*
-{
+* {
   margin: 0px;
   padding: 0px;
   font-size: 100%;
   color: white;
-  font-family: 'Libre Baskerville', serif;
+  font-family:'Libre Baskerville', serif;
 }
-
-#toc
-{
+#toc {
   display: none;
 }
-
-body, html
-{
+body, html {
   width: 100%;
   height: 100%;
   background-color: white;
 }
-
-.section0
-{
+.section0 {
   position: relative;
   width: 100%;
   height: 100%;
@@ -29,45 +22,32 @@ body, html
   padding: 0%;
   overflow-x: hidden;
 }
-
-p
-{
+p {
   font-size: 1em;
   line-height: 2em;
   padding-bottom: 1em;
 }
-
-ul
-{
+ul {
   padding-bottom: 1em;
 }
-
-ul li
-{
+ul li {
   line-height: 2em;
 }
-
-a
-{
+a {
   color: #c2ba95;
   text-decoration: none;
 }
-
-a:hover
-{
+a:hover {
   color: #c2ba95;
   text-decoration: underline;
 }
-
-header
-{
+header {
   position: absolute;
   left: 0%;
   height: 100%;
   width: 4%;
   background-color: #2E2E2E;
 }
-
 /*
 In this example the Poetry Book title is in an 
 h1 tag that's been rotated 90% around it's top left corner.
@@ -78,8 +58,7 @@ Because of this, you need to set a maximum width in pixels to give the text insi
 the h1 tag enough room to flow up the page.
 Set the h1 element's background-color to red help you debug positioning problems
 */
-h1
-{
+ h1 {
   font-size: 1.8em;
   color: white;
   position: absolute;
@@ -89,15 +68,13 @@ h1
   padding-left: 0.1em;
   padding-top: 0.16em;
   /* background-color: red; */
-  
   /* Rotate the text */
-  -webkit-transform: rotate(-90deg); /* Safari */
-  -moz-transform: rotate(-90deg); /* Firefox */
-  -ms-transform: rotate(-90deg); /* IE */
-  -o-transform: rotate(-90deg); /* Opera */
-  transform: rotate(-90deg); /* Generic */
-  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3); /* Internet Explorer */
-    
+  -webkit-transform: rotate(-90deg);
+  -moz-transform: rotate(-90deg);
+  -ms-transform: rotate(-90deg);
+  -o-transform: rotate(-90deg);
+  transform: rotate(-90deg);
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
   /* Make the rotation happen around the top left corner */
   -webkit-transform-origin: top left;
   -moz-transform-origin: top left;
@@ -105,8 +82,7 @@ h1
   -o-transform-origin: top left;
   transform-origin: top left;
 }
-.section0 nav
-{
+.section0 nav {
   position: absolute;
   left: 4%;
   height: 100%;
@@ -118,9 +94,7 @@ h1
   overflow-x: auto;
   z-index: 3000;
 }
-
-.section0 nav a, .section0 nav a.unselected
-{
+.section0 nav a, .section0 nav a.unselected {
   display: block;
   padding-bottom: 0.7em;
   padding-left: 1em;
@@ -128,49 +102,35 @@ h1
   font-size: 1.2em;
   outline: none;
 }
-
-.section0 nav a:hover, .section0 nav a.selected
-{
+.section0 nav a:hover, .section0 nav a.selected {
   color: #eee8aa;
   text-decoration: none;
 }
-
-.section0 nav span
-{
+.section0 nav span {
   display: block;
   font-size: 1.4em;
-  color: white; 
+  color: white;
   padding-top: 1em;
   padding-bottom: 1em;
 }
-
 /* This next style is just used to add 3em of padding to the top
 of the first section that doesn't have a category. This is
 so that it's neatly padded from the top of the page */
-.section0 nav a:first-child
-{
+ .section0 nav a:first-child {
   padding-top: 3em;
 }
-
-nav a:last-child
-{
+nav a:last-child {
   padding-bottom: 2em;
 }
-
-
-em, code
-{
+em, code {
   color: black;
 }
-
 /* 
 <section> tags are created automatically by poetryBook.js when it loads the 
 markdown document. It wraps each content section beginning with <h2> or ## in
 an <section> tag, so that the content pages can be positioned.
 */
-
-.section1
-{
+ .section1 {
   position: absolute;
   left: 23%;
   width: 58%;
@@ -178,72 +138,55 @@ an <section> tag, so that the content pages can be positioned.
   color: black;
   opacity: 0;
   display: block;
-	
   padding-left: 10%;
   padding-right: 10%;
-	
   overflow-y: scroll;
   overflow-x: hidden;
-	
   background-color: white;
-	
   transition: opacity 0.5s;
-  -moz-transition: opacity 0.5s; /* Firefox 4 */
-  -webkit-transition: opacity 0.5s; /* Safari and Chrome */
-  -o-transition: opacity 0.5s; /* Opera */
-  -ms-transition: opacity 0.5s; /* IE */ 
-  
+  -moz-transition: opacity 0.5s;
+  /* Firefox 4 */
+  -webkit-transition: opacity 0.5s;
+  /* Safari and Chrome */
+  -o-transition: opacity 0.5s;
+  /* Opera */
+  -ms-transition: opacity 0.5s;
+  /* IE */
   /* Prevent Safari flickering transition bug */
   -webkit-backface-visibility: hidden;
 }
-
-.section1 p, ul li
-{
+.section1 p, ul li {
   font-size: 1.1em;
   color: black;
 }
-
-.section1 h2, .section1 h3
-{
+.section1 h2, .section1 h3 {
   font-size: 1.8em;
   color: black;
   font-weight: normal;
   padding-top: 1em;
   padding-bottom: 1em;
 }
-
-.section1 h3
-{
+.section1 h3 {
   font-size: 1.6em;
 }
-
-.section1 h4
-{
+.section1 h4 {
   font-size: 1.2em;
 }
-
-.section1 h5, .section1 h6, 
-{
+.section1 h5, .section1 h6, {
   font-size: 1em;
 }
-
-.section1 a
-{
+.section1 a {
   color: black;
   text-decoration: underline;
   outline: none;
   font-size: 1em;
 }
-.section1 a:hover
-{
+.section1 a:hover {
   color: grey;
 }
-
-.section1 p:last-child
-{
+.section1 p:last-child {
   padding-bottom: 3em;
 }
-
 /* 
 Use these next styles for any sub-navigation you might have inside the sections 
 <h3> tags inside <section> tags used to automatically build the sub-navigation bar.
@@ -254,9 +197,7 @@ section nav
   display: none;
 }
 */
-
-.section1 nav
-{
+ .section1 nav {
   background-color: #2E2E2E;
   width: 12%;
   height: 99%;
@@ -268,45 +209,38 @@ section nav
   position: fixed;
   opacity: 0.1;
   overflow-y: scroll;
-  overflow-x: hidden; 
+  overflow-x: hidden;
   color: white;
   font-size: 1em;
   outline: none;
   text-decoration: none;
-  
   transition: left 0.2s, opacity 0.2s;
-  -moz-transition: left 0.2s, opacity 0.2s; /* Firefox 4 */
-  -webkit-transition: left 0.2s, opacity 0.2s; /* Safari and Chrome */
-  -o-transition: left 0.2s, opacity 0.2s; /* Opera */
-  -ms-transition: left 0.2s, opacity 0.2s; /* IE */ 
-  
+  -moz-transition: left 0.2s, opacity 0.2s;
+  /* Firefox 4 */
+  -webkit-transition: left 0.2s, opacity 0.2s;
+  /* Safari and Chrome */
+  -o-transition: left 0.2s, opacity 0.2s;
+  /* Opera */
+  -ms-transition: left 0.2s, opacity 0.2s;
+  /* IE */
   /* Prevent Safari flickering transition bug */
   -webkit-backface-visibility: hidden;
 }
-
-.section1 nav a, .section1 nav a.unselected
-{
+.section1 nav a, .section1 nav a.unselected {
   text-decoration: none;
   font-size: 1em;
 }
-.section1 nav:hover
-{
+.section1 nav:hover {
   left: 23%;
   opacity: 1;
 }
-
-.section1 nav a:hover
-{
+.section1 nav a:hover {
   color: #eee8aa;
 }
-
 /* Prevent deep sub-section navigation bars from displaying, if there are any */
-.section2 nav, .section3 nav,
-.section4 nav, .section5 nav
-{
+ .section2 nav, .section3 nav, .section4 nav, .section5 nav {
   display: none;
 }
-
 /* 
 If you need to style an individual section that contains the 
 page content, it will have the same id name as that page's url.
@@ -319,12 +253,9 @@ For example, here's how to style an aricle that has the url #SongsofthePixies:
 */
 
 /* Hidden Content */
-
-.x
-{
+ .x {
   display: none;
 }
-
 /*
 Hidden content
 
@@ -380,77 +311,59 @@ reload the index.html page.
 /* Responsive design styles */
 
 /* Styles for screens under 1150px */
-@media all and (max-width: 1150px) 
-{
-  h1
-  {
+ @media all and (max-width: 1150px) {
+  h1 {
     font-size: 1.4em;
   }
 }
-
 /* Styles for screens under 850px */
-@media all and (max-width: 850px) 
-{
+ @media all and (max-width: 850px) {
   /*Make fonts smaller*/
-  .section0 nav h2, .section1 h2
-  {
+  .section0 nav h2, .section1 h2 {
     font-size: 1em;
   }
-  
-  .section1 h3, .section0 nav a, .section0 nav a.unselected
-  {
+  .section1 h3, .section0 nav a, .section0 nav a.unselected {
     font-size: 0.9em;
   }
-  
-  .section1 h4
-  {
+  .section1 h4 {
     font-size: 0.875em;
   }
-  
-  .section1 p, section li
-  {
+  .section1 p, section li {
     font-size: 0.875em;
   }
-  
   /* Move the title heading from the side to the top*/
-  .section0 nav
-  {
+  .section0 nav {
     width: 20%;
     height: 80%;
     top: 20%;
     left: 0%;
   }
-  header
-  {
+  header {
     height: 20%;
     width: 20%;
     padding-left: 2%;
     padding-right: 2%;
     z-index: 2;
   }
-  
-  h1
-  { 
+  h1 {
     top: 0.5em;
     left: 1em;
-    font-size: 1.2em;
+    font-size: 1.6em;
+    padding: 0;
+    margin:0;
     width: auto;
     height:auto;
-    -webkit-transform: rotate(0deg); /* Safari */
-    -moz-transform: rotate(0deg); /* Firefox */
-    -ms-transform: rotate(0deg); /* IE */
-    -o-transform: rotate(0deg); /* Opera */
-    transform: rotate(0deg); /* Generic */
-    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0); /* Internet Explorer */
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0);
   }
-  .section1 nav
-  {
+  .section1 nav {
     display: none;
   }
-  
-  .section1 img
-  {
+  .section1 img {
     width: 80%;
   }
 }
-

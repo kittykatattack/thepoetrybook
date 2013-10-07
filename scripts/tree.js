@@ -3,22 +3,28 @@ var POETRYBOOK = POETRYBOOK || {};
 
 POETRYBOOK.tree = (function () {
   "use strict";
-  
+
   var documentsLoaded = 0,
     //The loaded markdown document
     markdown = "",
     markdownDocuments,
     poetry;
-  
+
   //Set the markdown converter options
-  marked.setOptions({gfm: true, breaks: true, tables: true});
-  
+  marked.setOptions({
+    gfm: true,
+    breaks: true,
+    tables: true
+  });
+
   //A function to capitalize the first letter of a string
+
   function capitaliseFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
-  
+
   //Make strings lowercase, remove space and punctuation
+
   function normalizeText(string) {
     //Remove punctuation
     string = string.replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()?]/g, "");
@@ -28,11 +34,11 @@ POETRYBOOK.tree = (function () {
     string = string.toLowerCase();
     return string;
   }
-  
+
   function replaceString(oldS, newS, fullS) {
     return fullS.split(oldS).join(newS);
   }
-  
+
   function findHTagsInDocument() {
     var headings = [];
     var i;
@@ -47,7 +53,7 @@ POETRYBOOK.tree = (function () {
     }
     return headings;
   }
-  
+
   function makeHeadingTextClassAndID(headingTags, index) {
     headingTags.forEach(function (headingTag) {
       //1. Create the heading title, id, and class
@@ -72,14 +78,14 @@ POETRYBOOK.tree = (function () {
         //Add a category attribute to the heading
         headingTag.setAttribute("category", classText);
       }
-      //Set a heirarchyLevel attribute to the heading. This will be section0 to section6
-      //Depending on the level's heirarchy. This to help us create <section> tags with
-      //the class names that match that heirarchy. This makes it easy to hide or display
+      //Set a hierarchyLevel attribute to the heading. This will be section0 to section6
+      //Depending on the level's hierarchy. This to help us create <section> tags with
+      //the class names that match that hierarchy. This makes it easy to hide or display
       //levels of content depending on user interaction and navigation.
-      headingTag.setAttribute("heirarchyLevel", "section" + index);
+      headingTag.setAttribute("hierarchyLevel", "section" + index);
     });
   }
-  
+
   function makeSections(headingTags, index) {
     headingTags.forEach(function (headingTag) {
       //Create the <section> tag
@@ -87,9 +93,9 @@ POETRYBOOK.tree = (function () {
       var section = document.createElement("section");
       section.id = normalizeText(headingTag.innerHTML);
       if (headingTag.className !== "x") {
-        section.className = headingTag.getAttribute("heirarchyLevel");
+        section.className = headingTag.getAttribute("hierarchyLevel");
       } else {
-        section.setAttribute("class", "x " + headingTag.getAttribute("heirarchyLevel") );
+        section.setAttribute("class", "x " + headingTag.getAttribute("hierarchyLevel"));
       }
       if (index !== 0) {
         //Insert the section just before the current heading tag
@@ -116,7 +122,7 @@ POETRYBOOK.tree = (function () {
       });
     });
   }
-  
+
   function buildNavigation(headingTags) {
     //console.log("***");
     //Loop through each heading level and find it
@@ -151,8 +157,7 @@ POETRYBOOK.tree = (function () {
               //Only add a new category to the array
               //if it hasn't already been added in a previous iteration of the loop
               if (categoryClasses.indexOf(headingTag.className) === -1) {
-                if(headingTag.className !== "x")
-                {
+                if (headingTag.className !== "x") {
                   categoryClasses.push(headingTag.className);
                   categoryStrings.push(headingTag.getAttribute("category"));
                 }
@@ -209,14 +214,15 @@ POETRYBOOK.tree = (function () {
           });
           //console.log(spanTags.length);
         }
-      //console.log("*");
+        //console.log("*");
       }
     });
   }
+
   function addIdAttributeToImgTags() {
     var imgTags = document.querySelectorAll("img");
     imgTags = Array.prototype.slice.call(imgTags);
-    imgTags.forEach(function(imgTag) {
+    imgTags.forEach(function (imgTag) {
       var altText = imgTag.getAttribute("alt");
       if (altText !== null) {
         altText = normalizeText(altText);
@@ -224,14 +230,16 @@ POETRYBOOK.tree = (function () {
       }
     });
   }
+
   function makeTableOfContents() {
     //Create a <div id="contents">
     var toc = document.createElement("div");
     toc.id = "toc";
     //Add it as the firt child to the body
     document.body.insertBefore(toc, document.body.firstChild);
-    
+
     //Thank you!:https://github.com/matthewkastor/html-table-of-contents
+
     function htmlTableOfContents(documentRef) {
       var toc = documentRef.getElementById('toc');
       var headings = [].slice.call(documentRef.body.querySelectorAll('h1, h2, h3, h4, h5, h6'));
@@ -239,14 +247,14 @@ POETRYBOOK.tree = (function () {
         var anchor = documentRef.createElement('a');
         anchor.setAttribute('name', 'toc' + index);
         anchor.setAttribute('id', 'toc' + index);
-        
+
         var link = documentRef.createElement('a');
         link.setAttribute('href', '#toc' + index);
         link.textContent = heading.textContent;
-        
+
         var div = documentRef.createElement('div');
         div.setAttribute('class', heading.tagName.toLowerCase());
-        
+
         div.appendChild(link);
         toc.appendChild(div);
         heading.parentNode.insertBefore(anchor, heading);
@@ -254,13 +262,14 @@ POETRYBOOK.tree = (function () {
     }
     htmlTableOfContents(document);
   }
+
   function makeHeaderSection() {
     var h1 = document.querySelector("h1");
     var header = document.createElement("header");
     h1.parentNode.insertBefore(header, h1);
     header.appendChild(h1);
   }
-  
+
   function makeHTMLpage() {
     //Copy the loaded markdown into the body
     document.body.innerHTML += markdown;
@@ -279,14 +288,14 @@ POETRYBOOK.tree = (function () {
     makeHeaderSection();
     //Build the table of contents
     makeTableOfContents();
-    
+
     //Run the poetry callback function in the poet.js file to tell it that
     //the HTML has been built
     if (poetry !== undefined) {
       poetry();
     }
   }
-  
+
   function loadFile(fileName) {
     var reader = new XMLHttpRequest();
     reader.open("get", fileName, true);
@@ -303,18 +312,18 @@ POETRYBOOK.tree = (function () {
     }, false);
     reader.send(null);
   }
-  
-  function makeHTMLFromMarkdown(documents, callBackFunction) {
+
+  function makeHTMLFromMarkdown(config) {
     //Load the markdown files
-    markdownDocuments = documents;
+    markdownDocuments = config.files;
     //A callback function to alert poet.js that the HTML has been built
-    poetry = callBackFunction;
+    poetry = config.callback;
     markdownDocuments.forEach(loadFile);
   }
-  
-  //Pulic API
+
+  //Public API
   return {
     makeHTMLFromMarkdown: makeHTMLFromMarkdown
   };
-  
+
 }());
