@@ -12,72 +12,71 @@ POETRYBOOK.poet = (function () {
     previousLocation;
 
   function selectSection() {
+    //Find the level at which the selection is happening
     var sectionLevel;
-    //Look at the sections
-    sections.some(function(section, index) {
+    sections.some(function(section) {
       //Is there one that has an id that matches the url hash location?
       if (window.location.hash === "#" + section.id) {
-        //If there is, set the section's state attribute to selected
-        section.setAttribute("state", "selected");
         //Figure out the section level (0, 1, 2 etc.) by looking at last character
         //of the section's class name
-        sectionLevel = section.className.slice(-1);
-        //We also want to select the section's matching <a> tag, so the css
-        //can create a highlight effect
-        //Check all the <a> tags inside <nav> tags
-        console.log(section.id);
-        console.log(section.getAttribute("state"));
-        aTags.forEach(function(aTag) {
-          //Do the <a> tag and the <section> have the same parent?
-          if(aTag.parentNode.parentNode === section.parentNode) {
-            //If they do, does the <a> tag's href match the <section> id?
-            if (section.id === aTag.href.slice(aTag.href.indexOf("#") + 1)) { 
-              //If yes, set the <a> tag state to selected
-              aTag.setAttribute("state", "selected");
-            } else {
-              //If not, set it to unselected
-              aTag.setAttribute("state", "unselected"); 
-            }
-          }
-        });
+        sectionLevel = parseInt(section.parentNode.className.slice(-1));
         return true;
       }
     });
-    //We need to deselect sections and <a> tags that aren't currently selected
-    sections.some(function(section) {
-      var previousSectionLevel = section.className.slice(-1);
-      //Check whether the previousLocation matches a <section> id
-      if (previousLocation === "#" + section.id) { 
-        //If it does, is it in the current selection level? (0, 1, 2 etc.)
-        if (previousSectionLevel === sectionLevel) {
-          //If it is, unselect it
-          section.setAttribute("state", "unselected");
-          //Unselect it's matching <a> tag
-          aTags.some(function(aTag) {
-            if (section.id === aTag.href.slice(aTag.href.indexOf("#") + 1)) { 
-              aTag.setAttribute("state", "unselected");
-              return true;
+    sections.forEach(function(section) {;
+      var selectedParent
+      //Is the <section> at the same navigation level as the selected section?
+      if (parseInt(section.parentNode.className.slice(-1)) === sectionLevel) {
+        //Is there one that has an id that matches the url hash location?
+        if (window.location.hash === "#" + section.id) {
+          //If there is, select it, and it's parent
+          section.setAttribute("state", "selected");
+          section.parentNode.setAttribute("state", "selected");
+          selectedParent = section.parentNode;
+          //Set any <section> tags in the parent's level to "unselected"
+          sections.forEach(function(parentSection) {
+            if (parseInt(parentSection.parentNode.className.slice(-1)) === sectionLevel - 1) {
+             if (parentSection !== selectedParent) {
+               parentSection.setAttribute("state", "unselected");
+             } 
             }
           });
-          return true;
-        }
-        //Unselect a section if we're moving further up in the hierarchy
-        if (previousSectionLevel > sectionLevel) {
-          //section.parentNode.setAttribute("state", "unselected");
+        } else {
+            section.setAttribute("state", "unselected");
         }
       }
     });
-  }
-  
-  function highlightSectionLink() {
-    var sectionLevel
-    aTags.some(function(aTag) {
-      if (window.location.hash === aTag.href.slice(aTag.href.indexOf("#"))) { 
-        aTag.setAttribute("state", "selected");
-        sectionLevel = aTag.parentNode.parentNode.className.slice(-1);
-        console.log("aTag: " + aTag.href.slice(aTag.href.indexOf("#")));
-        console.log("sectionLevel: " + sectionLevel);
-        return true;
+    aTags.forEach(function(aTag) {
+      var sectionAnchor
+      //Is the <a> tag at the same navigation level as the selected section?
+      if (parseInt(aTag.parentNode.parentNode.className.slice(-1)) === sectionLevel) {
+        //Is there one that has an id that matches the url hash location?
+        if (window.location.hash === aTag.href.slice(aTag.href.indexOf("#"))) {
+          //If there is, select it
+          aTag.setAttribute("state", "selected");
+          //Also select the section's anchor <a> tag, if it exists
+          var searchString = "[href=\"#" + aTag.parentNode.parentNode.id + "\"]";
+          sectionAnchor = document.querySelector(searchString);
+          if(sectionAnchor !== null) {
+            sectionAnchor.setAttribute("state", "selected");
+            //If there is a section anchor, deselect any other anchors on the
+            //parent section level
+            aTags.forEach(function(parentATag) {
+              if (parseInt(parentATag.parentNode.parentNode.className.slice(-1)) === sectionLevel - 1) {
+                if (parentATag !== sectionAnchor) {
+                  parentATag.setAttribute("state", "unselected");
+                } 
+              }
+            });
+          }
+        } else {
+          //Unselect any <a> tags only their parent is currently selected
+          //(This allows us to maintain <a> selection hightlight states 
+          //for currently unselected sections)
+          if(aTag.parentNode.parentNode.getAttribute("state") === "selected") {
+            aTag.setAttribute("state", "unselected");
+          }
+        }
       }
     });
   }
