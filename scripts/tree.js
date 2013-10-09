@@ -92,6 +92,7 @@ POETRYBOOK.tree = (function () {
       //Give it the same id and class name as the heading
       var section = document.createElement("section");
       section.id = normalizeText(headingTag.innerHTML);
+      section.setAttribute("state", "unselected");
       if (headingTag.className !== "x") {
         section.className = headingTag.getAttribute("hierarchyLevel");
       } else {
@@ -187,12 +188,13 @@ POETRYBOOK.tree = (function () {
             //Create an <a> tag for each heading and append it to the <nav> tag
             var aTag = document.createElement("a");
             aTag.innerHTML = headingTag.innerHTML;
+            aTag.setAttribute("state", "unselected");
             aTag.href = "#" + sectionTag.id;
             if (headingTag.className !== "") {
               if (headingTag.className !== "x") {
                 //aTag.className = headingTag.className;
                 aTag.setAttribute("category", headingTag.className);
-                aTag.className = "unselected";
+                //aTag.className = "unselected";
               } else {
                 aTag.setAttribute("category", headingTag.className);
                 aTag.className = "x";
