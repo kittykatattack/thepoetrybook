@@ -31,9 +31,7 @@ POETRYBOOK.poet = (function () {
   "use strict";
 
   //List the markdown documents you want to load into the array
-  var markdownDocuments = ["../example3.markdown"],
-    //Variables we'll need
-    sections,
+  var sections,
     aTags,
     currentLocation,
     previousLocation;
@@ -82,42 +80,15 @@ POETRYBOOK.poet = (function () {
     });
     //Select the correct matching <a> tags for each section
     aTags.forEach(function (aTag) {
-      var sectionAnchor;
-      //Is the <a> tag at the same navigation level as the selected section?
-      if (parseInt(aTag.parentNode.parentNode.className.slice(-1)) === sectionLevel) {
-        //Is there one that has an id that matches the url hash location?
-        if (window.location.hash === aTag.href.slice(aTag.href.indexOf("#"))) {
-          //If there is, select it
-          aTag.setAttribute("state", "selected");
-          //Also select the section's anchor <a> tag, if it exists
-          var searchString = "[href=\"#" + aTag.parentNode.parentNode.id + "\"]";
-          sectionAnchor = document.querySelector(searchString);
-          if (sectionAnchor !== null) {
-            sectionAnchor.setAttribute("state", "selected");
-            //If there is a section anchor, deselect any other anchors on the
-            //parent section level, except the parent itself
-            aTags.forEach(function (parentATag) {
-              var parent = parentATag.parentNode.parentNode;
-              var parentSectionLevel = parseInt(parent.className.slice(-1));
-              if (parentSectionLevel === sectionLevel - 1) {
-                if (parentATag !== sectionAnchor) {
-                  parentATag.setAttribute("state", "unselected");
-                }
-              }
-            });
-          }
-        } else {
-          //Unselect any <a> tags only if their parent is currently selected
-          //(This allows us to maintain <a> selection hightlight states 
-          //inside currently unselected sections)
-          if (aTag.parentNode.parentNode.getAttribute("state") === "selected") {
-            aTag.setAttribute("state", "unselected");
-          }
+      sections.some(function (section) {
+        if (aTag.getAttribute("href") === "#" + section.id) {
+          aTag.setAttribute("state", section.getAttribute("state"));
+          return true;
         }
-      }
+      });
     });
   }
-  
+
   //This function runs every 1/60th of a second and watches for changes
   //in the url location hash. If it changes, the selectSection function finds the
   //new selected sections and also selects the matching <a> tags
@@ -146,6 +117,15 @@ POETRYBOOK.poet = (function () {
     aTags = document.querySelectorAll("nav a");
     aTags = Array.prototype.slice.call(aTags);
 
+    //Intialize the first sub-sections of each main section to state "selected"
+    sections.forEach(function (section) {
+      if (section.parentNode.className !== section.className) {
+        var firstSubSection = section.parentNode.querySelector("section:first-of-type");
+        if (firstSubSection.getAttribute("state") === "unselected") {
+          firstSubSection.setAttribute("state", "selected");
+        }
+      }
+    });
     //First figure out which section to load first. This should be
     //a <section> tag that belongs to the section1 class
     //Load the first section1 tag if the url hash location is empty
@@ -175,7 +155,7 @@ POETRYBOOK.poet = (function () {
   }
   //Tell the tree.js to build the HTML tree structure from the markdown documents
   POETRYBOOK.tree.makeHTMLFromMarkdown({
-    files: markdownDocuments,
+    files: POETRYBOOK.documents,
     callback: poetry
   });
 
