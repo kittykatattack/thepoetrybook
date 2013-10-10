@@ -1,9 +1,11 @@
 /*jslint white: false, indent: 2, browser: true, maxerr: 200, maxlen: 100, plusplus: true, vars: true  */
-/* This file loads the markdown documents and passes them to the tree.js file, which turns them into HTML. List your markdown documents in the markdownDocuments array, like this:
+/* This file loads the markdown documents and passes them to the tree.js file, which turns them into HTML. List your markdown documents in the documents.js file array, like this:
 
-var markdownDocuments = ["../book.markdown", "../anotherDocument.markdown"]
+POETRYBOOK.documents = (function () {
+  return ["../book.markdown", "../anotherBook.markdown"];
+}());
 
-When tree.js has built the, it runs a callback funtion in this file called poetry. The job of poetry is to display the first section that that the viewer should see. It then runs the update function that watches for changes in the url location hash. When the has changes, it runs the selectSection function which figures out which <section> tags and their matching <a> tags should have their "state" attributes set to "selected" or "unselected". This maintains a general, all-purpose seclection state that can be used with css to selectively display sections. For example, if you want <section> tags belonging to the section1 class to be visible when only when they're selected, use some css like this:
+When tree.js has built the HTML, it runs a callback function in this file called poetry. The job of poetry is to display the first section that the viewer should see. It then runs the update function that watches for changes in the url location hash. When the hash changes, it runs the selectSection function which figures out which <section> tags and their matching <a> tags should have their "state" attributes set to "selected" or "unselected". This maintains a general, all-purpose selection state that can be used with css to selectively display sections. For example, if you want <section> tags belonging to the section1 class to be visible when only when they're selected, use some css like this:
 
 section .section1[state=selected] {
   opacity: 1;
@@ -23,6 +25,8 @@ nav a[state=selected] {
 nav a[state=unselected] {
   color: white;
 }
+
+By default, the poetry function in this file intializes the first sub-section of each section as "selected". This is helpful because it means that each first section can also be the first visible one.
 */
 
 var POETRYBOOK = POETRYBOOK || {};

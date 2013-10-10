@@ -55,7 +55,7 @@ POETRYBOOK.tree = (function () {
   }
 
   function makeHeadingTextClassAndID(headingTags, index) {
-    headingTags.forEach(function (headingTag) {
+    headingTags.forEach(function (headingTag) { 
       //1. Create the heading title, id, and class
       var tagText = headingTag.innerHTML;
       //Find the position of the square brackets  
@@ -87,7 +87,7 @@ POETRYBOOK.tree = (function () {
   }
 
   function makeSections(headingTags, index) {
-    headingTags.forEach(function (headingTag) {
+    headingTags.forEach(function (headingTag) { 
       //Create the <section> tag
       //Give it the same id and class name as the heading
       var section = document.createElement("section");
@@ -98,10 +98,21 @@ POETRYBOOK.tree = (function () {
       } else {
         section.setAttribute("class", "x " + headingTag.getAttribute("hierarchyLevel"));
       }
-      if (index !== 0) {
+      //This set of if statements inserts the first section as a child of the body.
+      //It inserts following sections as chidren of their parents. If a heading which isn't
+      //an <h1> tag happpens to be the first one loaded, it makes sure that it's appended to
+      //the first <section> element, not the <body>. (This could happen if multiple documents
+      //are loaded out of order, and the first loaded document starts with <h2> or <h3>)
+      if (headingTag.tagName !== "H1") {
         //Insert the section just before the current heading tag
-        headingTag.parentNode.insertBefore(section, headingTag);
-      } else {
+        if(headingTag.parentNode !== document.body) {
+          headingTag.parentNode.insertBefore(section, headingTag);
+        }else {
+          var firstSection = document.body.querySelector("section:first-of-type");
+          console.log(firstSection);
+          firstSection.insertBefore(section, firstSection.firstChild);
+        }
+      } else { 
         //If this is the first section, insert it as the first child of the body
         document.body.insertBefore(section, document.body.firstChild);
       }
@@ -121,6 +132,7 @@ POETRYBOOK.tree = (function () {
       sectionContent.forEach(function (element) {
         section.appendChild(element);
       });
+      //console.log(section);
     });
   }
 
@@ -297,19 +309,23 @@ POETRYBOOK.tree = (function () {
       poetry();
     }
   }
-
+  
   function loadFile(fileName) {
     var reader = new XMLHttpRequest();
-    reader.open("get", fileName, true);
+    reader.open("GET", fileName, true);
     reader.addEventListener("readystatechange", function () {
       if (reader.readyState === 4) {
-        //Convert the markdown to HTML text inside the <section id="book"> tag
-        markdown += (marked(reader.responseText));
-        documentsLoaded += 1;
-        //Build the HTML Dom tree if all the markdown documents have been loaded
-        if (documentsLoaded === markdownDocuments.length) {
-          makeHTMLpage();
+        if (reader.status === 200) {
+          //Convert the markdown to HTML text inside the <section id="book"> tag
+          markdown += (marked(reader.responseText));
+          documentsLoaded += 1;
+          //Build the HTML Dom tree if all the markdown documents have been loaded
+          if (documentsLoaded === markdownDocuments.length) {
+            makeHTMLpage();
+          }
         }
+      } else {
+        //console.log("XHR Error: ", reader.statusText); 
       }
     }, false);
     reader.send(null);
