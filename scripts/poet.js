@@ -41,8 +41,10 @@ POETRYBOOK.poet = (function () {
     previousLocation;
 
   function selectSection() {
+
+    //Set selection states on sections
     function select(section) {
-      if(section && section.tagName === "SECTION") {
+      if (section && section.tagName === "SECTION") {
         section.setAttribute("state", "selected");
         //Find the navigation level of the current section
         var sectionLevel = parseInt(section.className.slice(-1));
@@ -58,7 +60,7 @@ POETRYBOOK.poet = (function () {
             }
           }
         });
-        //recursively select the section's parent nodes
+        //Recursively select the section's parent nodes
         select(section.parentNode);
       }
     }
@@ -131,13 +133,6 @@ POETRYBOOK.poet = (function () {
         if (window.location.hash === "#" + section.id) {
           selectSection();
           return true;
-          /*
-          while (section && section.className !== "section1") {
-            section = section.parentNode;
-          }
-          window.location.hash = "#" + section.id;
-          return true;
-          */
         }
       });
       //If there's still no match, just load the first section
