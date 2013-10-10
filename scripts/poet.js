@@ -41,45 +41,33 @@ POETRYBOOK.poet = (function () {
     previousLocation;
 
   function selectSection() {
-    //Find the level at which the selection is happening
-    var sectionLevel;
-    sections.some(function (section) {
-      //Is there a <section> that has an id that matches the url hash location?
-      if (window.location.hash === "#" + section.id) {
-        //Figure out the section level (0, 1, 2 etc.) by looking at last character
-        //of the section's class name
-        sectionLevel = parseInt(section.parentNode.className.slice(-1));
-        return true;
-      }
-    });
-    //Select the correct <section> tags
-    sections.forEach(function (section) {
-      var selectedParent;
-      //Is the <section> at the same navigation level as the selected section?
-      if (parseInt(section.parentNode.className.slice(-1)) === sectionLevel) {
-        //Is there a <section> that has an id that matches the url hash location?
-        if (window.location.hash === "#" + section.id) {
-          //If there is, select it, and it's parent
-          section.setAttribute("state", "selected");
-          section.parentNode.setAttribute("state", "selected");
-          selectedParent = section.parentNode;
-          //Set any <section> tags in the parent's level to "unselected",
-          //Except the parent itself
-          sections.forEach(function (parentSection) {
-            if (parseInt(parentSection.parentNode.className.slice(-1)) === sectionLevel - 1) {
-              if (parentSection !== selectedParent) {
-                parentSection.setAttribute("state", "unselected");
+    function select(section) {
+      if(section && section.tagName === "SECTION") {
+        section.setAttribute("state", "selected");
+        //Find the navigation level of the current section
+        var sectionLevel = parseInt(section.className.slice(-1));
+        //Unselect other sections on the same level
+        sections.forEach(function (testSection) {
+          var testSectionLevel = parseInt(testSection.className.slice(-1));
+          if (sectionLevel === testSectionLevel) {
+            if (section !== testSection) {
+              //Only deselect if the section's parent is currently selected
+              if (testSection.parentNode.getAttribute("state") === "selected") {
+                testSection.setAttribute("state", "unselected");
               }
             }
-          });
-        } else {
-          //Unselect any <section> tags only if their parent is currently selected.
-          //(This allows us to maintain <section> selection states inside
-          //other currently unselected sections)
-          if (section.parentNode.getAttribute("state") === "selected") {
-            section.setAttribute("state", "unselected");
           }
-        }
+        });
+        //recursively select the section's parent nodes
+        select(section.parentNode);
+      }
+    }
+    sections.some(function (section) {
+      if (window.location.hash === "#" + section.id) {
+        //Select a section if its id matches the url location hash
+        select(section);
+        section.scrollIntoView(true);
+        return true;
       }
     });
     //Select the correct matching <a> tags for each section
@@ -141,11 +129,15 @@ POETRYBOOK.poet = (function () {
       //until you hit one
       var sectionFound = sections.some(function (section) {
         if (window.location.hash === "#" + section.id) {
+          selectSection();
+          return true;
+          /*
           while (section && section.className !== "section1") {
             section = section.parentNode;
           }
           window.location.hash = "#" + section.id;
           return true;
+          */
         }
       });
       //If there's still no match, just load the first section
