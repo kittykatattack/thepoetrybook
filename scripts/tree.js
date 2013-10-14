@@ -283,6 +283,12 @@ POETRYBOOK.tree = (function () {
     h1.parentNode.insertBefore(header, h1);
     header.appendChild(h1);
   }
+  
+  function makeTitle() {
+    var h1 = document.querySelector("h1");
+    var title = document.querySelector("title");
+    title.innerHTML = h1.innerHTML;
+  }
 
   function makeHTMLpage() {
     //Copy the loaded markdown into the body
@@ -300,6 +306,8 @@ POETRYBOOK.tree = (function () {
     //Insert the <h1> tag into a <header> tag 
     //(Do this near the end so that we don't mess up the HTML stucture)
     makeHeaderSection();
+    //Add a <title>
+    makeTitle();
     //Build the table of contents
     makeTableOfContents();
 

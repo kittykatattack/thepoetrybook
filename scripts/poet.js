@@ -19,10 +19,10 @@ section .section1[state=unselected] {
 You can create a hightlight effect for selected sections like this:
 
 }
-nav a[state=selected] {
+.section0 nav a[state=selected] {
   color: #eee8aa;
 }
-nav a[state=unselected] {
+.section0 nav a[state=unselected] {
   color: white;
 }
 
@@ -41,7 +41,6 @@ POETRYBOOK.poet = (function () {
     previousLocation;
 
   function selectSection() {
-
     //Set selection states on sections
     function select(section) {
       if (section && section.tagName === "SECTION") {
@@ -68,7 +67,6 @@ POETRYBOOK.poet = (function () {
       if (window.location.hash === "#" + section.id) {
         //Select a section if its id matches the url location hash
         select(section);
-        section.scrollIntoView(true);
         return true;
       }
     });
@@ -80,6 +78,18 @@ POETRYBOOK.poet = (function () {
           return true;
         }
       });
+    });
+  }
+  
+  //Intialize the first sub-sections of each main section to state "selected"
+  function initializeSections() {
+    sections.forEach(function (section) {
+      if (section.parentNode.className !== section.className) {
+        var firstSubSection = section.parentNode.querySelector("section:first-of-type");
+        if (firstSubSection.getAttribute("state") === "unselected") {
+          firstSubSection.setAttribute("state", "selected");
+        }
+      }
     });
   }
 
@@ -111,33 +121,26 @@ POETRYBOOK.poet = (function () {
     aTags = document.querySelectorAll("nav a");
     aTags = Array.prototype.slice.call(aTags);
 
-    //Intialize the first sub-sections of each main section to state "selected"
-    sections.forEach(function (section) {
-      if (section.parentNode.className !== section.className) {
-        var firstSubSection = section.parentNode.querySelector("section:first-of-type");
-        if (firstSubSection.getAttribute("state") === "unselected") {
-          firstSubSection.setAttribute("state", "selected");
-        }
-      }
-    });
     //First figure out which section to load first. This should be
     //a <section> tag that belongs to the section1 class
     //Load the first section1 tag if the url hash location is empty
     if (window.location.hash === "") {
-      window.location.hash = "#" + sections[1].id;
+      initializeSections();
     } else {
       //If the url hash isn't empty, load the section that matches it.
       //If it's not a section1 class <section>, move up in the hierarchy 
       //until you hit one
       var sectionFound = sections.some(function (section) {
         if (window.location.hash === "#" + section.id) {
+          initializeSections();
           selectSection();
+          section.scrollIntoView(true);
           return true;
         }
       });
       //If there's still no match, just load the first section
       if (!sectionFound) {
-        window.location.hash = "#" + sections[1].id;
+        initializeSections();
       }
     }
     //Now that the first section has been loaded,
