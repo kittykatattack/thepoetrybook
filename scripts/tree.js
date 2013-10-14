@@ -87,11 +87,23 @@ POETRYBOOK.tree = (function () {
   }
 
   function makeSections(headingTags, index) {
+    var ids = [],
+      idDuplicateCounter = 0;
     headingTags.forEach(function (headingTag) { 
       //Create the <section> tag
       //Give it the same id and class name as the heading
       var section = document.createElement("section");
-      section.id = normalizeText(headingTag.innerHTML);
+      var sectionIdText = normalizeText(headingTag.innerHTML);
+      //Check whether the id is already used by another <section> tag
+      if (ids.indexOf(sectionIdText) !== -1) {
+        //The id name is already in use, so add a number to the end of it
+        sectionIdText += idDuplicateCounter
+        section.id = sectionIdText;
+        idDuplicateCounter += 1;
+      } else {
+        section.id = sectionIdText;
+        ids.push(sectionIdText);
+      }
       section.setAttribute("state", "unselected");
       if (headingTag.className !== "x") {
         section.className = headingTag.getAttribute("hierarchyLevel");

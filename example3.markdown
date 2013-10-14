@@ -1,20 +1,20 @@
 H1 Main Heading
 ===============
 
-h2 First [Fu n]
+h2 First [Fun]
 --------------
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ultricies ipsum odio, ac gravida justo cursus eget. Pellentesque varius tincidunt justo, vitae viverra mauris malesuada elementum. Fusce fermentum, urna sit amet feugiat auctor, metus nulla commodo neque, ac congue erat augue nec mi. Donec nec elit facilisis, congue nulla et, tempor magna. Suspendisse ante lorem, mollis non ligula eu, imperdiet bibendum nulla. Nullam vitae leo risus. Sed vel libero dolor. Nulla non ipsum et quam vehicula mattis.
 
-### h3 First: A heading
+### First heading
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ultricies ipsum odio, ac gravida justo cursus eget. Pellentesque varius tincidunt justo, vitae viverra mauris malesuada elementum. Fusce fermentum, urna sit amet feugiat auctor, metus nulla commodo neque, ac congue erat augue nec mi. Donec nec elit facilisis, congue nulla et, tempor magna. Suspendisse ante lorem, mollis non ligula eu, imperdiet bibendum nulla. Nullam vitae leo risus. Sed vel libero dolor. Nulla non ipsum et quam vehicula mattis.
 
-### h3 First: Another heading
+### First heading
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ultricies ipsum odio, ac gravida justo cursus eget. Pellentesque varius tincidunt justo, vitae viverra mauris malesuada elementum. Fusce fermentum, urna sit amet feugiat auctor, metus nulla commodo neque, ac congue erat augue nec mi. Donec nec elit facilisis, congue nulla et, tempor magna. Suspendisse ante lorem, mollis non ligula eu, imperdiet bibendum nulla. Nullam vitae leo risus. Sed vel libero dolor. Nulla non ipsum et quam vehicula mattis.
 
-#### h4 First: A Deep heading
+#### First heading
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ultricies ipsum odio, ac gravida justo cursus eget. Pellentesque varius tincidunt justo, vitae viverra mauris malesuada elementum. Fusce fermentum, urna sit amet feugiat auctor, metus nulla commodo neque, ac congue erat augue nec mi. Donec nec elit facilisis, congue nulla et, tempor magna. Suspendisse ante lorem, mollis non ligula eu, imperdiet bibendum nulla. Nullam vitae leo risus. Sed vel libero dolor. Nulla non ipsum et quam vehicula mattis.
 
@@ -26,7 +26,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ultricies ipsum
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ultricies ipsum odio, ac gravida justo cursus eget. Pellentesque varius tincidunt justo, vitae viverra mauris malesuada elementum. Fusce fermentum, urna sit amet feugiat auctor, metus nulla commodo neque, ac congue erat augue nec mi. Donec nec elit facilisis, congue nulla et, tempor magna. Suspendisse ante lorem, mollis non ligula eu, imperdiet bibendum nulla. Nullam vitae leo risus. Sed vel libero dolor. Nulla non ipsum et quam vehicula mattis.
 
-### h3 First: One more heading
+### First heading
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ultricies ipsum odio, ac gravida justo cursus eget. Pellentesque varius tincidunt justo, vitae viverra mauris malesuada elementum. Fusce fermentum, urna sit amet feugiat auctor, metus nulla commodo neque, ac congue erat augue nec mi. Donec nec elit facilisis, congue nulla et, tempor magna. Suspendisse ante lorem, mollis non ligula eu, imperdiet bibendum nulla. Nullam vitae leo risus. Sed vel libero dolor. Nulla non ipsum et quam vehicula mattis.
 
