@@ -1,5 +1,5 @@
 var POETRYBOOK = POETRYBOOK || {};
 
 POETRYBOOK.documents = (function () {
-  return ["../book.markdown",];
+  return ["http://kittykatattack.github.io/thepoetrybook/book.markdown",];
 }());
