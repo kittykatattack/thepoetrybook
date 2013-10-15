@@ -7,7 +7,7 @@
 }
 /* Always set toc's display to none to preven the table 
 of contents displaying */
- #toc {
+#toc {
   display: none;
 }
 body, html {
@@ -94,7 +94,7 @@ Set the h1 element's background-color to red help you debug positioning problems
   padding-right: 2%;
   overflow-y: scroll;
   overflow-x: auto;
-  z-index: 3000;
+  z-index: 2;
 }
 .section0 nav a {
   display: block;
@@ -118,7 +118,7 @@ Set the h1 element's background-color to red help you debug positioning problems
 /* This next style is just used to add 3em of padding to the top
 of the first section that doesn't have a category. This is
 so that it's neatly padded from the top of the page */
- .section0 nav a:first-child {
+.section0 nav a:first-child {
   padding-top: 3em;
 }
 nav a:last-child {
@@ -133,11 +133,14 @@ nav a[state=unselected] {
 em, code {
   color: black;
 }
+pre {
+  padding-bottom: 1em;
+}
 /* 
 <section> tags are created automatically by poetryBook.js when it loads the 
 markdown document. It wraps each content section beginning with <h2> or ## in
 an <section> tag, so that the content pages can be positioned.*/
- .section1 {
+.section1 {
   position: absolute;
   left: 23%;
   width: 58%;
@@ -178,6 +181,9 @@ an <section> tag, so that the content pages can be positioned.*/
 }
 .section1 h4 {
   font-size: 1.2em;
+  color: black;
+  padding-bottom: 1em;
+  padding-top: 1em;
 }
 .section1 h5, .section1 h6, {
   font-size: 1em;
@@ -196,7 +202,7 @@ an <section> tag, so that the content pages can be positioned.*/
 }
 /* The next two styles will display or hide <section> tags that belong to the .section1
 class based on their selection state set by the poet.js program */
- section .section1[state=selected] {
+section .section1[state=selected] {
   opacity: 1;
   z-index: 1;
 }
@@ -214,7 +220,7 @@ section nav
   display: none;
 }
 */
- .section1 nav {
+.section1 nav {
   background-color: #2E2E2E;
   width: 12%;
   height: 99%;

@@ -4,13 +4,13 @@ The Poetry Book
 What is The Poetry Book? [What?]
 --------------------------------
 
-*The Poetry Book* is a fast and easy system for quickly making your own book of poems. You can also use it as the basis of building highly interactive websites and apps. If you want to create your own book of poems that looks like this one, [get the source code](http:#) and modify it as much as you like.
+*The Poetry Book* is a fast and easy system for quickly making your own book of poems. You can also use it as the basis for building highly interactive websites, apps or game interfaces. If you want to create your own book of poems that looks like this one, [get the source code](https://github.com/kittykatattack/thepoetrybook) and modify it as much as you like.
 
 ![A Painting by William Blake](images/williamBlake.png)
  
-All the content for the entire book exists as a single [markdown document](http://daringfireball.net/projects/markdown/basics). Markdown documents are quick and easy to read and write, and don't require any technical skill to create. The Poetry Book uses the markdown document to figure out how the website should be organized. This is all done automatically using JavaScript - you don't have to worry about it. Just drop your markdown file into the Poetry Book's home folder, and the navigation bar and content pages will be automatically created. Fill the content pages with anything you like, as much as you like. Drop the Poetry Book project folder into any webserver, and you're done. There's nothing to configure or install, and no complex dependant technologies. It's a new way to think about websites and interactive content using the most basic technologies available.
+All the content for the entire book exists as a single [markdown document](http://daringfireball.net/projects/markdown/basics). Markdown documents are quick and easy to read and write, and don't require any technical skill to create. The Poetry Book uses the markdown document to figure out how the website should be organized. This is all done automatically using JavaScript - you don't have to worry about it. Just drop your markdown file into the Poetry Book's home folder, and the navigation bar and content pages will be automatically created. Fill the content pages with anything you like, as much as you like. Completely change the layout and design with CSS. Drop the Poetry Book project folder into any webserver, and you're done. There's nothing to configure or install, no complex dependant technologies, and no command-line-anything. It's a new way to think about websites and interactive content using the most basic technologies available.
 
-If you like, you can completely customize the css code to create entirely new and original layouts and designs based on this system. It will work on any platform, anywhere. There is only one content file, so it's extremely easy to manage and displays pages instantly. If you keep things simple, this might be all you need to build a small to medium-sized personal website or focused app.
+If you like, you can completely customize the css code to create entirely new and original layouts and designs based on this system. It will work on any platform, anywhere. There is only one content file, so it's extremely easy to manage and displays pages instantly. If you keep things simple, this might be all you need to build a small to medium-sized personal website, portfolio gallery or focused app.
   
 Or, just make a poetry book.
 
@@ -26,7 +26,7 @@ For HTML and CSS experts, go wild! This project was intended as the simplest, ba
 
 ### How to make your own book ###
 
-Use a plain text editor to write a markdown document. Or, you can use a free online markdown editor, [like this one](http://dillinger.io). (If you want a get fancy, download the latest version of [Brackets](http://brackets.io) and install the markdown extension from the extension manager). The Poetry Book uses and enhanced style of markdown called GFM, which [adds some extra useful features](https://help.github.com/articles/github-flavored-markdown). (Here's a good [markdown cheat-sheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) you can use while you're learning to write markdown documents.)
+Use a plain text editor to write a markdown document. Or, you can use a free online markdown editor, [like this one](http://dillinger.io). (If you want to get fancy, download the latest version of [Brackets](http://brackets.io) and install the markdown extension from the extension manager). The Poetry Book uses an improved style of markdown called GFM, which [adds some extra useful features](https://help.github.com/articles/github-flavored-markdown). (Here's a good [markdown cheat-sheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) you can use while you're learning to write markdown documents.)
 
 What does a markdown document look like? Here's an example of a markdown document that will create a book with two pages of poems.
 
@@ -63,7 +63,7 @@ That is all you need to do. You've got a poetry book!
 
 ### Category ordering ###
 
-The categories will be ordered alphabetically. To change that, you'll need to change the JavaScript code in the poetryBook.js file. If that's something you're confident doing, go for it! But, if you don't fight it, you'll discover that's it's really nice just to have the system organize your poems for you automatically like this. It's just one less decision you need to make, and you can make it work for you. 
+The categories will be ordered alphabetically. To change that, you'll need to change the JavaScript code in the tree.js file. If that's something you're confident doing, go for it! But, if you don't fight it, you'll discover that's it's really nice just to have the system organize your poems for you automatically like this. It's just one less decision you need to make, and you can make it work for you. 
 
 Spend the extra time you saved to write some poetry.
 
@@ -85,57 +85,71 @@ If you want to link a poem to another poem in the book you can [do it like this]
 
 `[do it like this](#songsofthepixies)`
 
-### Sub-page navigation for websites ###
+### Sub-page navigation headings for websites ###
 
 If you want to use The Poetry Book to make a website, you can think of each poem as a page of content. You might have pages with a lot of information that you want to break up with sub-headings. You can add a sub-heading in a page like this:
 
 `### This is a sub-heading inside a page ###`
 
-The Poetry Book will automatically create a sub-page navigation bar for you based on these headings. To see it, move your mouse over the light-gray vertical bar to the left of this page. A navigation bar will open showing you all the headings inside this page. You can jump to a new heading by clicking one of the links.
+The Poetry Book will automatically create a sub-page navigation bar for you based on these headings. To see it in this example, move your mouse over the light-gray vertical bar to the left of this page. A navigation bar will open showing you all the headings inside this page. You can jump to a new heading by clicking one of the links.
 
 If you don't want this sub-page navigation to be displayed, add this bit of code to the end of your CSS file:
 
-article nav
-{
-  display: none;
-}
+.section1 nav {display: none;}
 
-### Advanced stuff ###
+### Making a website ###
 
 You can use The Poetry Book to make a website. Just use real information, instead of poems. And, if you  know enough HTML CSS and JavaScript, you can completely customize it to look and behave however you want it to. In fact, The Poetry Book was written specifically to make it easy for you to do that. 
 
 If you don't know HTML, CSS and basic JavaScript - don't read further! 
 But, if you do, here are some of the things you should know about the source code:
 
-All the HTML code is generated automatically by the poetryBook.js file based on the structure of your markdown document. That means you won't be able to see the HTML page structure by looking at the index.html file. Instead, you'll need to open the *developer tools* in whatever browser you're using, and use it to inspect the generated HTML elements. (If you're using the [Chrome browser](https://www.google.com/intl/en/chrome/browser/), you can [do it like this](https://developers.google.com/chrome-developer-tools/docs/elements).)
+All the HTML code is generated automatically by the poetryBook.min.js file based on the structure of your markdown document. That means you won't be able to see the HTML page structure by looking at the index.html file. Instead, you'll need to open the *developer tools* in whatever browser you're using, and use it to inspect the generated HTML elements. (If you're using the [Chrome browser](https://www.google.com/intl/en/chrome/browser/), you can [do it like this](https://developers.google.com/chrome-developer-tools/docs/elements).)
 
-When the index.html file loads, the poetryBook.js file loads the markdown document into this tag:
+Using those tools, try it now and a look at the HTML structure of this example Poetry Book (yes, this very one you're reading!) You'll notice that every heading from the markdown document has a matching HTML heading tag: `<h1>, <h2>, <h3>` etc. And each of those headings, and the content they contain, are nested inside a  matching `<section>` tag. Those `<section>` tags all have class names: section0, section1, section2, etc. section0 matches the `<h1>` tag, section1 matches the `<h2>` tags, and section2 matches the `<h3>` tags.
 
-`<section id="book">... the markdown document will be here... </section>`
+![](images/htmlExample1.png)
 
-Your poetry book's main title will be loaded into the page's `<title>` tag, and also inserted into this tag:
+Here's what one of the poems looks like:
 
-`<div id="bookTitle"><h1>... your book title will be here...</h1></div>`
+![](images/htmlExample3.png)
 
-The inner `<h1>` tag will be automatically created, and the page `<title>` tag will match the `<h1>` heading.
+You can also see that the id names for each section are the same as the document headings, except in lower case without spaces or punctuation. You'll also notice that the entire book is wrapped inside a single `<section>` tag with the class name section0. That's based on the main heading that you gave your markdown document. 
 
-Here's what the first HTML section of this poetry book looks like:
+#### Selection states
 
-![](images/htmlHead.png)
+You'll also notice that the sections have *state* attributes. These are set as either "selected" or "unselected". Those states are set for you automatically by the poetrybook.min.js file, based on currently active links. This is really useful, because it means that you can use those *state* attributes to selectivly show or hide content. For example, here's the css you could use to make only selected content in section1 visible:
 
-poetryBook.js scans the markdown document and automatically creates the navigation bar based on the poem titles. It creates the titles as `<a>` tags, and inserts them into the `<nav>` section. The `<a>` tags will have links to their poems. (The link names are all lowercase without spaces or punctuation.) If you've created categories, new `<h2>` tags will also be created to represent those categories. Here's what the HTML navigation looks like for this poetry book:
+section .section1[state=selected] {
+  opacity: 1;
+  z-index: 1;
+}
+section .section1[state=unselected] {
+  z-index: 0;
+  opacity: 0;
+}
 
-![](images/navTag.png)
+This is a really powerful feature. It's the key to easily making highly dynamic, complex websites with nothing more than a few simple lines of CSS. Take a look at the poetryBook.css file to see how it's been implemented in this example.
 
-poetryBook.js also wraps each poem in `<article>` tags. Those `<article>` tags have id's that match the poem title (also in lower case and without spaces or punctuation.) They also have a class that matches their category. Here are the `<article>` tags for this book:
+#### Navigation bars
 
-![](images/articleTag.png)
+Each `<section>` tag is also immediately followed by a `<nav>` tag. This is a navigation bar that's automatically created for each sub-heading in that section. In the following illustration your can see the `<nav>` tag for this section that you're now reading, and how the links correspond to the id tags of the sub-sections.
 
-The poem's title in the markdown document is turned into an HTML `<h2>` tag, inside the enclosing `<article>` tag. Here's the what the HTML for one of the poems looks like:
+![](images/htmlExample2.png)
 
-![](images/poemExample.png)
 
-Can you see how it matches the original markdown document?
+Each `<a>` tag in the navigation bar has an href attribute that matches a sub-section's id attribute. The `<a>` tags also have *state* attributes. Look carefully, and you'll notice that if an `<a>` tag's state is "selected", the matching sub-section state will also be "selected". Everything else will be "unselected". This makes it easy for you to create navagation highlight states in your CSS, like this:
+
+nav a[state=selected] {
+  color: #eee8aa;
+}
+nav a[state=unselected] {
+  color: white;
+}
+
+The poetryBook.min.js file does all the work of figuring out which navigation links and sections should be selected or unselected, so you don't need to worry about that.
+
+#### Images
 
 You can access each image by using an id that corresponds to its "alt" text: lower-case and without spaces or punctuation. Imagine that you've got an image in your markdown document that looks like this:
 
@@ -143,31 +157,96 @@ You can access each image by using an id that corresponds to its "alt" text: low
 
 Its matching HTML will look like this:
 
-`<img src="images/williamBlake.png" alt="A Painting by William Blake" id="apaintingbywilliamblake" >"`
+`<img src="images/williamBlake.png" alt="A Painting by William Blake" id="apaintingbywilliamblake" >`
 
-If you know CSS, you'll immediately understand how easy it will be to customize the design, layout and behaviour of your poetry book using all these id and class hooks.
+#### Making hidden, unlinked content
 
-You can also add your own HTML code directly into the index.html page - it won't conflict with the HTML code generated by the markdown document. This lets you use The Poetry Book as the basis for making highly customized websites and interactive apps.
+You might have some content that should remain hidden and unlinked, unless some conditions are met. In that case, give that content section an "x" category, like this
 
-The poetryBook.js file is complex, so even if you understand JavaScript, you may want to avoid customizing it directly. Instead, if you want to add some JavaScript, just create your own new .js file and load it into the index.html file, along with the poetryBook.js file. That's the simplest, safest option.
+`### This content should not be visible [x] ###`
 
-However, if you're feeling courageous, you can certainly tinker with poetryBook.js. One thing you may want to do is change the name of the markdown file that that's being loaded. To do that, scan down to the very bottom of the program, and look for an array called *markdownDocuments*. You should see this:
+This content will be created in a `<section>` that has a class called "x". To hide all "x" class content, use this CSS code:
 
-`markdownDocuments = ["book.markdown"];`
+.x {display: none;}
 
+If you want to make it visible at some point based on user interaction, add some css that might look like this:
+
+```
+#thiscontentshouldnotbevisible {
+  display: block;
+  z-index: 2;
+}
+
+```
+
+(Giving it a high z-index number will make sure that it displays above the any other visible content.)
+
+This is an advanced feature, but could be extremely useful if you're building a complex custom user interface. For example, you might want a login window that appears when a reader clicks a button. You could then use JavaScript and CSS to make this content appear.
+
+#### Adding HTML code into the markdown document
+
+You can add your own HTML code directly into your markdown document. This is really useful for adding things like YouTube video embed code, or games inside `<iframe>` tags.  Just make sure to leave 1 blank line between the html code block and your markdown text.
+
+#### Loading markdown documents
+
+One thing you may want to do is change the name of the markdown file that that's being loaded. To do that, open the JavaScript file called documents.js:
+
+```
+var POETRYBOOK = POETRYBOOK || {};
+POETRYBOOK.documents = (function () {
+  return ["../book.markdown",];
+}());
+
+```
 Change the name of the array element to any markdown document you want to use, like this:
 
-`markdownDocuments = ["anyMarkdownDocument.markdown"];`
+`["../anyDocument.markdown"]`
 
-After the file is loaded, the *makeHTMLpage* function runs. That's the main part of the program that builds the HTML and interactive behaviour based on the markdown file.
+Then save the file, and reload index.html.
 
-You can also use more than one markdown file to build your poetry book. In fact, you can use as many as you like - there's no limit. Just add the names of the documents you want to use as elements in the markdownDocuments array. For example, here's how to make a book using 3 separate documents:
+You can also use more than one markdown file to build your poetry book. In fact, you can use as many as you like - there's no limit. Just add the names of the documents you want to use as elements in the array. For example, here's how to make a book using 3 separate documents:
 
-`markdownDocuments = ["firstDoc.markdown", "secondDoc.markdown", "thirdDoc.markdown"];`
+`["../firstDoc.markdown", "../secondDoc.markdown", "../thirdDoc.markdown"]`
 
-The Poetry Book will merge all the documents into a single book. But if you want to use multiple documents like this, you'll need to plan them a bit to make sure they organize themselves the way you expect. Also, there can only be one main title for the entire book. That title will be taken from the main heading in the first document you load. If the other documents also contain main headings, they won't be displayed.
+The Poetry Book will merge all the documents into a single book. But if you want to use multiple documents like this, you'll need to plan them a bit to make sure they organize themselves the way you expect. Also, there can only be one main title for the entire book, so make sure only one document has a main heading, like this:
 
-You will need very advanced JavaScript knowledge to understand it, but most of poetryBook.js is commented, so have fun!
+```
+Use Only One Main Heading For All Your Documents
+=============================================
+```
+
+If you do use more than one main heading, you'll end up with two separate books inside one HTML page. That could possibly be really useful in some way that I haven't been able to figure out yet. Or, it could not be what you want at all!
+
+#### More about the JavaScript code
+
+Make your life easy and just link the document.js and poetryBook.min.js file to the index.html file. You probably won't need to customize the source code. If you want to add some features, just create an additional JavaScript file that implements those new features.
+
+If you do want to mess around with the source code, you'll need to load the JS files in this order:
+
+documents.js
+rafPollyfill.js
+marked.js
+tree.js
+poet.js
+
+rafPollyfill.js makes sure that requestAnimationFrame works on all platforms. marked.js converts the markdown document to HTML. tree.js structures the HTML into useful nested sections and adds the navigation bars. poet.js sets the correct selection states for each section. All the source code is documented if you feel you want to try and customize it.
+
+#### An optional table of contents
+
+The tree.js file creates a table of contents with the id "toc". It also adds `<a>` tag links between the table of contents and its matching section in the main HTML. This could be very useful for some styles of websites, so it's there if you need it. However, if you don't, prevent the table of contents from displaying with the following CSS code:
+
+```
+#toc {
+  display: none;
+}
+```
+
+#### Some other things you should know
+
+* The `<title>` tag will contain the same text as your markdown document's main heading.
+* Identical heading names in your markdown document with have id names that match those names, with the addition of a number. For example, if you have 2 headings both called "story", the first one will have an id called "story0" and the second will be "story1".
+* If a section only has 1 subheading, a navigation bar won't be created for that section.
+* You can add user comments to sections with [Disqus](http://disqus.com/). You can add a website discussion forum with [Discourse](http://www.discourse.org/).
 
 ###  Why The Poetry Book is cool ###
 
@@ -176,32 +255,21 @@ You will need very advanced JavaScript knowledge to understand it, but most of p
 - Content pages display instantly because they all exist in that single file. The browser doesn't need to make continual http requests to a server for each page.
 - You can manage the entire website offline, without needing a CMS, database or web server. You can do it in Notepad.
 - Minimal, uncluttered content management using markdown so that it's extremely easy to add and customize content by hand. Just use your text editor's search capability (Ctrl-F) to find what you're looking for.
-- When you want to update your website content, just upload the single markdown file with FTP.
-- Use this same code as the foundation for building a mobile app (with [CocoonJS](http://www.ludei.com/tech/cocoonjs)), or a desktop app (with [node-webkit](https://github.com/rogerwang/node-webkit/wiki/Getting-Started-with-node-webkit)).
+- When you want to update your website content, just make some changes to the single markdown file.
+- Use this same code as the foundation for building a mobile app (with [CocoonJS](http://www.ludei.com/tech/cocoonjs)), or a desktop app (with [node-webkit](https://github.com/rogerwang/node-webkit/wiki/Getting-Started-with-node-webkit)), or for quickly building a GUI for a game.
 - Completely transportable. Just drop the same files into any webserver anywhere, and it will work exactly the same without any configuration or installation. Keep your whole website in your back pocket.
 - Low-tech, high-performance, and extremely easy to maintain.
+- Command-line nothing. Way faster an easier to use than other static website creation frameworks like Jekyll.
 - Less is more!
 
-[Get the source](http://#).
+[Get the source](https://github.com/kittykatattack/thepoetrybook).
 
 
 Unlinked content [x]
 --------------------
-This content won't be displayed in the navigation bar. To set this up, give the `<h2>` tag the class name "x" and don't give it a category. You can access this content through the `<article>` tag that will surround it. The article's id will be the same as the `<h2>` title, but lowercase without spaces. For example, the `<article>` tag for this section will look like this:
-
-`<article id="unlinkedcontent" class="x">`
+This content won't be displayed in the navigation bar. To set this up, add an [x] category to any heading. You can then access this content through the `<section>` tag id name that matches the heading. 
 
 This is an advanced feature, but could be extremely useful if you're building a complex custom user interface. For example, you might want a login window that appears when a reader clicks a button. You could then use JavaScript and CSS to make this content appear.
-
-In the css file, Make sure to give the element a z-index value which is *higher than 1000*. This is so that it displays above the currently selected page content. You'll also need to set the opacity to *100*, and the display to *block*. Like this:
-
-{  
-  z-index: 2000;  
-  display: block;  
-  opacity: 100;  
-}  
-  
-This is a very powerful feature because it lets you use The Poetry Book as the basis for a complex website or app user interface.
 
 Infant Sorrow [Blake]
 ---------------------
