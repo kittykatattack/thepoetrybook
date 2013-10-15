@@ -6,18 +6,20 @@ If you like, you can completely customize the css code to create entirely new an
   
 Or, just make a poetry book.
 
-View index.html for a full, interactive description of how to use and customize The Poetry Book.
+[View the live demonstration](http://kittykatattack.github.io/thepoetrybook/) for a full, interactive explanation of how to use and customize The Poetry Book.
 
 Why The Poetry Book is cool:
 
 - All the content exists as a single, easy-to-read markdown file.
 - There are no moving parts, so nothing can break.
 - Content pages display instantly because they all exist in that single file. The browser doesn't need to make continual http requests to a server for each page.
-- You can manage the entire website offline, without needing a CMS, database or web server. You can do it in Notepad.
+- You can manage the entire website offline, without needing a CMS or database. You can do it in Notepad.
 - Minimal, uncluttered content management using markdown so that it's extremely easy to add and customize content by hand. Just use your text editor's search capability (Ctrl-F) to find what you're looking for.
 - When you want to update your website content, just make some changes to the single markdown file.
 - Use this same code as the foundation for building a mobile app (with [CocoonJS](http://www.ludei.com/tech/cocoonjs)), or a desktop app (with [node-webkit](https://github.com/rogerwang/node-webkit/wiki/Getting-Started-with-node-webkit)), or for quickly building a GUI for a game.
 - Completely transportable. Just drop the same files into any webserver anywhere, and it will work exactly the same without any configuration or installation. Keep your whole website in your back pocket.
 - Low-tech, high-performance, and extremely easy to maintain.
-- Command-line nothing. Way faster an easier to use than other static website creation frameworks like Jekyll.
+- Command-line nothing. Way faster an easier to use than other static website creation frameworks like Jekyll. Prettier, leaner and easier to use and customize than Ghost.
 - Less is more!
+
+[Get the source](https://github.com/kittykatattack/thepoetrybook/releases).

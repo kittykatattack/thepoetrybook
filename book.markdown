@@ -26,6 +26,10 @@ For HTML and CSS experts, go wild! This project was intended as the simplest, ba
 
 ### How to make your own book ###
 
+First, make sure you have a local web server runnning. If you're using OSX, [Here's how to do that](http://osxdaily.com/2012/09/02/start-apache-web-server-mac-os-x/). On other platforms, [try XAMMP](http://www.apachefriends.org/en/xampp.html). If you're not afraid of the command line, you could [try a simple Python webserver](http://www.linuxjournal.com/content/tech-tip-really-simple-http-server-python). Or just, to make things really easy, download [Brackets](http://www.brackets.io/) and the latest version of [Chrome](https://www.google.com/intl/en/chrome/browser/) and then launch any project's index.html file by clicking Bracket's lightning bolt icon. Brackets will create a local web server for you automatically.
+
+Next, [Download the source files](https://github.com/kittykatattack/thepoetrybook/releases), put them in your local web server, and view the index.html file in a web browser. You can then start writing your own poetry book.
+
 Use a plain text editor to write a markdown document. Or, you can use a free online markdown editor, [like this one](http://dillinger.io). (If you want to get fancy, download the latest version of [Brackets](http://brackets.io) and install the markdown extension from the extension manager). The Poetry Book uses an improved style of markdown called GFM, which [adds some extra useful features](https://help.github.com/articles/github-flavored-markdown). (Here's a good [markdown cheat-sheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) you can use while you're learning to write markdown documents.)
 
 What does a markdown document look like? Here's an example of a markdown document that will create a book with two pages of poems.
@@ -253,16 +257,16 @@ The tree.js file creates a table of contents with the id "toc". It also adds `<a
 - All the content exists as a single, easy-to-read markdown file.
 - There are no moving parts, so nothing can break.
 - Content pages display instantly because they all exist in that single file. The browser doesn't need to make continual http requests to a server for each page.
-- You can manage the entire website offline, without needing a CMS, database or web server. You can do it in Notepad.
+- You can manage the entire website offline, without needing a CMS or database. You can do it in Notepad.
 - Minimal, uncluttered content management using markdown so that it's extremely easy to add and customize content by hand. Just use your text editor's search capability (Ctrl-F) to find what you're looking for.
 - When you want to update your website content, just make some changes to the single markdown file.
 - Use this same code as the foundation for building a mobile app (with [CocoonJS](http://www.ludei.com/tech/cocoonjs)), or a desktop app (with [node-webkit](https://github.com/rogerwang/node-webkit/wiki/Getting-Started-with-node-webkit)), or for quickly building a GUI for a game.
 - Completely transportable. Just drop the same files into any webserver anywhere, and it will work exactly the same without any configuration or installation. Keep your whole website in your back pocket.
 - Low-tech, high-performance, and extremely easy to maintain.
-- Command-line nothing. Way faster an easier to use than other static website creation frameworks like Jekyll.
+- Command-line nothing. Way faster an easier to use than other static website creation frameworks like Jekyll. Prettier, leaner and easier to use and customize than Ghost.
 - Less is more!
 
-[Get the source](https://github.com/kittykatattack/thepoetrybook).
+[Get the source](https://github.com/kittykatattack/thepoetrybook/releases).
 
 
 Unlinked content [x]
